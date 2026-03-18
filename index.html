@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a237e">
+<title>CobrApp</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root {
+    --primary: #1565C0;
+    --primary-dark: #0D47A1;
+    --primary-light: #1E88E5;
+    --accent: #00BFA5;
+    --accent2: #FF6F00;
+    --danger: #E53935;
+    --success: #43A047;
+    --warning: #FB8C00;
+    --bg: #F0F4FF;
+    --surface: #FFFFFF;
+    --surface2: #E8EDF8;
+    --text: #0D1B3E;
+    --text2: #5C6B8A;
+    --border: #C8D3EF;
+    --shadow: 0 4px 24px rgba(21,101,192,0.13);
+    --radius: 18px;
+    --font: 'Nunito', sans-serif;
+    --mono: 'Roboto Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; max-width: 430px; margin: 0 auto; overflow-x: hidden; }
+
+  .screen { display: none; flex-direction: column; min-height: 100vh; }
+  .screen.active { display: flex; }
+
+  /* ── SETUP SCREEN ── */
+  #setupScreen {
+    background: linear-gradient(160deg, #0D47A1 0%, #1565C0 50%, #00BFA5 100%);
+    justify-content: center; align-items: center; padding: 28px 20px; gap: 0;
+  }
+  .setup-logo { width: 80px; height: 80px; background: rgba(255,255,255,0.18); border-radius: 26px; display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
+  .setup-title { color: #fff; font-size: 30px; font-weight: 900; letter-spacing: -1px; }
+  .setup-sub { color: rgba(255,255,255,0.75); font-size: 13px; margin-bottom: 6px; }
+  .setup-card { background: #fff; border-radius: 24px; padding: 24px 20px; width: 100%; box-shadow: 0 16px 48px rgba(0,0,0,0.18); margin-top: 20px; }
+  .setup-card h2 { font-size: 17px; font-weight: 900; color: var(--primary-dark); margin-bottom: 4px; }
+  .setup-card p { font-size: 12px; color: var(--text2); margin-bottom: 16px; line-height: 1.5; }
+  .step-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: #fff; border-radius: 99px; padding: 3px 10px; font-size: 11px; font-weight: 800; margin-bottom: 10px; }
+
+  /* ── LOGIN ── */
+  #loginScreen { background: linear-gradient(160deg, #0D47A1 0%, #1565C0 40%, #00BFA5 100%); justify-content: center; align-items: center; padding: 32px 24px; }
+  .login-logo { width: 88px; height: 88px; background: rgba(255,255,255,0.18); border-radius: 28px; display: flex; align-items: center; justify-content: center; font-size: 44px; margin-bottom: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
+  .login-title { color: #fff; font-size: 32px; font-weight: 900; letter-spacing: -1px; }
+  .login-sub { color: rgba(255,255,255,0.72); font-size: 14px; margin-bottom: 36px; }
+  .login-card { background: #fff; border-radius: 24px; padding: 28px 24px; width: 100%; box-shadow: 0 16px 48px rgba(0,0,0,0.18); }
+  .login-card h2 { font-size: 20px; font-weight: 800; color: var(--primary-dark); margin-bottom: 20px; }
+
+  .field { margin-bottom: 16px; }
+  .field label { font-size: 12px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
+  .field input, .field select, .field textarea { width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 12px; font-family: var(--font); font-size: 15px; color: var(--text); background: var(--bg); outline: none; transition: border-color 0.2s; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); background: #fff; }
+  .field select { -webkit-appearance: none; }
+  .field textarea { resize: none; min-height: 80px; }
+
+  .btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 15px; background: var(--primary); color: #fff; border: none; border-radius: 14px; font-family: var(--font); font-size: 16px; font-weight: 800; cursor: pointer; transition: all 0.18s; }
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .btn.accent { background: var(--accent); }
+  .btn.danger { background: var(--danger); }
+  .btn.outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+  .btn.sm { padding: 10px 16px; font-size: 13px; border-radius: 10px; width: auto; }
+  .btn.warning { background: var(--warning); }
+  .btn.success { background: var(--success); }
+  .error-msg { color: var(--danger); font-size: 13px; font-weight: 600; margin-top: 10px; text-align: center; }
+
+  .topbar { background: var(--primary); padding: 16px 20px 14px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(21,101,192,0.18); }
+  .topbar-title { color: #fff; font-size: 18px; font-weight: 800; flex: 1; }
+  .topbar-action { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.15); border: none; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+  .bottomnav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: #fff; border-top: 1px solid var(--border); display: flex; padding: 8px 0 12px; z-index: 99; box-shadow: 0 -4px 20px rgba(21,101,192,0.08); }
+  .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; padding: 4px 0; border: none; background: none; font-family: var(--font); }
+  .nav-icon { font-size: 22px; line-height: 1; transition: transform 0.15s; }
+  .nav-label { font-size: 10px; font-weight: 700; color: var(--text2); transition: color 0.15s; }
+  .nav-item.active .nav-icon { transform: scale(1.15); }
+  .nav-item.active .nav-label { color: var(--primary); }
+
+  .content { flex: 1; padding: 16px; padding-bottom: 80px; overflow-y: auto; }
+
+  .card { background: var(--surface); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); margin-bottom: 14px; }
+  .card-title { font-size: 14px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .stat-card { background: var(--surface); border-radius: 16px; padding: 16px; box-shadow: var(--shadow); }
+  .stat-icon { font-size: 26px; margin-bottom: 6px; }
+  .stat-value { font-size: 20px; font-weight: 900; color: var(--primary); font-family: var(--mono); }
+  .stat-label { font-size: 11px; color: var(--text2); font-weight: 700; margin-top: 2px; }
+  .stat-card.green .stat-value { color: var(--success); }
+  .stat-card.red .stat-value { color: var(--danger); }
+  .stat-card.orange .stat-value { color: var(--warning); }
+
+  .list-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--surface2); cursor: pointer; }
+  .list-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .list-item:first-child { padding-top: 0; }
+  .list-avatar { width: 46px; height: 46px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; flex-shrink: 0; color: #fff; }
+  .list-info { flex: 1; min-width: 0; }
+  .list-name { font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .list-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .list-amount { text-align: right; flex-shrink: 0; }
+  .amount { font-size: 15px; font-weight: 800; font-family: var(--mono); }
+  .amount.red { color: var(--danger); }
+  .amount.green { color: var(--success); }
+  .badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-top: 2px; display: inline-block; }
+  .badge-active { background: #E8F5E9; color: var(--success); }
+  .badge-paid { background: #E3F2FD; color: var(--primary); }
+
+  .progress-bar { height: 6px; background: var(--surface2); border-radius: 99px; overflow: hidden; margin-top: 6px; }
+  .progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+  .progress-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+  .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--surface2); }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-label { font-size: 13px; color: var(--text2); font-weight: 600; }
+  .detail-value { font-size: 14px; font-weight: 800; font-family: var(--mono); }
+
+  .search-wrap { position: relative; margin-bottom: 14px; }
+  .search-wrap input { width: 100%; padding: 12px 16px 12px 42px; border: 2px solid var(--border); border-radius: 14px; font-family: var(--font); font-size: 14px; background: var(--surface); color: var(--text); outline: none; }
+  .search-wrap input:focus { border-color: var(--primary); }
+  .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 18px; }
+
+  .modal-overlay { position: fixed; inset: 0; background: rgba(13,27,62,0.5); z-index: 200; display: none; align-items: flex-end; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--surface); border-radius: 24px 24px 0 0; width: 100%; max-width: 430px; padding: 24px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.25s ease; }
+  @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-title { font-size: 20px; font-weight: 900; margin-bottom: 20px; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+
+  .chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 99px; font-size: 12px; font-weight: 700; }
+  .chip-blue { background: #E3F2FD; color: var(--primary); }
+  .chip-green { background: #E8F5E9; color: var(--success); }
+
+  .empty { text-align: center; padding: 48px 24px; color: var(--text2); }
+  .empty-icon { font-size: 52px; margin-bottom: 12px; }
+  .empty-text { font-size: 16px; font-weight: 700; }
+
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .tag-btn { padding: 6px 14px; border-radius: 99px; font-family: var(--font); font-size: 12px; font-weight: 700; cursor: pointer; border: 2px solid var(--border); background: var(--surface); color: var(--text2); }
+  .tag-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  .section-title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 10px; }
+
+  .welcome-banner { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%); border-radius: 20px; padding: 20px; color: #fff; margin-bottom: 14px; position: relative; overflow: hidden; }
+  .welcome-banner::after { content: '💰'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 52px; opacity: 0.2; }
+
+  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #222; color: #fff; padding: 12px 24px; border-radius: 99px; font-size: 14px; font-weight: 600; z-index: 300; opacity: 0; transition: opacity 0.2s; white-space: nowrap; pointer-events: none; }
+  .toast.show { opacity: 1; }
+
+  /* Loading overlay */
+  .loading-overlay { position: fixed; inset: 0; background: rgba(13,27,62,0.45); z-index: 400; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+  .loading-overlay.show { display: flex; }
+  .spinner { width: 48px; height: 48px; border: 5px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { color: #fff; font-weight: 700; font-size: 14px; }
+
+  .conn-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; }
+  .conn-ok { background: #E8F5E9; color: var(--success); }
+  .conn-err { background: #FFEBEE; color: var(--danger); }
+
+  .sql-box { background: #1a1a2e; color: #00E5FF; border-radius: 12px; padding: 14px; font-family: var(--mono); font-size: 11px; line-height: 1.6; margin: 10px 0; overflow-x: auto; white-space: pre; }
+  .info-box { background: #E3F2FD; border-left: 4px solid var(--primary); border-radius: 10px; padding: 12px 14px; font-size: 12px; color: var(--primary-dark); margin: 10px 0; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loadingText">Conectando...</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════════ SETUP SCREEN ══════════════ -->
+<div id="setupScreen" class="screen active">
+  <div class="setup-logo">💳</div>
+  <div class="setup-title">CobrApp</div>
+  <div class="setup-sub">Conectar base de datos en la nube</div>
+
+  <div class="setup-card">
+    <div class="step-badge">⚡ Configuración inicial</div>
+    <h2>Conectar con Supabase</h2>
+    <p>Ingresa las credenciales de tu proyecto Supabase. Solo se hace una vez — se guardan localmente.</p>
+
+    <div class="field">
+      <label>URL del proyecto</label>
+      <input type="text" id="sbUrl" placeholder="https://xxxx.supabase.co" autocomplete="off">
+    </div>
+    <div class="field">
+      <label>Anon Public Key</label>
+      <input type="text" id="sbKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." autocomplete="off">
+    </div>
+    <button class="btn" id="btnConectar" onclick="conectarSupabase()">🔌 Conectar y continuar</button>
+    <div class="error-msg" id="setupError"></div>
+
+    <div class="info-box">
+      📋 <b>¿Cómo obtener estas credenciales?</b><br>
+      1. Ve a <b>supabase.com</b> → Nuevo proyecto<br>
+      2. En tu proyecto → Settings → API<br>
+      3. Copia <b>Project URL</b> y <b>anon public key</b>
+    </div>
+
+    <div style="margin-top:12px">
+      <div style="font-size:12px;font-weight:800;color:var(--text2);margin-bottom:8px">📐 SQL para crear las tablas (ejecutar en Supabase → SQL Editor):</div>
+      <div class="sql-box">-- 1. Usuarios
+CREATE TABLE usuarios (
+  id BIGSERIAL PRIMARY KEY,
+  nombre TEXT NOT NULL,
+  usuario TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL,
+  rol TEXT DEFAULT 'cobrador',
+  color TEXT DEFAULT '#1565C0',
+  activo BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 2. Clientes
+CREATE TABLE clientes (
+  id BIGSERIAL PRIMARY KEY,
+  nombre TEXT NOT NULL,
+  telefono TEXT,
+  direccion TEXT,
+  email TEXT,
+  color TEXT DEFAULT '#1565C0',
+  activo BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 3. Préstamos
+CREATE TABLE prestamos (
+  id BIGSERIAL PRIMARY KEY,
+  cliente_id BIGINT REFERENCES clientes(id),
+  monto NUMERIC NOT NULL,
+  interes NUMERIC DEFAULT 10,
+  plazo INT DEFAULT 6,
+  fecha_inicio DATE,
+  estado TEXT DEFAULT 'activo',
+  cobrador_id BIGINT REFERENCES usuarios(id),
+  notas TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 4. Pagos
+CREATE TABLE pagos (
+  id BIGSERIAL PRIMARY KEY,
+  prestamo_id BIGINT REFERENCES prestamos(id),
+  monto NUMERIC NOT NULL,
+  fecha DATE NOT NULL,
+  metodo TEXT DEFAULT 'efectivo',
+  notas TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Usuario admin por defecto
+INSERT INTO usuarios (nombre, usuario, password, rol, color)
+VALUES ('Administrador', 'admin', '1234', 'admin', '#1565C0');
+
+-- Deshabilitar RLS para uso simple
+ALTER TABLE usuarios DISABLE ROW LEVEL SECURITY;
+ALTER TABLE clientes DISABLE ROW LEVEL SECURITY;
+ALTER TABLE prestamos DISABLE ROW LEVEL SECURITY;
+ALTER TABLE pagos DISABLE ROW LEVEL SECURITY;</div>
+    </div>
+
+    <div style="text-align:center;margin-top:10px">
+      <button class="btn outline sm" onclick="usarDemoLocal()" style="width:auto">🧪 Usar modo demo (sin Supabase)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ LOGIN ══════════════ -->
+<div id="loginScreen" class="screen">
+  <div class="login-logo">💳</div>
+  <div class="login-title">CobrApp</div>
+  <div class="login-sub">Gestión de cobros profesional</div>
+  <div class="login-card">
+    <h2>Iniciar sesión</h2>
+    <div id="connBadge" style="margin-bottom:14px"></div>
+    <div class="field">
+      <label>Usuario</label>
+      <input type="text" id="loginUser" placeholder="Tu usuario" autocomplete="off">
+    </div>
+    <div class="field">
+      <label>Contraseña</label>
+      <input type="password" id="loginPass" placeholder="••••••••">
+    </div>
+    <button class="btn" id="loginBtn" onclick="doLogin()">Entrar</button>
+    <div class="error-msg" id="loginError"></div>
+    <div style="margin-top:14px;text-align:center">
+      <button class="btn outline sm" onclick="volverSetup()" style="width:auto">⚙️ Cambiar configuración</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ APP ══════════════ -->
+<div id="appScreen" class="screen">
+  <div class="topbar">
+    <div class="topbar-title" id="mainTitle">Dashboard</div>
+    <button class="topbar-action" onclick="doLogout()">🚪</button>
+  </div>
+  <div class="content" id="mainContent"></div>
+  <div class="bottomnav">
+    <button class="nav-item active" id="nav-dash" onclick="navTo('dash')">
+      <div class="nav-icon">🏠</div><div class="nav-label">Inicio</div>
+    </button>
+    <button class="nav-item" id="nav-clientes" onclick="navTo('clientes')">
+      <div class="nav-icon">👥</div><div class="nav-label">Clientes</div>
+    </button>
+    <button class="nav-item" id="nav-prestamos" onclick="navTo('prestamos')">
+      <div class="nav-icon">💵</div><div class="nav-label">Préstamos</div>
+    </button>
+    <button class="nav-item" id="nav-pagos" onclick="navTo('pagos')">
+      <div class="nav-icon">💳</div><div class="nav-label">Pagos</div>
+    </button>
+    <button class="nav-item" id="nav-config" onclick="navTo('config')">
+      <div class="nav-icon">⚙️</div><div class="nav-label">Config</div>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════ MODAL ══════════════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  SUPABASE CONFIG
+// ══════════════════════════════════════════
+const CONF_KEY = 'cobrapp_supabase_conf';
+let sbClient = null;
+let demoMode = false;
+
+// Demo DB en memoria
+let demoDB = {
+  usuarios: [
+    { id: 1, nombre: 'Administrador', usuario: 'admin', password: '1234', rol: 'admin', color: '#1565C0', activo: true }
+  ],
+  clientes: [],
+  prestamos: [],
+  pagos: []
+};
+
+window.addEventListener('load', () => {
+  // Verificar que el SDK de Supabase cargó
+  if (!window.supabase) {
+    document.getElementById('setupError').textContent = '⚠️ No se pudo cargar el SDK de Supabase. Verifica tu conexión a internet.';
+  }
+  const conf = localStorage.getItem(CONF_KEY);
+  if (conf) {
+    try {
+      const { url, key } = JSON.parse(conf);
+      if (url && key) {
+        document.getElementById('sbUrl').value = url;
+        document.getElementById('sbKey').value = key;
+        inicializarSupabase(url, key, true);
+      }
+    } catch(e) { localStorage.removeItem(CONF_KEY); }
+  }
+});
+
+async function conectarSupabase() {
+  const errEl = document.getElementById('setupError');
+  const btn = document.getElementById('btnConectar');
+  errEl.textContent = '';
+
+  // Validar SDK
+  if (!window.supabase || typeof window.supabase.createClient !== 'function') {
+    errEl.textContent = '❌ SDK de Supabase no cargó. ¿Tienes internet? Recarga la página.';
+    return;
+  }
+
+  const url = document.getElementById('sbUrl').value.trim();
+  const key = document.getElementById('sbKey').value.trim();
+
+  if (!url) { errEl.textContent = '❌ Ingresa la URL del proyecto'; return; }
+  if (!url.startsWith('https://')) { errEl.textContent = '❌ La URL debe comenzar con https://'; return; }
+  if (!key) { errEl.textContent = '❌ Ingresa el Anon Key'; return; }
+  if (!key.startsWith('eyJ')) { errEl.textContent = '❌ El key parece incorrecto (debe empezar con eyJ...)'; return; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Conectando...';
+  await inicializarSupabase(url, key, false);
+  btn.disabled = false;
+  btn.textContent = '🔌 Conectar y continuar';
+}
+
+async function inicializarSupabase(url, key, silencioso) {
+  const errEl = document.getElementById('setupError');
+  if (!silencioso) showLoading('Conectando con Supabase...');
+  try {
+    // Crear cliente
+    const client = window.supabase.createClient(url.replace(/\/$/, ''), key, {
+      auth: { persistSession: false }
+    });
+
+    // Test con timeout de 8 segundos
+    const testPromise = client.from('usuarios').select('id').limit(1);
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Tiempo de espera agotado (8s). Verifica la URL.')), 8000)
+    );
+
+    const { data, error } = await Promise.race([testPromise, timeoutPromise]);
+
+    hideLoading();
+
+    if (error) {
+      // Diagnóstico según código de error
+      let msg = '❌ ' + error.message;
+      if (error.message.includes('relation') || error.message.includes('does not exist')) {
+        msg = '⚠️ Conectado, pero las tablas no existen. Ejecuta el SQL en Supabase → SQL Editor.';
+        // Aun así guardar y avanzar porque la conexión funciona
+        sbClient = client;
+        localStorage.setItem(CONF_KEY, JSON.stringify({ url: url.replace(/\/$/, ''), key }));
+        demoMode = false;
+        irALogin('⚠️ Supabase OK — Falta crear tablas');
+        if (!silencioso) toast('⚠️ Ejecuta el SQL para crear las tablas');
+        return;
+      }
+      if (error.code === 'PGRST301' || error.message.includes('JWT')) {
+        msg = '❌ Anon Key incorrecto. Cópialo de Settings → API → anon public.';
+      }
+      if (!silencioso) errEl.textContent = msg;
+      sbClient = null;
+      return;
+    }
+
+    // ✅ Conexión exitosa
+    sbClient = client;
+    localStorage.setItem(CONF_KEY, JSON.stringify({ url: url.replace(/\/$/, ''), key }));
+    demoMode = false;
+    irALogin('☁️ Supabase conectado');
+    if (!silencioso) toast('✅ ¡Conexión exitosa!');
+
+  } catch(e) {
+    hideLoading();
+    let msg = '❌ ' + (e.message || 'Error desconocido');
+    if (e.message && e.message.includes('agotado')) msg = '❌ ' + e.message;
+    else if (e.message && (e.message.includes('fetch') || e.message.includes('network') || e.message.includes('Failed'))) {
+      msg = '❌ Sin acceso a internet o URL incorrecta.';
+    }
+    if (!silencioso) errEl.textContent = msg;
+    else {
+      // Si falla en auto-reconexión al cargar, ir al setup limpio
+      localStorage.removeItem(CONF_KEY);
+    }
+    sbClient = null;
+  }
+}
+
+function usarDemoLocal() {
+  demoMode = true;
+  sbClient = null;
+  irALogin('🧪 Modo demo (datos locales)');
+}
+
+function irALogin(badgeMsg) {
+  show('loginScreen');
+  document.getElementById('connBadge').innerHTML = `<span class="conn-badge conn-ok">✅ ${badgeMsg}</span>`;
+}
+
+function volverSetup() {
+  show('setupScreen');
+}
+
+// ══════════════════════════════════════════
+//  DB LAYER — abstrae Supabase o Demo
+// ══════════════════════════════════════════
+async function dbSelect(tabla, filtros = {}) {
+  if (demoMode) {
+    let rows = [...(demoDB[tabla] || [])];
+    Object.entries(filtros).forEach(([k, v]) => { rows = rows.filter(r => r[k] === v); });
+    return rows;
+  }
+  let q = sbClient.from(tabla).select('*');
+  Object.entries(filtros).forEach(([k, v]) => { q = q.eq(k, v); });
+  const { data, error } = await q;
+  if (error) throw error;
+  return data || [];
+}
+
+async function dbInsert(tabla, obj) {
+  if (demoMode) {
+    const arr = demoDB[tabla];
+    const newObj = { ...obj, id: arr.length ? Math.max(...arr.map(x => x.id)) + 1 : 1, created_at: new Date().toISOString() };
+    arr.push(newObj);
+    return newObj;
+  }
+  const { data, error } = await sbClient.from(tabla).insert(obj).select().single();
+  if (error) throw error;
+  return data;
+}
+
+async function dbUpdate(tabla, id, obj) {
+  if (demoMode) {
+    const idx = demoDB[tabla].findIndex(x => x.id === id);
+    demoDB[tabla][idx] = { ...demoDB[tabla][idx], ...obj };
+    return demoDB[tabla][idx];
+  }
+  const { data, error } = await sbClient.from(tabla).update(obj).eq('id', id).select().single();
+  if (error) throw error;
+  return data;
+}
+
+async function dbDelete(tabla, id) {
+  if (demoMode) {
+    demoDB[tabla] = demoDB[tabla].filter(x => x.id !== id);
+    return;
+  }
+  const { error } = await sbClient.from(tabla).delete().eq('id', id);
+  if (error) throw error;
+}
+
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+let currentUser = null;
+let currentNav = 'dash';
+let cache = { clientes: [], prestamos: [], pagos: [], usuarios: [] };
+let filtroClientes = '';
+let filtroPrestamos = 'todos';
+
+// ══════════════════════════════════════════
+//  UI HELPERS
+// ══════════════════════════════════════════
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function showLoading(msg = 'Cargando...') {
+  document.getElementById('loadingText').textContent = msg;
+  document.getElementById('loadingOverlay').classList.add('show');
+}
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('show');
+}
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+function openModal(html) {
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+});
+
+function fmt(n) { return '$' + Number(n || 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function fmtDate(d) { if (!d) return '—'; const [y, m, day] = d.split('T')[0].split('-'); return `${day}/${m}/${y}`; }
+function today() { return new Date().toISOString().split('T')[0]; }
+function avatarText(name) { return (name || '?').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase(); }
+
+// Cálculos
+function cuotaMensual(p) { return (p.monto * (1 + p.interes / 100)) / p.plazo; }
+function totalPrestamo(p) { return p.monto * (1 + p.interes / 100); }
+function totalPagado(prestamoId) { return cache.pagos.filter(pg => pg.prestamo_id == prestamoId).reduce((s, pg) => s + Number(pg.monto), 0); }
+function saldoPendiente(p) { return Math.max(0, totalPrestamo(p) - totalPagado(p.id)); }
+function getCliente(id) { return cache.clientes.find(c => c.id == id) || { nombre: '—', color: '#999' }; }
+
+// ══════════════════════════════════════════
+//  AUTH
+// ══════════════════════════════════════════
+async function doLogin() {
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  if (!u || !p) { document.getElementById('loginError').textContent = '❌ Completa los campos'; return; }
+  showLoading('Verificando...');
+  try {
+    const usuarios = await dbSelect('usuarios');
+    const found = usuarios.find(x => x.usuario === u && x.password === p && x.activo);
+    hideLoading();
+    if (found) {
+      currentUser = found;
+      document.getElementById('loginError').textContent = '';
+      show('appScreen');
+      await cargarCache();
+      navTo('dash');
+    } else {
+      document.getElementById('loginError').textContent = '❌ Usuario o contraseña incorrectos';
+    }
+  } catch (e) {
+    hideLoading();
+    document.getElementById('loginError').textContent = '❌ Error de conexión: ' + e.message;
+  }
+}
+document.getElementById('loginPass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+function doLogout() {
+  currentUser = null;
+  show('loginScreen');
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+}
+
+// ══════════════════════════════════════════
+//  CACHE
+// ══════════════════════════════════════════
+async function cargarCache() {
+  showLoading('Cargando datos...');
+  try {
+    const [clientes, prestamos, pagos, usuarios] = await Promise.all([
+      dbSelect('clientes'),
+      dbSelect('prestamos'),
+      dbSelect('pagos'),
+      dbSelect('usuarios')
+    ]);
+    cache = { clientes, prestamos, pagos, usuarios };
+  } finally {
+    hideLoading();
+  }
+}
+
+// ══════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════
+const navTitles = { dash: 'Dashboard', clientes: 'Clientes', prestamos: 'Préstamos', pagos: 'Pagos', config: 'Configuración' };
+const navRenderers = { dash: renderDash, clientes: renderClientes, prestamos: renderPrestamos, pagos: renderPagos, config: renderConfig };
+
+async function navTo(section) {
+  currentNav = section;
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  const el = document.getElementById('nav-' + section);
+  if (el) el.classList.add('active');
+  document.getElementById('mainTitle').textContent = navTitles[section];
+  await cargarCache();
+  navRenderers[section]();
+}
+
+// ══════════════════════════════════════════
+//  DASHBOARD
+// ══════════════════════════════════════════
+function renderDash() {
+  const totalPrestado = cache.prestamos.reduce((s, p) => s + Number(p.monto), 0);
+  const totalCobrado = cache.pagos.reduce((s, pg) => s + Number(pg.monto), 0);
+  const totalPendiente = cache.prestamos.filter(p => p.estado === 'activo').reduce((s, p) => s + saldoPendiente(p), 0);
+  const activos = cache.prestamos.filter(p => p.estado === 'activo');
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' });
+  const modeTag = demoMode ? '<span style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:99px;margin-left:6px">🧪 Demo</span>' : '<span style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:99px;margin-left:6px">☁️ Nube</span>';
+
+  let html = `
+  <div class="welcome-banner">
+    <div style="font-size:20px;font-weight:900">Hola, ${currentUser.nombre.split(' ')[0]} 👋 ${modeTag}</div>
+    <div style="font-size:13px;opacity:0.82">Resumen de tu cartera</div>
+    <div style="font-size:12px;opacity:0.65;margin-top:6px">${dateStr}</div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon">💵</div><div class="stat-value">${fmt(totalPrestado)}</div><div class="stat-label">Total prestado</div></div>
+    <div class="stat-card green"><div class="stat-icon">✅</div><div class="stat-value">${fmt(totalCobrado)}</div><div class="stat-label">Total cobrado</div></div>
+    <div class="stat-card red"><div class="stat-icon">⏳</div><div class="stat-value">${fmt(totalPendiente)}</div><div class="stat-label">Por cobrar</div></div>
+    <div class="stat-card orange"><div class="stat-icon">📋</div><div class="stat-value">${activos.length}</div><div class="stat-label">Activos</div></div>
+  </div>`;
+
+  if (activos.length) {
+    html += `<div class="card"><div class="card-title" style="margin-bottom:12px">📊 Préstamos activos</div>`;
+    activos.slice(0, 4).forEach(p => {
+      const cl = getCliente(p.cliente_id);
+      const pct = Math.min(100, Math.round(totalPagado(p.id) / totalPrestamo(p) * 100));
+      html += `<div class="list-item" onclick="verPrestamo(${p.id})">
+        <div class="list-avatar" style="background:${cl.color}">${avatarText(cl.nombre)}</div>
+        <div class="list-info">
+          <div class="list-name">${cl.nombre}</div>
+          <div class="list-sub">${fmt(p.monto)} · ${p.plazo} meses</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+          <div class="progress-labels"><span>${pct}%</span><span>${fmt(saldoPendiente(p))}</span></div>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  const recientes = [...cache.pagos].sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, 4);
+  if (recientes.length) {
+    html += `<div class="card"><div class="card-title" style="margin-bottom:12px">💳 Pagos recientes</div>`;
+    recientes.forEach(pg => {
+      const prest = cache.prestamos.find(x => x.id == pg.prestamo_id);
+      const cl = prest ? getCliente(prest.cliente_id) : { nombre: '—', color: '#999' };
+      html += `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--surface2)">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--success);flex-shrink:0"></div>
+        <div style="flex:1"><div style="font-size:13px;font-weight:700">${cl.nombre}</div><div style="font-size:11px;color:var(--text2)">${fmtDate(pg.fecha)} · ${pg.metodo}</div></div>
+        <div style="font-weight:800;font-family:var(--mono);color:var(--success);font-size:14px">${fmt(pg.monto)}</div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (!activos.length && !cache.pagos.length) {
+    html += `<div class="empty"><div class="empty-icon">🚀</div><div class="empty-text">¡Empieza agregando clientes!</div></div>`;
+  }
+
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+// ══════════════════════════════════════════
+//  CLIENTES
+// ══════════════════════════════════════════
+function renderClientes() {
+  const filtered = cache.clientes.filter(c =>
+    c.nombre.toLowerCase().includes(filtroClientes.toLowerCase()) ||
+    (c.telefono || '').includes(filtroClientes)
+  );
+  let html = `
+  <div class="search-wrap"><span class="search-icon">🔍</span>
+    <input type="text" placeholder="Buscar cliente..." value="${filtroClientes}" oninput="filtroClientes=this.value;renderClientes()">
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <div class="section-title" style="margin:0">👥 ${filtered.length} cliente${filtered.length !== 1 ? 's' : ''}</div>
+    <button class="btn sm" onclick="modalCliente()">+ Nuevo</button>
+  </div>`;
+  if (!filtered.length) {
+    html += `<div class="empty"><div class="empty-icon">🧑‍💼</div><div class="empty-text">Sin clientes</div><div style="font-size:13px;color:var(--text2);margin-top:6px">Agrega tu primer cliente</div></div>`;
+  } else {
+    html += `<div class="card">`;
+    filtered.forEach(c => {
+      const prestActivos = cache.prestamos.filter(p => p.cliente_id == c.id && p.estado === 'activo').length;
+      const deuda = cache.prestamos.filter(p => p.cliente_id == c.id && p.estado === 'activo').reduce((s, p) => s + saldoPendiente(p), 0);
+      html += `<div class="list-item" onclick="verCliente(${c.id})">
+        <div class="list-avatar" style="background:${c.color}">${avatarText(c.nombre)}</div>
+        <div class="list-info">
+          <div class="list-name">${c.nombre}</div>
+          <div class="list-sub">📞 ${c.telefono || '—'}</div>
+        </div>
+        <div class="list-amount">
+          <div class="amount ${deuda > 0 ? 'red' : 'green'}">${fmt(deuda)}</div>
+          <div class="badge ${prestActivos > 0 ? 'badge-active' : 'badge-paid'}">${prestActivos} préstamo${prestActivos !== 1 ? 's' : ''}</div>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function modalCliente(id) {
+  const c = id ? cache.clientes.find(x => x.id == id) : null;
+  const colors = ['#AD1457', '#6A1B9A', '#1565C0', '#00695C', '#E65100', '#37474F'];
+  openModal(`
+    <div class="modal-title">${c ? 'Editar cliente' : 'Nuevo cliente'}</div>
+    <div class="field"><label>Nombre</label><input id="cNombre" type="text" value="${c ? c.nombre : ''}" placeholder="Nombre completo"></div>
+    <div class="field"><label>Teléfono</label><input id="cTel" type="tel" value="${c ? c.telefono || '' : ''}" placeholder="555-0000"></div>
+    <div class="field"><label>Dirección</label><input id="cDir" type="text" value="${c ? c.direccion || '' : ''}" placeholder="Calle, colonia..."></div>
+    <div class="field"><label>Email</label><input id="cEmail" type="email" value="${c ? c.email || '' : ''}" placeholder="correo@email.com"></div>
+    <div class="field"><label>Color</label><div style="display:flex;gap:8px;margin-top:4px">
+      ${colors.map(col => `<div onclick="document.querySelectorAll('.cc').forEach(x=>x.style.outline='none');this.style.outline='3px solid #000';document.getElementById('cColor').value='${col}'"
+        class="cc" style="width:28px;height:28px;border-radius:8px;background:${col};cursor:pointer;outline:${c && c.color === col ? '3px solid #000' : 'none'}"></div>`).join('')}
+      <input type="hidden" id="cColor" value="${c ? c.color : colors[2]}">
+    </div></div>
+    <div class="modal-actions">
+      <button class="btn outline" onclick="closeModal()">Cancelar</button>
+      <button class="btn" onclick="guardarCliente(${id || 'null'})">${c ? 'Guardar' : 'Agregar'}</button>
+    </div>
+    ${c ? `<button class="btn danger" style="margin-top:10px" onclick="eliminarCliente(${id})">🗑️ Eliminar</button>` : ''}
+  `);
+}
+
+async function guardarCliente(id) {
+  const nombre = document.getElementById('cNombre').value.trim();
+  const telefono = document.getElementById('cTel').value.trim();
+  const direccion = document.getElementById('cDir').value.trim();
+  const email = document.getElementById('cEmail').value.trim();
+  const color = document.getElementById('cColor').value;
+  if (!nombre) { toast('❌ El nombre es requerido'); return; }
+  showLoading('Guardando...');
+  try {
+    if (id) {
+      await dbUpdate('clientes', id, { nombre, telefono, direccion, email, color });
+      toast('✅ Cliente actualizado');
+    } else {
+      await dbInsert('clientes', { nombre, telefono, direccion, email, color, activo: true });
+      toast('✅ Cliente agregado');
+    }
+    await cargarCache();
+    closeModal();
+    renderClientes();
+  } catch (e) { toast('❌ Error: ' + e.message); }
+  finally { hideLoading(); }
+}
+
+async function eliminarCliente(id) {
+  if (!confirm('¿Eliminar este cliente?')) return;
+  showLoading('Eliminando...');
+  try {
+    await dbDelete('clientes', id);
+    await cargarCache();
+    closeModal();
+    renderClientes();
+    toast('🗑️ Cliente eliminado');
+  } catch (e) { toast('❌ Error: ' + e.message); }
+  finally { hideLoading(); }
+}
+
+function verCliente(id) {
+  const c = cache.clientes.find(x => x.id == id);
+  const prestamos = cache.prestamos.filter(p => p.cliente_id == id);
+  const deuda = prestamos.filter(p => p.estado === 'activo').reduce((s, p) => s + saldoPendiente(p), 0);
+  let html = `
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+    <div class="list-avatar" style="background:${c.color};width:60px;height:60px;border-radius:18px;font-size:24px">${avatarText(c.nombre)}</div>
+    <div>
+      <div style="font-size:20px;font-weight:900">${c.nombre}</div>
+      <div style="font-size:13px;color:var(--text2)">📞 ${c.telefono || '—'}</div>
+      ${c.email ? `<div style="font-size:12px;color:var(--text2)">✉️ ${c.email}</div>` : ''}
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <div class="detail-row"><span class="detail-label">Dirección</span><span class="detail-value" style="font-family:var(--font);font-size:13px">${c.direccion || '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Saldo pendiente</span><span class="detail-value" style="color:var(--danger)">${fmt(deuda)}</span></div>
+  </div>
+  <div class="section-title">💵 Préstamos (${prestamos.length})</div>`;
+  prestamos.forEach(p => {
+    const pct = Math.min(100, Math.round(totalPagado(p.id) / totalPrestamo(p) * 100));
+    html += `<div class="card" onclick="closeModal();verPrestamo(${p.id})" style="cursor:pointer;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span class="chip ${p.estado === 'activo' ? 'chip-blue' : 'chip-green'}">${p.estado}</span>
+        <span style="font-weight:800;font-family:var(--mono)">${fmt(p.monto)}</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div class="progress-labels"><span>${pct}%</span><span>${fmt(saldoPendiente(p))} pendiente</span></div>
+    </div>`;
+  });
+  html += `<div class="modal-actions">
+    <button class="btn outline" onclick="closeModal()">Cerrar</button>
+    <button class="btn" onclick="closeModal();modalCliente(${id})">✏️ Editar</button>
+  </div>`;
+  openModal(html);
+}
+
+// ══════════════════════════════════════════
+//  PRÉSTAMOS
+// ══════════════════════════════════════════
+function renderPrestamos() {
+  const filtered = cache.prestamos.filter(p => filtroPrestamos === 'todos' || p.estado === filtroPrestamos);
+  let html = `
+  <div class="tag-row">
+    <button class="tag-btn ${filtroPrestamos === 'todos' ? 'active' : ''}" onclick="filtroPrestamos='todos';renderPrestamos()">Todos (${cache.prestamos.length})</button>
+    <button class="tag-btn ${filtroPrestamos === 'activo' ? 'active' : ''}" onclick="filtroPrestamos='activo';renderPrestamos()">Activos (${cache.prestamos.filter(p=>p.estado==='activo').length})</button>
+    <button class="tag-btn ${filtroPrestamos === 'liquidado' ? 'active' : ''}" onclick="filtroPrestamos='liquidado';renderPrestamos()">Liquidados (${cache.prestamos.filter(p=>p.estado==='liquidado').length})</button>
+  </div>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
+    <button class="btn sm" onclick="modalPrestamo()">+ Nuevo préstamo</button>
+  </div>`;
+  if (!filtered.length) {
+    html += `<div class="empty"><div class="empty-icon">💵</div><div class="empty-text">Sin préstamos</div></div>`;
+  } else {
+    filtered.forEach(p => {
+      const cl = getCliente(p.cliente_id);
+      const pagado = totalPagado(p.id);
+      const total = totalPrestamo(p);
+      const pct = Math.min(100, Math.round(pagado / total * 100));
+      html += `<div class="card" onclick="verPrestamo(${p.id})" style="cursor:pointer">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div class="list-avatar" style="background:${cl.color}">${avatarText(cl.nombre)}</div>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:800">${cl.nombre}</div>
+            <div style="font-size:12px;color:var(--text2)">${fmtDate(p.fecha_inicio)} · ${p.plazo} meses · ${p.interes}%</div>
+          </div>
+          <span class="chip ${p.estado === 'activo' ? 'chip-blue' : 'chip-green'}">${p.estado}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+          <div style="text-align:center"><div style="font-size:10px;color:var(--text2);font-weight:700">Prestado</div><div style="font-size:13px;font-weight:800;font-family:var(--mono)">${fmt(p.monto)}</div></div>
+          <div style="text-align:center"><div style="font-size:10px;color:var(--success);font-weight:700">Cobrado</div><div style="font-size:13px;font-weight:800;font-family:var(--mono);color:var(--success)">${fmt(pagado)}</div></div>
+          <div style="text-align:center"><div style="font-size:10px;color:var(--danger);font-weight:700">Pendiente</div><div style="font-size:13px;font-weight:800;font-family:var(--mono);color:var(--danger)">${fmt(saldoPendiente(p))}</div></div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <div class="progress-labels"><span>${pct}%</span></div>
+      </div>`;
+    });
+  }
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function modalPrestamo(id) {
+  const p = id ? cache.prestamos.find(x => x.id == id) : null;
+  const clientesOpts = cache.clientes.map(c => `<option value="${c.id}" ${p && p.cliente_id == c.id ? 'selected' : ''}>${c.nombre}</option>`).join('');
+  const cobOpts = cache.usuarios.map(u => `<option value="${u.id}" ${p && p.cobrador_id == u.id ? 'selected' : ''}>${u.nombre}</option>`).join('');
+  openModal(`
+    <div class="modal-title">${p ? 'Editar préstamo' : 'Nuevo préstamo'}</div>
+    ${cache.clientes.length === 0 ? '<div style="color:var(--danger);font-size:13px;margin-bottom:12px">⚠️ Primero agrega un cliente</div>' : ''}
+    <div class="field"><label>Cliente</label><select id="pCliente">${clientesOpts}</select></div>
+    <div class="field"><label>Monto ($)</label><input id="pMonto" type="number" value="${p ? p.monto : ''}" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Interés (%)</label><input id="pInteres" type="number" value="${p ? p.interes : 10}" min="0" step="0.5"></div>
+    <div class="field"><label>Plazo (meses)</label><input id="pPlazo" type="number" value="${p ? p.plazo : 6}" min="1"></div>
+    <div class="field"><label>Fecha inicio</label><input id="pFecha" type="date" value="${p ? (p.fecha_inicio || '').split('T')[0] : today()}"></div>
+    <div class="field"><label>Cobrador</label><select id="pCobrador">${cobOpts}</select></div>
+    <div class="field"><label>Estado</label><select id="pEstado">
+      <option value="activo" ${!p || p.estado === 'activo' ? 'selected' : ''}>Activo</option>
+      <option value="liquidado" ${p && p.estado === 'liquidado' ? 'selected' : ''}>Liquidado</option>
+    </select></div>
+    <div class="field"><label>Notas</label><textarea id="pNotas">${p ? p.notas || '' : ''}</textarea></div>
+    <div class="modal-actions">
+      <button class="btn outline" onclick="closeModal()">Cancelar</button>
+      <button class="btn" onclick="guardarPrestamo(${id || 'null'})">${p ? 'Guardar' : 'Crear'}</button>
+    </div>
+  `);
+}
+
+async function guardarPrestamo(id) {
+  const cliente_id = parseInt(document.getElementById('pCliente').value);
+  const monto = parseFloat(document.getElementById('pMonto').value);
+  const interes = parseFloat(document.getElementById('pInteres').value);
+  const plazo = parseInt(document.getElementById('pPlazo').value);
+  const fecha_inicio = document.getElementById('pFecha').value;
+  const cobrador_id = parseInt(document.getElementById('pCobrador').value);
+  const estado = document.getElementById('pEstado').value;
+  const notas = document.getElementById('pNotas').value.trim();
+  if (!monto || monto <= 0 || !plazo || !fecha_inicio) { toast('❌ Completa los campos requeridos'); return; }
+  showLoading('Guardando...');
+  try {
+    if (id) {
+      await dbUpdate('prestamos', id, { cliente_id, monto, interes, plazo, fecha_inicio, cobrador_id, estado, notas });
+      toast('✅ Préstamo actualizado');
+    } else {
+      await dbInsert('prestamos', { cliente_id, monto, interes, plazo, fecha_inicio, cobrador_id, estado: 'activo', notas });
+      toast('✅ Préstamo creado');
+    }
+    await cargarCache();
+    closeModal();
+    renderPrestamos();
+  } catch (e) { toast('❌ Error: ' + e.message); }
+  finally { hideLoading(); }
+}
+
+function verPrestamo(id) {
+  const p = cache.prestamos.find(x => x.id == id);
+  const cl = getCliente(p.cliente_id);
+  const pagados = cache.pagos.filter(pg => pg.prestamo_id == id).sort((a, b) => b.fecha.localeCompare(a.fecha));
+  const pagado = totalPagado(id);
+  const total = totalPrestamo(p);
+  const pct = Math.min(100, Math.round(pagado / total * 100));
+  let html = `
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+    <div class="list-avatar" style="background:${cl.color};width:52px;height:52px;border-radius:16px;font-size:22px">${avatarText(cl.nombre)}</div>
+    <div>
+      <div style="font-size:19px;font-weight:900">${cl.nombre}</div>
+      <span class="chip ${p.estado === 'activo' ? 'chip-blue' : 'chip-green'}">${p.estado}</span>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <div class="detail-row"><span class="detail-label">Monto prestado</span><span class="detail-value">${fmt(p.monto)}</span></div>
+    <div class="detail-row"><span class="detail-label">Interés</span><span class="detail-value">${p.interes}%</span></div>
+    <div class="detail-row"><span class="detail-label">Total a pagar</span><span class="detail-value">${fmt(total)}</span></div>
+    <div class="detail-row"><span class="detail-label">Cuota mensual</span><span class="detail-value">${fmt(cuotaMensual(p))}</span></div>
+    <div class="detail-row"><span class="detail-label">Plazo</span><span class="detail-value" style="font-family:var(--font)">${p.plazo} meses</span></div>
+    <div class="detail-row"><span class="detail-label">Inicio</span><span class="detail-value" style="font-family:var(--font)">${fmtDate(p.fecha_inicio)}</span></div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+      <div style="text-align:center"><div style="font-size:11px;color:var(--success);font-weight:700">Cobrado</div><div style="font-size:18px;font-weight:900;color:var(--success);font-family:var(--mono)">${fmt(pagado)}</div></div>
+      <div style="text-align:center"><div style="font-size:11px;color:var(--danger);font-weight:700">Pendiente</div><div style="font-size:18px;font-weight:900;color:var(--danger);font-family:var(--mono)">${fmt(Math.max(0, total - pagado))}</div></div>
+    </div>
+    <div class="progress-bar" style="height:10px"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="progress-labels"><span style="font-weight:800">${pct}% cobrado</span></div>
+  </div>
+  <div class="section-title">💳 Pagos (${pagados.length})</div>`;
+  pagados.forEach(pg => {
+    html += `<div class="card" style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--success)">${fmt(pg.monto)}</div>
+          <div style="font-size:12px;color:var(--text2)">${fmtDate(pg.fecha)} · ${pg.metodo}</div>
+          ${pg.notas ? `<div style="font-size:11px;color:var(--text2)">${pg.notas}</div>` : ''}
+        </div>
+        <button class="btn danger sm" onclick="eliminarPago(${pg.id},${id})">🗑️</button>
+      </div>
+    </div>`;
+  });
+  html += `<div class="modal-actions">
+    <button class="btn outline" onclick="closeModal()">Cerrar</button>
+    <button class="btn warning" onclick="closeModal();modalPrestamo(${id})">✏️</button>
+    ${p.estado === 'activo' ? `<button class="btn accent" onclick="closeModal();modalNuevoPago(${id})">💳 Pago</button>` : ''}
+  </div>`;
+  openModal(html);
+}
+
+// ══════════════════════════════════════════
+//  PAGOS
+// ══════════════════════════════════════════
+function renderPagos() {
+  const sorted = [...cache.pagos].sort((a, b) => b.fecha.localeCompare(a.fecha));
+  const hoy = today();
+  const totalHoy = cache.pagos.filter(pg => pg.fecha === hoy).reduce((s, pg) => s + Number(pg.monto), 0);
+
+  let html = `
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <div class="section-title" style="margin:0">💳 ${sorted.length} pago${sorted.length !== 1 ? 's' : ''}</div>
+    <button class="btn sm" onclick="modalSeleccionarPrestamo()">+ Registrar</button>
+  </div>
+  <div class="card" style="background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));color:#fff;margin-bottom:14px">
+    <div style="font-size:12px;opacity:0.8;font-weight:700;text-transform:uppercase">Cobrado hoy</div>
+    <div style="font-size:28px;font-weight:900;font-family:var(--mono);margin:4px 0">${fmt(totalHoy)}</div>
+    <div style="font-size:12px;opacity:0.75">${cache.pagos.filter(pg=>pg.fecha===hoy).length} pago${cache.pagos.filter(pg=>pg.fecha===hoy).length!==1?'s':''} registrados</div>
+  </div>`;
+
+  if (!sorted.length) {
+    html += `<div class="empty"><div class="empty-icon">💳</div><div class="empty-text">Sin pagos</div></div>`;
+  } else {
+    let lastDate = '';
+    sorted.forEach(pg => {
+      const prest = cache.prestamos.find(x => x.id == pg.prestamo_id);
+      const cl = prest ? getCliente(prest.cliente_id) : { nombre: '—', color: '#999' };
+      if (pg.fecha !== lastDate) {
+        if (lastDate) html += `</div>`;
+        html += `<div style="font-size:11px;font-weight:700;color:var(--text2);margin:12px 0 6px;text-transform:uppercase">${fmtDate(pg.fecha)}</div><div class="card">`;
+        lastDate = pg.fecha;
+      }
+      html += `<div class="list-item">
+        <div class="list-avatar" style="background:${cl.color}">${avatarText(cl.nombre)}</div>
+        <div class="list-info"><div class="list-name">${cl.nombre}</div><div class="list-sub">${pg.metodo}${pg.notas ? ' · ' + pg.notas : ''}</div></div>
+        <div class="list-amount"><div class="amount green">${fmt(pg.monto)}</div></div>
+      </div>`;
+    });
+    if (lastDate) html += `</div>`;
+  }
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function modalSeleccionarPrestamo() {
+  const activos = cache.prestamos.filter(p => p.estado === 'activo');
+  let html = `<div class="modal-title">Seleccionar préstamo</div>`;
+  if (!activos.length) {
+    html += `<div style="text-align:center;padding:24px;color:var(--text2)">No hay préstamos activos</div>`;
+  } else {
+    activos.forEach(p => {
+      const cl = getCliente(p.cliente_id);
+      html += `<div class="list-item" onclick="closeModal();modalNuevoPago(${p.id})">
+        <div class="list-avatar" style="background:${cl.color}">${avatarText(cl.nombre)}</div>
+        <div class="list-info"><div class="list-name">${cl.nombre}</div><div class="list-sub">Pendiente: ${fmt(saldoPendiente(p))}</div></div>
+        <div style="font-size:20px">›</div>
+      </div>`;
+    });
+  }
+  html += `<button class="btn outline" style="margin-top:16px" onclick="closeModal()">Cancelar</button>`;
+  openModal(html);
+}
+
+function modalNuevoPago(prestamoId) {
+  const p = cache.prestamos.find(x => x.id == prestamoId);
+  const cl = getCliente(p.cliente_id);
+  openModal(`
+    <div class="modal-title">Registrar pago</div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div class="list-avatar" style="background:${cl.color}">${avatarText(cl.nombre)}</div>
+      <div><div style="font-weight:800">${cl.nombre}</div><div style="font-size:12px;color:var(--text2)">Pendiente: ${fmt(saldoPendiente(p))}</div></div>
+    </div>
+    <div class="field"><label>Monto ($)</label><input id="pgMonto" type="number" value="${cuotaMensual(p).toFixed(2)}" step="0.01" min="0.01"></div>
+    <div class="field"><label>Fecha</label><input id="pgFecha" type="date" value="${today()}"></div>
+    <div class="field"><label>Método</label><select id="pgMetodo">
+      <option value="efectivo">💵 Efectivo</option>
+      <option value="transferencia">🏦 Transferencia</option>
+      <option value="tarjeta">💳 Tarjeta</option>
+      <option value="otro">Otro</option>
+    </select></div>
+    <div class="field"><label>Notas</label><input id="pgNotas" type="text" placeholder="Opcional..."></div>
+    <div class="modal-actions">
+      <button class="btn outline" onclick="closeModal()">Cancelar</button>
+      <button class="btn accent" onclick="guardarPago(${prestamoId})">✅ Registrar</button>
+    </div>
+  `);
+}
+
+async function guardarPago(prestamoId) {
+  const monto = parseFloat(document.getElementById('pgMonto').value);
+  const fecha = document.getElementById('pgFecha').value;
+  const metodo = document.getElementById('pgMetodo').value;
+  const notas = document.getElementById('pgNotas').value.trim();
+  if (!monto || monto <= 0 || !fecha) { toast('❌ Completa los campos'); return; }
+  showLoading('Guardando pago...');
+  try {
+    await dbInsert('pagos', { prestamo_id: prestamoId, monto, fecha, metodo, notas });
+    await cargarCache();
+    // Auto-liquidar
+    const p = cache.prestamos.find(x => x.id == prestamoId);
+    if (saldoPendiente(p) <= 0.01) {
+      await dbUpdate('prestamos', prestamoId, { estado: 'liquidado' });
+      await cargarCache();
+      toast('🎉 ¡Préstamo liquidado!');
+    } else {
+      toast('✅ Pago registrado');
+    }
+    closeModal();
+    renderPagos();
+  } catch (e) { toast('❌ Error: ' + e.message); }
+  finally { hideLoading(); }
+}
+
+async function eliminarPago(pagoId, prestamoId) {
+  if (!confirm('¿Eliminar este pago?')) return;
+  showLoading('Eliminando...');
+  try {
+    await dbDelete('pagos', pagoId);
+    await cargarCache();
+    closeModal();
+    toast('🗑️ Pago eliminado');
+    verPrestamo(prestamoId);
+  } catch (e) { toast('❌ Error: ' + e.message); }
+  finally { hideLoading(); }
+}
+
+// ══════════════════════════════════════════
+//  CONFIG / USUARIOS
+// ══════════════════════════════════════════
+function renderConfig() {
+  const isAdmin = currentUser.rol === 'admin';
+  let html = `
+  <div class="card" style="background:linear-gradient(135deg,#0D47A1,#1E88E5);color:#fff;margin-bottom:14px">
+    <div style="display:flex;align-items:center;gap:14px">
+      <div style="width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900">${avatarText(currentUser.nombre)}</div>
+      <div>
+        <div style="font-size:18px;font-weight:900">${currentUser.nombre}</div>
+        <div style="font-size:13px;opacity:0.8">@${currentUser.usuario} · ${currentUser.rol}</div>
+        <div style="font-size:11px;opacity:0.7;margin-top:4px">${demoMode ? '🧪 Modo Demo' : '☁️ Supabase conectado'}</div>
+      </div>
+    </div>
+  </div>`;
+
+  if (isAdmin) {
+    html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div class="section-title" style="margin:0">👥 Usuarios</div>
+      <button class="btn sm" onclick="modalUsuario()">+ Nuevo</button>
+    </div>
+    <div class="card">`;
+    cache.usuarios.forEach(u => {
+      html += `<div class="list-item" onclick="${u.id !== currentUser.id ? `modalUsuario(${u.id})` : ''}">
+        <div class="list-avatar" style="background:${u.color}">${avatarText(u.nombre)}</div>
+        <div class="list-info">
+          <div class="list-name">${u.nombre} ${u.id == currentUser.id ? '(tú)' : ''}</div>
+          <div class="list-sub">@${u.usuario} · ${u.rol}</div>
+        </div>
+        ${u.id != currentUser.id ? '<div style="font-size:18px;color:var(--text2)">✏️</div>' : ''}
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `
+  <div class="section-title">📊 Sistema</div>
+  <div class="card">
+    <div class="detail-row"><span class="detail-label">Clientes</span><span class="detail-value" style="font-family:var(--font)">${cache.clientes.length}</span></div>
+    <div class="detail-row"><span class="detail-label">Préstamos totales</span><span class="detail-value" style="font-family:var(--font)">${cache.prestamos.length}</span></div>
+    <div class="detail-row"><span class="detail-label">Activos</span><span class="detail-value" style="font-family:var(--font)">${cache.prestamos.filter(p=>p.estado==='activo').length}</span></div>
+    <div class="detail-row"><span class="detail-label">Pagos registrados</span><span class="detail-value" style="font-family:var(--font)">${cache.pagos.length}</span></div>
+    <div class="detail-row"><span class="detail-label">Capital prestado</span><span class="detail-value">${fmt(cache.prestamos.reduce((s,p)=>s+Number(p.monto),0))}</span></div>
+    <div class="detail-row"><span class="detail-label">Total cobrado</span><span class="detail-value" style="color:var(--success)">${fmt(cache.pagos.reduce((s,pg)=>s+Number(pg.monto),0))}</span></div>
+  </div>
+  <button class="btn outline" style="margin-bottom:10px" onclick="volverSetup()">⚙️ Cambiar base de datos</button>
+  <button class="btn danger" onclick="doLogout()">🚪 Cerrar sesión</button>`;
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function modalUsuario(id) {
+  const u = id ? cache.usuarios.find(x => x.id == id) : null;
+  const colors = ['#1565C0', '#00897B', '#AD1457', '#6A1B9A', '#E65100', '#37474F'];
+  openModal(`
+    <div class="modal-title">${u ? 'Editar usuario' : 'Nuevo usuario'}</div>
+    <div class="field"><label>Nombre</label><input id="uNombre" type="text" value="${u ? u.nombre : ''}" placeholder="Nombre completo"></div>
+    <div class="field"><label>Usuario (login)</label><input id="uUsuario" type="text" value="${u ? u.usuario : ''}" placeholder="usuario123"></div>
+    <div class="field"><label>Contraseña</label><input id="uPass" type="password" value="${u ? u.password : ''}" placeholder="${u ? 'Vacío = no cambiar' : 'Contraseña'}"></div>
+    <div class="field"><label>Rol</label><select id="uRol">
+      <option value="cobrador" ${u && u.rol === 'cobrador' ? 'selected' : ''}>Cobrador</option>
+      <option value="admin" ${u && u.rol === 'admin' ? 'selected' : ''}>Administrador</option>
+    </select></div>
+    <div class="field"><label>Color</label><div style="display:flex;gap:8px;margin-top:4px">
+      ${colors.map(col => `<div onclick="document.querySelectorAll('.uc').forEach(x=>x.style.outline='none');this.style.outline='3px solid #000';document.getElementById('uColor').value='${col}'"
+        class="uc" style="width:28px;height:28px;border-radius:8px;background:${col};cursor:pointer;outline:${u&&u.color===col?'3px solid #000':'none'}"></div>`).join('')}
+      <input type="hidden" id="uColor" value="${u ? u.color : colors[0]}">
+    </div></div>
+    <div class="modal-actions">
+      <button class="btn outline" onclick="closeModal()">Cancelar</button>
+      <button class="btn" onclick="guardarUsuario(${id || 'null'})">${u ? 'Guardar' : 'Crear'}</button>
+    </div>
+    ${u ? `<button class="btn danger" style="margin-top:10px" onclick="eliminarUsuario(${id})">🗑️ Eliminar</button>` : ''}
+  `);
+}
+
+async function guardarUsuario(id) {
+  const nombre = document.getElementById('uNombre').value.trim();
+  const usuario = document.getElementById('uUsuario').value.trim();
+  const pass = document.getElementById('uPass').value;
+  const rol = document.getElementById('uRol').value;
+  const color = document.getElementById('uColor').value;
+  if (!nombre || !usuario) { toast('❌ Nombre y usuario son requeridos'); return; }
+  showLoading('Guardando...');
+  try {
+    if (id) {
+      const obj = { nombre, usuario, rol, color, ...(pass ? { password: pass } : {}) };
+      await dbUpdate('usuarios', id, obj);
+      toast('✅ Usuario actualizado');
+    } else {
+      if (!pass) { toast('❌ Contraseña requerida'); hideLoading(); return; }
+      await dbInsert('usuarios', { nombre, usuario, password: pass, rol, color, activo: true });
+      toast('✅ Usuario creado');
+    }
+    await cargarCache();
+    closeModal();
+    renderConfig();
+  } catch (e) { toast('❌ Error: ' + e.message); }
+  finally { hideLoading(); }
+}
+
+async function eliminarUsuario(id) {
+  if (id == currentUser.id) { toast('❌ No puedes eliminarte'); return; }
+  if (!confirm('¿Eliminar usuario?')) return;
+  showLoading('Eliminando...');
+  try {
+    await dbDelete('usuarios', id);
+    await cargarCache();
+    closeModal();
+    renderConfig();
+    toast('🗑️ Usuario eliminado');
+  } catch (e) { toast('❌ Error: ' + e.message); }
+  finally { hideLoading(); }
+}
+</script>
+</body>
+</html>
