@@ -297,9 +297,6 @@ ALTER TABLE pagos DISABLE ROW LEVEL SECURITY;</div>
     </div>
     <button class="btn" id="loginBtn" onclick="doLogin()">Entrar</button>
     <div class="error-msg" id="loginError"></div>
-    <div style="margin-top:14px;text-align:center">
-      <button class="btn outline sm" onclick="volverSetup()" style="width:auto">⚙️ Cambiar configuración</button>
-    </div>
   </div>
 </div>
 
@@ -1240,6 +1237,10 @@ async function eliminarUsuario(id) {
     toast('🗑️ Usuario eliminado');
   } catch (e) { toast('❌ Error: ' + e.message); }
   finally { hideLoading(); }
+}
+</script>
+</body>
+</html>
 }
 </script>
 </body>
