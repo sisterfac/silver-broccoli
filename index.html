@@ -183,7 +183,7 @@
 <div class="toast" id="toast"></div>
 
 <!-- ══════════════ SETUP SCREEN ══════════════ -->
-<div id="setupScreen" class="screen active">
+<div id="setupScreen" class="screen">
   <div class="setup-logo">💳</div>
   <div class="setup-title">CobrApp</div>
   <div class="setup-sub">Conectar base de datos en la nube</div>
@@ -280,7 +280,7 @@ ALTER TABLE pagos DISABLE ROW LEVEL SECURITY;</div>
 </div>
 
 <!-- ══════════════ LOGIN ══════════════ -->
-<div id="loginScreen" class="screen">
+<div id="loginScreen" class="screen active">
   <div class="login-logo">💳</div>
   <div class="login-title">CobrApp</div>
   <div class="login-sub">Gestión de cobros profesional</div>
@@ -336,8 +336,12 @@ ALTER TABLE pagos DISABLE ROW LEVEL SECURITY;</div>
 
 <script>
 // ══════════════════════════════════════════
-//  SUPABASE CONFIG
+//  SUPABASE CONFIG — pon tus credenciales aquí
+//  ⬇️ REEMPLAZA CON TUS DATOS DE SUPABASE ⬇️
 // ══════════════════════════════════════════
+const SUPABASE_URL = 'https://rjnbxjxgrbrysnjuhlrl.supabase.co';   // ej: https://abcd1234.supabase.co
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqbmJ4anhncmJyeXNuanVobHJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MDg4NTksImV4cCI6MjA4OTM4NDg1OX0.E-ZuwfxcSJ-xSPZyzys8I6wiH6cOav97YaRLQXtw-j4';       // ej: eyJhbGci...
+
 const CONF_KEY = 'cobrapp_supabase_conf';
 let sbClient = null;
 let demoMode = false;
@@ -353,22 +357,31 @@ let demoDB = {
 };
 
 window.addEventListener('load', () => {
-  // Verificar que el SDK de Supabase cargó
-  if (!window.supabase) {
-    document.getElementById('setupError').textContent = '⚠️ No se pudo cargar el SDK de Supabase. Verifica tu conexión a internet.';
-  }
-  const conf = localStorage.getItem(CONF_KEY);
-  if (conf) {
-    try {
-      const { url, key } = JSON.parse(conf);
-      if (url && key) {
-        document.getElementById('sbUrl').value = url;
-        document.getElementById('sbKey').value = key;
-        inicializarSupabase(url, key, true);
-      }
-    } catch(e) { localStorage.removeItem(CONF_KEY); }
-  }
+  // Conectar directo con las credenciales fijas
+  conectarDirecto();
 });
+
+async function conectarDirecto() {
+  if (!window.supabase) {
+    // SDK no cargó, reintentar en 1 segundo
+    setTimeout(conectarDirecto, 1000);
+    return;
+  }
+  showLoading('Conectando...');
+  try {
+    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+      auth: { persistSession: false }
+    });
+    demoMode = false;
+    hideLoading();
+    show('loginScreen');
+    document.getElementById('connBadge').innerHTML = '<span class="conn-badge conn-ok">☁️ Supabase conectado</span>';
+  } catch(e) {
+    hideLoading();
+    show('loginScreen');
+    document.getElementById('connBadge').innerHTML = '<span class="conn-badge conn-err">❌ Error: ' + e.message + '</span>';
+  }
+};
 
 async function conectarSupabase() {
   const errEl = document.getElementById('setupError');
