@@ -36,19 +36,6 @@
   .screen { display: none; flex-direction: column; min-height: 100vh; }
   .screen.active { display: flex; }
  
-  /* ── SETUP SCREEN ── */
-  #setupScreen {
-    background: linear-gradient(160deg, #0D47A1 0%, #1565C0 50%, #00BFA5 100%);
-    justify-content: center; align-items: center; padding: 28px 20px; gap: 0;
-  }
-  .setup-logo { width: 80px; height: 80px; background: rgba(255,255,255,0.18); border-radius: 26px; display: flex; align-items: center; justify-content: center; font-size: 40px; margin-bottom: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
-  .setup-title { color: #fff; font-size: 30px; font-weight: 900; letter-spacing: -1px; }
-  .setup-sub { color: rgba(255,255,255,0.75); font-size: 13px; margin-bottom: 6px; }
-  .setup-card { background: #fff; border-radius: 24px; padding: 24px 20px; width: 100%; box-shadow: 0 16px 48px rgba(0,0,0,0.18); margin-top: 20px; }
-  .setup-card h2 { font-size: 17px; font-weight: 900; color: var(--primary-dark); margin-bottom: 4px; }
-  .setup-card p { font-size: 12px; color: var(--text2); margin-bottom: 16px; line-height: 1.5; }
-  .step-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: #fff; border-radius: 99px; padding: 3px 10px; font-size: 11px; font-weight: 800; margin-bottom: 10px; }
- 
   /* ── LOGIN ── */
   #loginScreen { background: linear-gradient(160deg, #0D47A1 0%, #1565C0 40%, #00BFA5 100%); justify-content: center; align-items: center; padding: 32px 24px; }
   .login-logo { width: 88px; height: 88px; background: rgba(255,255,255,0.18); border-radius: 28px; display: flex; align-items: center; justify-content: center; font-size: 44px; margin-bottom: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
@@ -156,7 +143,6 @@
   .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #222; color: #fff; padding: 12px 24px; border-radius: 99px; font-size: 14px; font-weight: 600; z-index: 300; opacity: 0; transition: opacity 0.2s; white-space: nowrap; pointer-events: none; }
   .toast.show { opacity: 1; }
  
-  /* Loading overlay */
   .loading-overlay { position: fixed; inset: 0; background: rgba(13,27,62,0.45); z-index: 400; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
   .loading-overlay.show { display: flex; }
   .spinner { width: 48px; height: 48px; border: 5px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
@@ -167,8 +153,28 @@
   .conn-ok { background: #E8F5E9; color: var(--success); }
   .conn-err { background: #FFEBEE; color: var(--danger); }
  
-  .sql-box { background: #1a1a2e; color: #00E5FF; border-radius: 12px; padding: 14px; font-family: var(--mono); font-size: 11px; line-height: 1.6; margin: 10px 0; overflow-x: auto; white-space: pre; }
-  .info-box { background: #E3F2FD; border-left: 4px solid var(--primary); border-radius: 10px; padding: 12px 14px; font-size: 12px; color: var(--primary-dark); margin: 10px 0; line-height: 1.6; }
+  /* ── SEMANA TABLE ── */
+  .semana-table-wrap { overflow-x: auto; margin-bottom: 14px; border-radius: 14px; box-shadow: var(--shadow); }
+  .semana-table { width: 100%; border-collapse: collapse; min-width: 520px; font-family: var(--mono); }
+  .semana-table th { background: var(--primary-dark); color: #fff; font-family: var(--font); font-size: 11px; font-weight: 800; padding: 10px 8px; text-align: center; text-transform: uppercase; letter-spacing: 0.4px; }
+  .semana-table th:first-child { text-align: left; border-radius: 14px 0 0 0; }
+  .semana-table th:last-child { border-radius: 0 14px 0 0; }
+  .semana-table td { padding: 9px 8px; font-size: 12px; text-align: center; border-bottom: 1px solid var(--surface2); background: #fff; }
+  .semana-table td:first-child { text-align: left; font-family: var(--font); font-weight: 700; font-size: 12px; }
+  .semana-table tr:last-child td { border-bottom: none; }
+  .semana-table tr.domingo td { background: #F5F5F5; color: #AAAAAA; font-style: italic; }
+  .semana-table tr.total-row td { background: #E3F2FD; font-weight: 800; color: var(--primary-dark); border-top: 2px solid var(--primary); }
+  .semana-table tr.total-row td:first-child { font-family: var(--font); }
+  .semana-table td input { width: 80px; padding: 4px 6px; border: 1.5px solid var(--border); border-radius: 8px; font-family: var(--mono); font-size: 12px; text-align: right; background: var(--bg); color: var(--text); outline: none; }
+  .semana-table td input:focus { border-color: var(--primary); background: #fff; }
+  .semana-card { background: var(--surface); border-radius: 16px; padding: 16px; box-shadow: var(--shadow); margin-bottom: 16px; }
+  .semana-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .semana-title { font-size: 15px; font-weight: 900; color: var(--primary-dark); }
+  .semana-sub { font-size: 11px; color: var(--text2); font-weight: 600; }
+  .saldo-pos { color: var(--success); }
+  .saldo-neg { color: var(--danger); }
+  .cobrador-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; }
+ 
 </style>
 </head>
 <body>
@@ -181,103 +187,6 @@
  
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
- 
-<!-- ══════════════ SETUP SCREEN ══════════════ -->
-<div id="setupScreen" class="screen">
-  <div class="setup-logo">💳</div>
-  <div class="setup-title">CobrApp</div>
-  <div class="setup-sub">Conectar base de datos en la nube</div>
- 
-  <div class="setup-card">
-    <div class="step-badge">⚡ Configuración inicial</div>
-    <h2>Conectar con Supabase</h2>
-    <p>Ingresa las credenciales de tu proyecto Supabase. Solo se hace una vez — se guardan localmente.</p>
- 
-    <div class="field">
-      <label>URL del proyecto</label>
-      <input type="text" id="sbUrl" placeholder="https://xxxx.supabase.co" autocomplete="off">
-    </div>
-    <div class="field">
-      <label>Anon Public Key</label>
-      <input type="text" id="sbKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." autocomplete="off">
-    </div>
-    <button class="btn" id="btnConectar" onclick="conectarSupabase()">🔌 Conectar y continuar</button>
-    <div class="error-msg" id="setupError"></div>
- 
-    <div class="info-box">
-      📋 <b>¿Cómo obtener estas credenciales?</b><br>
-      1. Ve a <b>supabase.com</b> → Nuevo proyecto<br>
-      2. En tu proyecto → Settings → API<br>
-      3. Copia <b>Project URL</b> y <b>anon public key</b>
-    </div>
- 
-    <div style="margin-top:12px">
-      <div style="font-size:12px;font-weight:800;color:var(--text2);margin-bottom:8px">📐 SQL para crear las tablas (ejecutar en Supabase → SQL Editor):</div>
-      <div class="sql-box">-- 1. Usuarios
-CREATE TABLE usuarios (
-  id BIGSERIAL PRIMARY KEY,
-  nombre TEXT NOT NULL,
-  usuario TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL,
-  rol TEXT DEFAULT 'cobrador',
-  color TEXT DEFAULT '#1565C0',
-  activo BOOLEAN DEFAULT true,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
- 
--- 2. Clientes
-CREATE TABLE clientes (
-  id BIGSERIAL PRIMARY KEY,
-  nombre TEXT NOT NULL,
-  telefono TEXT,
-  direccion TEXT,
-  email TEXT,
-  color TEXT DEFAULT '#1565C0',
-  activo BOOLEAN DEFAULT true,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
- 
--- 3. Préstamos
-CREATE TABLE prestamos (
-  id BIGSERIAL PRIMARY KEY,
-  cliente_id BIGINT REFERENCES clientes(id),
-  monto NUMERIC NOT NULL,
-  interes NUMERIC DEFAULT 10,
-  plazo INT DEFAULT 6,
-  fecha_inicio DATE,
-  estado TEXT DEFAULT 'activo',
-  cobrador_id BIGINT REFERENCES usuarios(id),
-  notas TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
- 
--- 4. Pagos
-CREATE TABLE pagos (
-  id BIGSERIAL PRIMARY KEY,
-  prestamo_id BIGINT REFERENCES prestamos(id),
-  monto NUMERIC NOT NULL,
-  fecha DATE NOT NULL,
-  metodo TEXT DEFAULT 'efectivo',
-  notas TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
- 
--- Usuario admin por defecto
-INSERT INTO usuarios (nombre, usuario, password, rol, color)
-VALUES ('Administrador', 'admin', '1234', 'admin', '#1565C0');
- 
--- Deshabilitar RLS para uso simple
-ALTER TABLE usuarios DISABLE ROW LEVEL SECURITY;
-ALTER TABLE clientes DISABLE ROW LEVEL SECURITY;
-ALTER TABLE prestamos DISABLE ROW LEVEL SECURITY;
-ALTER TABLE pagos DISABLE ROW LEVEL SECURITY;</div>
-    </div>
- 
-    <div style="text-align:center;margin-top:10px">
-      <button class="btn outline sm" onclick="usarDemoLocal()" style="width:auto">🧪 Usar modo demo (sin Supabase)</button>
-    </div>
-  </div>
-</div>
  
 <!-- ══════════════ LOGIN ══════════════ -->
 <div id="loginScreen" class="screen active">
@@ -320,6 +229,9 @@ ALTER TABLE pagos DISABLE ROW LEVEL SECURITY;</div>
     <button class="nav-item" id="nav-pagos" onclick="navTo('pagos')">
       <div class="nav-icon">💳</div><div class="nav-label">Pagos</div>
     </button>
+    <button class="nav-item" id="nav-semana" onclick="navTo('semana')">
+      <div class="nav-icon">📅</div><div class="nav-label">Semana</div>
+    </button>
     <button class="nav-item" id="nav-config" onclick="navTo('config')">
       <div class="nav-icon">⚙️</div><div class="nav-label">Config</div>
     </button>
@@ -333,13 +245,11 @@ ALTER TABLE pagos DISABLE ROW LEVEL SECURITY;</div>
  
 <script>
 // ══════════════════════════════════════════
-//  SUPABASE CONFIG — pon tus credenciales aquí
-//  ⬇️ REEMPLAZA CON TUS DATOS DE SUPABASE ⬇️
+//  CREDENCIALES SUPABASE — fijas en el código
 // ══════════════════════════════════════════
-const SUPABASE_URL = 'https://rjnbxjxgrbrysnjuhlrl.supabase.co';   // ej: https://abcd1234.supabase.co
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqbmJ4anhncmJyeXNuanVobHJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MDg4NTksImV4cCI6MjA4OTM4NDg1OX0.E-ZuwfxcSJ-xSPZyzys8I6wiH6cOav97YaRLQXtw-j4';       // ej: eyJhbGci...
+const SUPABASE_URL = 'https://rjnbxjxgrbrysnjuhlrl.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqbmJ4anhncmJyeXNuanVobHJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MDg4NTksImV4cCI6MjA4OTM4NDg1OX0.E-ZuwfxcSJ-xSPZyzys8I6wiH6cOav97YaRLQXtw-j4';
  
-const CONF_KEY = 'cobrapp_supabase_conf';
 let sbClient = null;
 let demoMode = false;
  
@@ -350,18 +260,18 @@ let demoDB = {
   ],
   clientes: [],
   prestamos: [],
-  pagos: []
+  pagos: [],
+  semanas: []
 };
  
+// ── Conectar automáticamente al cargar ──
 window.addEventListener('load', () => {
-  // Conectar directo con las credenciales fijas
-  conectarDirecto();
+  iniciarConexion();
 });
  
-async function conectarDirecto() {
+function iniciarConexion() {
   if (!window.supabase) {
-    // SDK no cargó, reintentar en 1 segundo
-    setTimeout(conectarDirecto, 1000);
+    setTimeout(iniciarConexion, 800);
     return;
   }
   showLoading('Conectando...');
@@ -371,121 +281,18 @@ async function conectarDirecto() {
     });
     demoMode = false;
     hideLoading();
-    show('loginScreen');
-    document.getElementById('connBadge').innerHTML = '<span class="conn-badge conn-ok">☁️ Supabase conectado</span>';
+    document.getElementById('connBadge').innerHTML =
+      '<span class="conn-badge conn-ok">☁️ Supabase conectado</span>';
   } catch(e) {
     hideLoading();
-    show('loginScreen');
-    document.getElementById('connBadge').innerHTML = '<span class="conn-badge conn-err">❌ Error: ' + e.message + '</span>';
+    document.getElementById('connBadge').innerHTML =
+      '<span class="conn-badge conn-err">❌ Sin conexión — modo demo</span>';
+    demoMode = true;
   }
-};
- 
-async function conectarSupabase() {
-  const errEl = document.getElementById('setupError');
-  const btn = document.getElementById('btnConectar');
-  errEl.textContent = '';
- 
-  // Validar SDK
-  if (!window.supabase || typeof window.supabase.createClient !== 'function') {
-    errEl.textContent = '❌ SDK de Supabase no cargó. ¿Tienes internet? Recarga la página.';
-    return;
-  }
- 
-  const url = document.getElementById('sbUrl').value.trim();
-  const key = document.getElementById('sbKey').value.trim();
- 
-  if (!url) { errEl.textContent = '❌ Ingresa la URL del proyecto'; return; }
-  if (!url.startsWith('https://')) { errEl.textContent = '❌ La URL debe comenzar con https://'; return; }
-  if (!key) { errEl.textContent = '❌ Ingresa el Anon Key'; return; }
-  if (!key.startsWith('eyJ')) { errEl.textContent = '❌ El key parece incorrecto (debe empezar con eyJ...)'; return; }
- 
-  btn.disabled = true;
-  btn.textContent = '⏳ Conectando...';
-  await inicializarSupabase(url, key, false);
-  btn.disabled = false;
-  btn.textContent = '🔌 Conectar y continuar';
-}
- 
-async function inicializarSupabase(url, key, silencioso) {
-  const errEl = document.getElementById('setupError');
-  if (!silencioso) showLoading('Conectando con Supabase...');
-  try {
-    // Crear cliente
-    const client = window.supabase.createClient(url.replace(/\/$/, ''), key, {
-      auth: { persistSession: false }
-    });
- 
-    // Test con timeout de 8 segundos
-    const testPromise = client.from('usuarios').select('id').limit(1);
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Tiempo de espera agotado (8s). Verifica la URL.')), 8000)
-    );
- 
-    const { data, error } = await Promise.race([testPromise, timeoutPromise]);
- 
-    hideLoading();
- 
-    if (error) {
-      // Diagnóstico según código de error
-      let msg = '❌ ' + error.message;
-      if (error.message.includes('relation') || error.message.includes('does not exist')) {
-        msg = '⚠️ Conectado, pero las tablas no existen. Ejecuta el SQL en Supabase → SQL Editor.';
-        // Aun así guardar y avanzar porque la conexión funciona
-        sbClient = client;
-        localStorage.setItem(CONF_KEY, JSON.stringify({ url: url.replace(/\/$/, ''), key }));
-        demoMode = false;
-        irALogin('⚠️ Supabase OK — Falta crear tablas');
-        if (!silencioso) toast('⚠️ Ejecuta el SQL para crear las tablas');
-        return;
-      }
-      if (error.code === 'PGRST301' || error.message.includes('JWT')) {
-        msg = '❌ Anon Key incorrecto. Cópialo de Settings → API → anon public.';
-      }
-      if (!silencioso) errEl.textContent = msg;
-      sbClient = null;
-      return;
-    }
- 
-    // ✅ Conexión exitosa
-    sbClient = client;
-    localStorage.setItem(CONF_KEY, JSON.stringify({ url: url.replace(/\/$/, ''), key }));
-    demoMode = false;
-    irALogin('☁️ Supabase conectado');
-    if (!silencioso) toast('✅ ¡Conexión exitosa!');
- 
-  } catch(e) {
-    hideLoading();
-    let msg = '❌ ' + (e.message || 'Error desconocido');
-    if (e.message && e.message.includes('agotado')) msg = '❌ ' + e.message;
-    else if (e.message && (e.message.includes('fetch') || e.message.includes('network') || e.message.includes('Failed'))) {
-      msg = '❌ Sin acceso a internet o URL incorrecta.';
-    }
-    if (!silencioso) errEl.textContent = msg;
-    else {
-      // Si falla en auto-reconexión al cargar, ir al setup limpio
-      localStorage.removeItem(CONF_KEY);
-    }
-    sbClient = null;
-  }
-}
- 
-function usarDemoLocal() {
-  demoMode = true;
-  sbClient = null;
-  irALogin('🧪 Modo demo (datos locales)');
-}
- 
-function irALogin(badgeMsg) {
-  show('loginScreen');
-  document.getElementById('connBadge').innerHTML = `<span class="conn-badge conn-ok">✅ ${badgeMsg}</span>`;
-}
- 
-function volverSetup() {
-  show('setupScreen');
 }
  
 // ══════════════════════════════════════════
-//  DB LAYER — abstrae Supabase o Demo
+//  DB LAYER
 // ══════════════════════════════════════════
 async function dbSelect(tabla, filtros = {}) {
   if (demoMode) {
@@ -577,7 +384,6 @@ function fmtDate(d) { if (!d) return '—'; const [y, m, day] = d.split('T')[0].
 function today() { return new Date().toISOString().split('T')[0]; }
 function avatarText(name) { return (name || '?').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase(); }
  
-// Cálculos
 function cuotaDiaria(p) { return (p.monto * (1 + p.interes / 100)) / p.plazo; }
 function totalPrestamo(p) { return p.monto * (1 + p.interes / 100); }
 function totalPagado(prestamoId) { return cache.pagos.filter(pg => pg.prestamo_id == prestamoId).reduce((s, pg) => s + Number(pg.monto), 0); }
@@ -625,15 +431,14 @@ function doLogout() {
 async function cargarCache() {
   showLoading('Cargando datos...');
   try {
-    // Admin ve todos los clientes, cobrador solo los suyos
     const clientesFiltro = currentUser.rol === 'admin' ? {} : { usuario_id: currentUser.id };
-    const [clientes, prestamos, pagos, usuarios] = await Promise.all([
+    const [clientes, prestamos, pagos, usuarios, semanas] = await Promise.all([
       dbSelect('clientes', clientesFiltro),
       dbSelect('prestamos'),
       dbSelect('pagos'),
-      dbSelect('usuarios')
+      dbSelect('usuarios'),
+      dbSelect('semanas')
     ]);
-    // Si es cobrador, filtrar prestamos solo de sus clientes
     const clienteIds = clientes.map(c => c.id);
     const prestamosFiltrados = currentUser.rol === 'admin'
       ? prestamos
@@ -641,7 +446,12 @@ async function cargarCache() {
     const pagosFiltrados = currentUser.rol === 'admin'
       ? pagos
       : pagos.filter(pg => prestamosFiltrados.map(p => p.id).includes(pg.prestamo_id));
-    cache = { clientes, prestamos: prestamosFiltrados, pagos: pagosFiltrados, usuarios };
+    // Parsear campo dias de semanas (viene como string JSON desde Supabase)
+    const semanasParsed = (semanas || []).map(s => ({
+      ...s,
+      dias: typeof s.dias === 'string' ? JSON.parse(s.dias) : (s.dias || [])
+    }));
+    cache = { clientes, prestamos: prestamosFiltrados, pagos: pagosFiltrados, usuarios, semanas: semanasParsed };
   } finally {
     hideLoading();
   }
@@ -650,8 +460,8 @@ async function cargarCache() {
 // ══════════════════════════════════════════
 //  NAVIGATION
 // ══════════════════════════════════════════
-const navTitles = { dash: 'Dashboard', clientes: 'Clientes', prestamos: 'Préstamos', pagos: 'Pagos', config: 'Configuración' };
-const navRenderers = { dash: renderDash, clientes: renderClientes, prestamos: renderPrestamos, pagos: renderPagos, config: renderConfig };
+const navTitles = { dash: 'Dashboard', clientes: 'Clientes', prestamos: 'Préstamos', pagos: 'Pagos', semana: 'Semanas', config: 'Configuración' };
+const navRenderers = { dash: renderDash, clientes: renderClientes, prestamos: renderPrestamos, pagos: renderPagos, semana: renderSemana, config: renderConfig };
  
 async function navTo(section) {
   currentNav = section;
@@ -671,14 +481,12 @@ function renderDash() {
   const totalCobrado = cache.pagos.reduce((s, pg) => s + Number(pg.monto), 0);
   const totalPendiente = cache.prestamos.filter(p => p.estado === 'activo').reduce((s, p) => s + saldoPendiente(p), 0);
   const activos = cache.prestamos.filter(p => p.estado === 'activo');
- 
   const now = new Date();
   const dateStr = now.toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' });
-  const modeTag = demoMode ? '<span style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:99px;margin-left:6px">🧪 Demo</span>' : '<span style="font-size:11px;background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:99px;margin-left:6px">☁️ Nube</span>';
  
   let html = `
   <div class="welcome-banner">
-    <div style="font-size:20px;font-weight:900">Hola, ${currentUser.nombre.split(' ')[0]} 👋 ${modeTag}</div>
+    <div style="font-size:20px;font-weight:900">Hola, ${currentUser.nombre.split(' ')[0]} 👋</div>
     <div style="font-size:13px;opacity:0.82">Resumen de tu cartera</div>
     <div style="font-size:12px;opacity:0.65;margin-top:6px">${dateStr}</div>
   </div>
@@ -725,26 +533,62 @@ function renderDash() {
   if (!activos.length && !cache.pagos.length) {
     html += `<div class="empty"><div class="empty-icon">🚀</div><div class="empty-text">¡Empieza agregando clientes!</div></div>`;
   }
- 
   document.getElementById('mainContent').innerHTML = html;
 }
  
 // ══════════════════════════════════════════
 //  CLIENTES
 // ══════════════════════════════════════════
+function getCobrador(usuarioId) {
+  return cache.usuarios.find(u => u.id == usuarioId) || null;
+}
+ 
 function renderClientes() {
-  const filtered = cache.clientes.filter(c =>
+  const isAdmin = currentUser.rol === 'admin';
+ 
+  // Para admin: filtro por cobrador seleccionado
+  let filtroCobrador = window._filtroCobrador || 'todos';
+ 
+  let filtered = cache.clientes.filter(c =>
     c.nombre.toLowerCase().includes(filtroClientes.toLowerCase()) ||
     (c.telefono || '').includes(filtroClientes)
   );
+ 
+  // Aplicar filtro de cobrador si es admin
+  if (isAdmin && filtroCobrador !== 'todos') {
+    filtered = filtered.filter(c => String(c.usuario_id) === String(filtroCobrador));
+  }
+ 
   let html = `
   <div class="search-wrap"><span class="search-icon">🔍</span>
     <input type="text" placeholder="Buscar cliente..." value="${filtroClientes}" oninput="filtroClientes=this.value;renderClientes()">
-  </div>
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+  </div>`;
+ 
+  // Selector de cobrador solo para admin
+  if (isAdmin) {
+    const cobradores = cache.usuarios;
+    html += `<div class="tag-row" style="margin-bottom:12px">
+      <button class="tag-btn ${filtroCobrador === 'todos' ? 'active' : ''}"
+        onclick="window._filtroCobrador='todos';renderClientes()">
+        👥 Todos (${cache.clientes.length})
+      </button>`;
+    cobradores.forEach(u => {
+      const count = cache.clientes.filter(c => String(c.usuario_id) === String(u.id)).length;
+      html += `<button class="tag-btn ${filtroCobrador === String(u.id) ? 'active' : ''}"
+        onclick="window._filtroCobrador='${u.id}';renderClientes()"
+        style="${filtroCobrador === String(u.id) ? `background:${u.color};border-color:${u.color}` : ''}">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${u.color};margin-right:4px"></span>
+        ${u.nombre.split(' ')[0]} (${count})
+      </button>`;
+    });
+    html += `</div>`;
+  }
+ 
+  html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
     <div class="section-title" style="margin:0">👥 ${filtered.length} cliente${filtered.length !== 1 ? 's' : ''}</div>
     <button class="btn sm" onclick="modalCliente()">+ Nuevo</button>
   </div>`;
+ 
   if (!filtered.length) {
     html += `<div class="empty"><div class="empty-icon">🧑‍💼</div><div class="empty-text">Sin clientes</div><div style="font-size:13px;color:var(--text2);margin-top:6px">Agrega tu primer cliente</div></div>`;
   } else {
@@ -752,11 +596,16 @@ function renderClientes() {
     filtered.forEach(c => {
       const prestActivos = cache.prestamos.filter(p => p.cliente_id == c.id && p.estado === 'activo').length;
       const deuda = cache.prestamos.filter(p => p.cliente_id == c.id && p.estado === 'activo').reduce((s, p) => s + saldoPendiente(p), 0);
+      const cobrador = isAdmin ? getCobrador(c.usuario_id) : null;
       html += `<div class="list-item" onclick="verCliente(${c.id})">
         <div class="list-avatar" style="background:${c.color}">${avatarText(c.nombre)}</div>
         <div class="list-info">
           <div class="list-name">${c.nombre}</div>
           <div class="list-sub">📞 ${c.telefono || '—'}</div>
+          ${isAdmin && cobrador ? `<div style="display:inline-flex;align-items:center;gap:4px;margin-top:3px;background:${cobrador.color}22;border-radius:99px;padding:2px 8px">
+            <span style="width:7px;height:7px;border-radius:50%;background:${cobrador.color};display:inline-block"></span>
+            <span style="font-size:11px;font-weight:700;color:${cobrador.color}">${cobrador.nombre.split(' ')[0]}</span>
+          </div>` : ''}
         </div>
         <div class="list-amount">
           <div class="amount ${deuda > 0 ? 'red' : 'green'}">${fmt(deuda)}</div>
@@ -818,18 +667,12 @@ async function eliminarCliente(id) {
   if (!confirm('¿Eliminar este cliente y todos sus préstamos y pagos?')) return;
   showLoading('Eliminando...');
   try {
-    // 1. Obtener préstamos del cliente
     const prestamosCliente = cache.prestamos.filter(p => p.cliente_id == id);
-    // 2. Eliminar pagos de cada préstamo
     for (const p of prestamosCliente) {
       const pagosDelPrestamo = cache.pagos.filter(pg => pg.prestamo_id == p.id);
-      for (const pg of pagosDelPrestamo) {
-        await dbDelete('pagos', pg.id);
-      }
-      // 3. Eliminar el préstamo
+      for (const pg of pagosDelPrestamo) { await dbDelete('pagos', pg.id); }
       await dbDelete('prestamos', p.id);
     }
-    // 4. Finalmente eliminar el cliente
     await dbDelete('clientes', id);
     await cargarCache();
     closeModal();
@@ -855,6 +698,7 @@ function verCliente(id) {
   <div class="card" style="margin-bottom:12px">
     <div class="detail-row"><span class="detail-label">Dirección</span><span class="detail-value" style="font-family:var(--font);font-size:13px">${c.direccion || '—'}</span></div>
     <div class="detail-row"><span class="detail-label">Saldo pendiente</span><span class="detail-value" style="color:var(--danger)">${fmt(deuda)}</span></div>
+    ${(() => { if (currentUser.rol !== 'admin') return ''; const cob = getCobrador(c.usuario_id); if (!cob) return ''; return `<div class="detail-row"><span class="detail-label">Cobrador</span><span style="display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:13px"><span style="width:10px;height:10px;border-radius:50%;background:${cob.color};display:inline-block"></span>${cob.nombre}</span></div>`; })()}
   </div>
   <div class="section-title">💵 Préstamos (${prestamos.length})</div>`;
   prestamos.forEach(p => {
@@ -1029,7 +873,6 @@ function renderPagos() {
   const sorted = [...cache.pagos].sort((a, b) => b.fecha.localeCompare(a.fecha));
   const hoy = today();
   const totalHoy = cache.pagos.filter(pg => pg.fecha === hoy).reduce((s, pg) => s + Number(pg.monto), 0);
- 
   let html = `
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
     <div class="section-title" style="margin:0">💳 ${sorted.length} pago${sorted.length !== 1 ? 's' : ''}</div>
@@ -1040,7 +883,6 @@ function renderPagos() {
     <div style="font-size:28px;font-weight:900;font-family:var(--mono);margin:4px 0">${fmt(totalHoy)}</div>
     <div style="font-size:12px;opacity:0.75">${cache.pagos.filter(pg=>pg.fecha===hoy).length} pago${cache.pagos.filter(pg=>pg.fecha===hoy).length!==1?'s':''} registrados</div>
   </div>`;
- 
   if (!sorted.length) {
     html += `<div class="empty"><div class="empty-icon">💳</div><div class="empty-text">Sin pagos</div></div>`;
   } else {
@@ -1118,7 +960,6 @@ async function guardarPago(prestamoId) {
   try {
     await dbInsert('pagos', { prestamo_id: prestamoId, monto, fecha, metodo, notas });
     await cargarCache();
-    // Auto-liquidar
     const p = cache.prestamos.find(x => x.id == prestamoId);
     if (saldoPendiente(p) <= 0.01) {
       await dbUpdate('prestamos', prestamoId, { estado: 'liquidado' });
@@ -1158,7 +999,7 @@ function renderConfig() {
       <div>
         <div style="font-size:18px;font-weight:900">${currentUser.nombre}</div>
         <div style="font-size:13px;opacity:0.8">@${currentUser.usuario} · ${currentUser.rol}</div>
-        <div style="font-size:11px;opacity:0.7;margin-top:4px">${demoMode ? '🧪 Modo Demo' : '☁️ Supabase conectado'}</div>
+        <div style="font-size:11px;opacity:0.7;margin-top:4px">☁️ Supabase conectado</div>
       </div>
     </div>
   </div>`;
@@ -1192,7 +1033,6 @@ function renderConfig() {
     <div class="detail-row"><span class="detail-label">Capital prestado</span><span class="detail-value">${fmt(cache.prestamos.reduce((s,p)=>s+Number(p.monto),0))}</span></div>
     <div class="detail-row"><span class="detail-label">Total cobrado</span><span class="detail-value" style="color:var(--success)">${fmt(cache.pagos.reduce((s,pg)=>s+Number(pg.monto),0))}</span></div>
   </div>
-  <button class="btn outline" style="margin-bottom:10px" onclick="volverSetup()">⚙️ Cambiar base de datos</button>
   <button class="btn danger" onclick="doLogout()">🚪 Cerrar sesión</button>`;
   document.getElementById('mainContent').innerHTML = html;
 }
@@ -1260,7 +1100,271 @@ async function eliminarUsuario(id) {
   } catch (e) { toast('❌ Error: ' + e.message); }
   finally { hideLoading(); }
 }
+ 
+// ══════════════════════════════════════════
+//  SEMANAS
+// ══════════════════════════════════════════
+ 
+// Días de la semana (Lunes a Sábado, Domingo = descanso)
+const DIAS = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+ 
+function semanaLabel(fechaInicio) {
+  const d = new Date(fechaInicio + 'T00:00:00');
+  const fin = new Date(d); fin.setDate(fin.getDate() + 6);
+  const fmt2 = x => x.toLocaleDateString('es-MX', { day:'2-digit', month:'short' });
+  return `${fmt2(d)} – ${fmt2(fin)}`;
+}
+ 
+function getLunes(offsetSemanas = 0) {
+  const hoy = new Date();
+  const dow = hoy.getDay();
+  const diffLunes = dow === 0 ? -6 : 1 - dow;
+  const lunes = new Date(hoy);
+  lunes.setDate(hoy.getDate() + diffLunes + offsetSemanas * 7);
+  return lunes.toISOString().split('T')[0];
+}
+ 
+function renderSemana() {
+  const isAdmin = currentUser.rol === 'admin';
+  let filtroTrabajador = window._filtroTrabajadorSemana || (isAdmin ? 'todos' : String(currentUser.id));
+ 
+  let html = '';
+ 
+  // Selector de trabajador para admin
+  if (isAdmin) {
+    html += `<div class="tag-row" style="margin-bottom:12px">
+      <button class="tag-btn ${filtroTrabajador === 'todos' ? 'active' : ''}"
+        onclick="window._filtroTrabajadorSemana='todos';renderSemana()">👥 Todos</button>`;
+    cache.usuarios.forEach(u => {
+      html += `<button class="tag-btn ${filtroTrabajador === String(u.id) ? 'active' : ''}"
+        onclick="window._filtroTrabajadorSemana='${u.id}';renderSemana()"
+        style="${filtroTrabajador === String(u.id) ? `background:${u.color};border-color:${u.color}` : ''}">
+        <span style="width:8px;height:8px;border-radius:50%;background:${u.color};display:inline-block;margin-right:4px"></span>
+        ${u.nombre.split(' ')[0]}
+      </button>`;
+    });
+    html += `</div>`;
+  }
+ 
+  html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <div class="section-title" style="margin:0">📅 Semanas de trabajo</div>
+    <button class="btn sm" onclick="modalNuevaSemana()">+ Nueva</button>
+  </div>`;
+ 
+  // Filtrar semanas
+  let semanas = [...(cache.semanas || [])].sort((a,b) => b.fecha_inicio.localeCompare(a.fecha_inicio));
+  if (filtroTrabajador !== 'todos') {
+    semanas = semanas.filter(s => String(s.usuario_id) === String(filtroTrabajador));
+  }
+ 
+  if (!semanas.length) {
+    html += `<div class="empty"><div class="empty-icon">📅</div>
+      <div class="empty-text">Sin semanas registradas</div>
+      <div style="font-size:13px;color:var(--text2);margin-top:6px">Crea la primera tabla semanal</div>
+    </div>`;
+    document.getElementById('mainContent').innerHTML = html;
+    return;
+  }
+ 
+  semanas.forEach(sem => {
+    const usuario = cache.usuarios.find(u => u.id == sem.usuario_id) || { nombre: '—', color: '#999' };
+    const dias = sem.dias || [];
+    let saldoAcum = Number(sem.saldo_anterior || 0);
+ 
+    const totalCobrado = dias.reduce((s,d) => s + Number(d.cobrado||0), 0);
+    const totalPrestado = dias.reduce((s,d) => s + Number(d.prestado||0), 0);
+    const totalGasto = dias.reduce((s,d) => s + Number(d.gasto||0), 0);
+    const saldoFinal = saldoAcum + totalCobrado - totalPrestado - totalGasto;
+ 
+    html += `<div class="semana-card">
+      <div class="semana-header">
+        <div>
+          <div class="semana-title">📅 ${semanaLabel(sem.fecha_inicio)}</div>
+          ${isAdmin ? `<div style="margin-top:4px"><span class="cobrador-pill" style="background:${usuario.color}22;color:${usuario.color}">
+            <span style="width:8px;height:8px;border-radius:50%;background:${usuario.color};display:inline-block"></span>
+            ${usuario.nombre}
+          </span></div>` : ''}
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:11px;color:var(--text2);font-weight:700">Saldo final</div>
+          <div style="font-size:18px;font-weight:900;font-family:var(--mono)" class="${saldoFinal >= 0 ? 'saldo-pos' : 'saldo-neg'}">${fmt(saldoFinal)}</div>
+        </div>
+      </div>
+ 
+      <div class="semana-table-wrap">
+        <table class="semana-table">
+          <thead>
+            <tr>
+              <th>Día</th>
+              <th>Cobrado</th>
+              <th>Prestado</th>
+              <th>Gasto</th>
+              <th>Saldo día</th>
+              <th>Acumulado</th>
+            </tr>
+          </thead>
+          <tbody>`;
+ 
+    let acum = saldoAcum;
+    dias.forEach((dia, i) => {
+      const esDomingo = i === 6;
+      const cobrado = Number(dia.cobrado || 0);
+      const prestado = Number(dia.prestado || 0);
+      const gasto = Number(dia.gasto || 0);
+      const saldoDia = esDomingo ? 0 : cobrado - prestado - gasto;
+      if (!esDomingo) acum += saldoDia;
+      const acumMostrar = esDomingo ? '—' : fmt(acum);
+      const saldoClass = saldoDia >= 0 ? 'saldo-pos' : 'saldo-neg';
+ 
+      html += `<tr class="${esDomingo ? 'domingo' : ''}">
+        <td>${DIAS[i]}${esDomingo ? ' 🔴' : ''}</td>
+        <td>${esDomingo ? '—' : fmt(cobrado)}</td>
+        <td>${esDomingo ? '—' : fmt(prestado)}</td>
+        <td>${esDomingo ? '—' : fmt(gasto)}</td>
+        <td>${esDomingo ? 'Descanso' : `<span class="${saldoClass}">${fmt(saldoDia)}</span>`}</td>
+        <td>${esDomingo ? '—' : `<span class="${saldoClass}">${acumMostrar}</span>`}</td>
+      </tr>`;
+    });
+ 
+    html += `<tr class="total-row">
+        <td>TOTAL</td>
+        <td>${fmt(totalCobrado)}</td>
+        <td>${fmt(totalPrestado)}</td>
+        <td>${fmt(totalGasto)}</td>
+        <td class="${(totalCobrado-totalPrestado-totalGasto)>=0?'saldo-pos':'saldo-neg'}">${fmt(totalCobrado-totalPrestado-totalGasto)}</td>
+        <td class="${saldoFinal>=0?'saldo-pos':'saldo-neg'}">${fmt(saldoFinal)}</td>
+      </tr>
+    </tbody></table></div>
+ 
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn sm warning" onclick="editarSemana('${sem.id}')">✏️ Editar</button>
+      <button class="btn sm danger" onclick="eliminarSemana('${sem.id}')">🗑️</button>
+    </div>
+    </div>`;
+  });
+ 
+  document.getElementById('mainContent').innerHTML = html;
+}
+ 
+function modalNuevaSemana() {
+  const isAdmin = currentUser.rol === 'admin';
+  const usuariosOpts = isAdmin
+    ? cache.usuarios.map(u => `<option value="${u.id}">${u.nombre}</option>`).join('')
+    : `<option value="${currentUser.id}">${currentUser.nombre}</option>`;
+ 
+  const lunesActual = getLunes();
+ 
+  openModal(`
+    <div class="modal-title">📅 Nueva semana</div>
+    ${isAdmin ? `<div class="field"><label>Trabajador</label><select id="semUsuario">${usuariosOpts}</select></div>` : `<input type="hidden" id="semUsuario" value="${currentUser.id}">`}
+    <div class="field"><label>Semana que inicia (Lunes)</label><input id="semFecha" type="date" value="${lunesActual}"></div>
+    <div class="field"><label>Saldo anterior ($)</label><input id="semSaldoAnt" type="number" value="0" step="0.01" placeholder="0.00"></div>
+    <div style="background:var(--surface2);border-radius:12px;padding:14px;margin-bottom:12px">
+      <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px">DATOS POR DÍA (Lunes a Sábado)</div>
+      ${[0,1,2,3,4,5].map(i => `
+        <div style="margin-bottom:10px">
+          <div style="font-size:12px;font-weight:800;color:var(--primary);margin-bottom:6px">${DIAS[i]}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+            <div><div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:3px">Cobrado</div>
+              <input type="number" id="d${i}_cobrado" placeholder="0" step="0.01" min="0" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg)"></div>
+            <div><div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:3px">Prestado</div>
+              <input type="number" id="d${i}_prestado" placeholder="0" step="0.01" min="0" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg)"></div>
+            <div><div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:3px">Gasto</div>
+              <input type="number" id="d${i}_gasto" placeholder="0" step="0.01" min="0" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg)"></div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div class="modal-actions">
+      <button class="btn outline" onclick="closeModal()">Cancelar</button>
+      <button class="btn" onclick="guardarSemana(null)">✅ Guardar</button>
+    </div>
+  `);
+}
+ 
+function editarSemana(id) {
+  const sem = cache.semanas.find(s => String(s.id) === String(id));
+  if (!sem) return;
+  const isAdmin = currentUser.rol === 'admin';
+  const usuariosOpts = isAdmin
+    ? cache.usuarios.map(u => `<option value="${u.id}" ${u.id == sem.usuario_id ? 'selected' : ''}>${u.nombre}</option>`).join('')
+    : `<option value="${currentUser.id}">${currentUser.nombre}</option>`;
+  const dias = sem.dias || Array(7).fill({cobrado:0,prestado:0,gasto:0});
+ 
+  openModal(`
+    <div class="modal-title">✏️ Editar semana</div>
+    ${isAdmin ? `<div class="field"><label>Trabajador</label><select id="semUsuario">${usuariosOpts}</select></div>` : `<input type="hidden" id="semUsuario" value="${currentUser.id}">`}
+    <div class="field"><label>Semana que inicia (Lunes)</label><input id="semFecha" type="date" value="${(sem.fecha_inicio||'').split('T')[0]}"></div>
+    <div class="field"><label>Saldo anterior ($)</label><input id="semSaldoAnt" type="number" value="${sem.saldo_anterior||0}" step="0.01"></div>
+    <div style="background:var(--surface2);border-radius:12px;padding:14px;margin-bottom:12px">
+      <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px">DATOS POR DÍA (Lunes a Sábado)</div>
+      ${[0,1,2,3,4,5].map(i => {
+        const d = dias[i] || {};
+        return `<div style="margin-bottom:10px">
+          <div style="font-size:12px;font-weight:800;color:var(--primary);margin-bottom:6px">${DIAS[i]}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+            <div><div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:3px">Cobrado</div>
+              <input type="number" id="d${i}_cobrado" value="${d.cobrado||0}" step="0.01" min="0" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg)"></div>
+            <div><div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:3px">Prestado</div>
+              <input type="number" id="d${i}_prestado" value="${d.prestado||0}" step="0.01" min="0" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg)"></div>
+            <div><div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:3px">Gasto</div>
+              <input type="number" id="d${i}_gasto" value="${d.gasto||0}" step="0.01" min="0" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg)"></div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="modal-actions">
+      <button class="btn outline" onclick="closeModal()">Cancelar</button>
+      <button class="btn" onclick="guardarSemana('${id}')">✅ Guardar</button>
+    </div>
+  `);
+}
+ 
+async function guardarSemana(id) {
+  const usuarioEl = document.getElementById('semUsuario');
+  const usuario_id = parseInt(usuarioEl.value || usuarioEl.getAttribute('value'));
+  const fecha_inicio = document.getElementById('semFecha').value;
+  const saldo_anterior = parseFloat(document.getElementById('semSaldoAnt').value || 0);
+  if (!fecha_inicio) { toast('❌ Selecciona la fecha'); return; }
+ 
+  // Recoger datos de los 7 días (domingo = 0 automático)
+  const dias = DIAS.map((_, i) => {
+    if (i === 6) return { cobrado: 0, prestado: 0, gasto: 0 }; // domingo
+    return {
+      cobrado:  parseFloat(document.getElementById(`d${i}_cobrado`)?.value  || 0),
+      prestado: parseFloat(document.getElementById(`d${i}_prestado`)?.value || 0),
+      gasto:    parseFloat(document.getElementById(`d${i}_gasto`)?.value    || 0),
+    };
+  });
+ 
+  showLoading('Guardando...');
+  try {
+    const obj = { usuario_id, fecha_inicio, saldo_anterior, dias: JSON.stringify(dias) };
+    if (id) {
+      await dbUpdate('semanas', id, obj);
+      toast('✅ Semana actualizada');
+    } else {
+      await dbInsert('semanas', obj);
+      toast('✅ Semana creada');
+    }
+    await cargarCache();
+    closeModal();
+    renderSemana();
+  } catch(e) { toast('❌ Error: ' + e.message); }
+  finally { hideLoading(); }
+}
+ 
+async function eliminarSemana(id) {
+  if (!confirm('¿Eliminar esta semana?')) return;
+  showLoading('Eliminando...');
+  try {
+    await dbDelete('semanas', id);
+    await cargarCache();
+    renderSemana();
+    toast('🗑️ Semana eliminada');
+  } catch(e) { toast('❌ Error: ' + e.message); }
+  finally { hideLoading(); }
+}
+ 
 </script>
 </body>
 </html>
- 
