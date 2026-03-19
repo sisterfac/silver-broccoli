@@ -1089,14 +1089,49 @@ async function guardarUsuario(id) {
 
 async function eliminarUsuario(id) {
   if (id == currentUser.id) { toast('❌ No puedes eliminarte'); return; }
-  if (!confirm('¿Eliminar usuario?')) return;
-  showLoading('Eliminando...');
+  if (!confirm('¿Eliminar este usuario?\n\nSe eliminarán también todos sus clientes, préstamos, pagos y semanas. Esta acción no se puede deshacer.')) return;
+
+  showLoading('Eliminando usuario...');
   try {
+    // 1. Obtener clientes del usuario
+    const clientesUsuario = cache.clientes.filter(c => c.usuario_id == id);
+
+    // 2. Por cada cliente, eliminar sus pagos y préstamos
+    for (const c of clientesUsuario) {
+      const prestamosCliente = cache.prestamos.filter(p => p.cliente_id == c.id);
+      for (const p of prestamosCliente) {
+        const pagosDelPrestamo = cache.pagos.filter(pg => pg.prestamo_id == p.id);
+        for (const pg of pagosDelPrestamo) {
+          await dbDelete('pagos', pg.id);
+        }
+        await dbDelete('prestamos', p.id);
+      }
+      await dbDelete('clientes', c.id);
+    }
+
+    // 3. Eliminar préstamos donde era cobrador asignado
+    const prestamosComoCobrador = cache.prestamos.filter(p => p.cobrador_id == id);
+    for (const p of prestamosComoCobrador) {
+      const pagosDelPrestamo = cache.pagos.filter(pg => pg.prestamo_id == p.id);
+      for (const pg of pagosDelPrestamo) {
+        await dbDelete('pagos', pg.id);
+      }
+      await dbDelete('prestamos', p.id);
+    }
+
+    // 4. Eliminar semanas del usuario
+    const semanasUsuario = (cache.semanas || []).filter(s => s.usuario_id == id);
+    for (const s of semanasUsuario) {
+      await dbDelete('semanas', s.id);
+    }
+
+    // 5. Finalmente eliminar el usuario
     await dbDelete('usuarios', id);
+
     await cargarCache();
     closeModal();
     renderConfig();
-    toast('🗑️ Usuario eliminado');
+    toast('🗑️ Usuario eliminado correctamente');
   } catch (e) { toast('❌ Error: ' + e.message); }
   finally { hideLoading(); }
 }
@@ -1544,10 +1579,6 @@ async function eliminarSemana(id) {
   finally { hideLoading(); }
 }
 
-</script>
-</body>
-</html>
- 
 </script>
 </body>
 </html>
