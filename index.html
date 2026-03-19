@@ -32,10 +32,10 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; max-width: 430px; margin: 0 auto; overflow-x: hidden; }
- 
+
   .screen { display: none; flex-direction: column; min-height: 100vh; }
   .screen.active { display: flex; }
- 
+
   /* ── LOGIN ── */
   #loginScreen { background: linear-gradient(160deg, #0D47A1 0%, #1565C0 40%, #00BFA5 100%); justify-content: center; align-items: center; padding: 32px 24px; }
   .login-logo { width: 88px; height: 88px; background: rgba(255,255,255,0.18); border-radius: 28px; display: flex; align-items: center; justify-content: center; font-size: 44px; margin-bottom: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
@@ -43,14 +43,14 @@
   .login-sub { color: rgba(255,255,255,0.72); font-size: 14px; margin-bottom: 36px; }
   .login-card { background: #fff; border-radius: 24px; padding: 28px 24px; width: 100%; box-shadow: 0 16px 48px rgba(0,0,0,0.18); }
   .login-card h2 { font-size: 20px; font-weight: 800; color: var(--primary-dark); margin-bottom: 20px; }
- 
+
   .field { margin-bottom: 16px; }
   .field label { font-size: 12px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
   .field input, .field select, .field textarea { width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 12px; font-family: var(--font); font-size: 15px; color: var(--text); background: var(--bg); outline: none; transition: border-color 0.2s; }
   .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); background: #fff; }
   .field select { -webkit-appearance: none; }
   .field textarea { resize: none; min-height: 80px; }
- 
+
   .btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 15px; background: var(--primary); color: #fff; border: none; border-radius: 14px; font-family: var(--font); font-size: 16px; font-weight: 800; cursor: pointer; transition: all 0.18s; }
   .btn:active { transform: scale(0.97); }
   .btn:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -61,23 +61,23 @@
   .btn.warning { background: var(--warning); }
   .btn.success { background: var(--success); }
   .error-msg { color: var(--danger); font-size: 13px; font-weight: 600; margin-top: 10px; text-align: center; }
- 
+
   .topbar { background: var(--primary); padding: 16px 20px 14px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(21,101,192,0.18); }
   .topbar-title { color: #fff; font-size: 18px; font-weight: 800; flex: 1; }
   .topbar-action { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.15); border: none; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
- 
+
   .bottomnav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: #fff; border-top: 1px solid var(--border); display: flex; padding: 8px 0 12px; z-index: 99; box-shadow: 0 -4px 20px rgba(21,101,192,0.08); }
   .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; padding: 4px 0; border: none; background: none; font-family: var(--font); }
   .nav-icon { font-size: 22px; line-height: 1; transition: transform 0.15s; }
   .nav-label { font-size: 10px; font-weight: 700; color: var(--text2); transition: color 0.15s; }
   .nav-item.active .nav-icon { transform: scale(1.15); }
   .nav-item.active .nav-label { color: var(--primary); }
- 
+
   .content { flex: 1; padding: 16px; padding-bottom: 80px; overflow-y: auto; }
- 
+
   .card { background: var(--surface); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); margin-bottom: 14px; }
   .card-title { font-size: 14px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
- 
+
   .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
   .stat-card { background: var(--surface); border-radius: 16px; padding: 16px; box-shadow: var(--shadow); }
   .stat-icon { font-size: 26px; margin-bottom: 6px; }
@@ -86,7 +86,7 @@
   .stat-card.green .stat-value { color: var(--success); }
   .stat-card.red .stat-value { color: var(--danger); }
   .stat-card.orange .stat-value { color: var(--warning); }
- 
+
   .list-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--surface2); cursor: pointer; }
   .list-item:last-child { border-bottom: none; padding-bottom: 0; }
   .list-item:first-child { padding-top: 0; }
@@ -101,58 +101,58 @@
   .badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-top: 2px; display: inline-block; }
   .badge-active { background: #E8F5E9; color: var(--success); }
   .badge-paid { background: #E3F2FD; color: var(--primary); }
- 
+
   .progress-bar { height: 6px; background: var(--surface2); border-radius: 99px; overflow: hidden; margin-top: 6px; }
   .progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
   .progress-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text2); margin-top: 4px; }
- 
+
   .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--surface2); }
   .detail-row:last-child { border-bottom: none; }
   .detail-label { font-size: 13px; color: var(--text2); font-weight: 600; }
   .detail-value { font-size: 14px; font-weight: 800; font-family: var(--mono); }
- 
+
   .search-wrap { position: relative; margin-bottom: 14px; }
   .search-wrap input { width: 100%; padding: 12px 16px 12px 42px; border: 2px solid var(--border); border-radius: 14px; font-family: var(--font); font-size: 14px; background: var(--surface); color: var(--text); outline: none; }
   .search-wrap input:focus { border-color: var(--primary); }
   .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 18px; }
- 
+
   .modal-overlay { position: fixed; inset: 0; background: rgba(13,27,62,0.5); z-index: 200; display: none; align-items: flex-end; justify-content: center; }
   .modal-overlay.open { display: flex; }
   .modal { background: var(--surface); border-radius: 24px 24px 0 0; width: 100%; max-width: 430px; padding: 24px; max-height: 90vh; overflow-y: auto; animation: slideUp 0.25s ease; }
   @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
   .modal-title { font-size: 20px; font-weight: 900; margin-bottom: 20px; }
   .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
- 
+
   .chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 99px; font-size: 12px; font-weight: 700; }
   .chip-blue { background: #E3F2FD; color: var(--primary); }
   .chip-green { background: #E8F5E9; color: var(--success); }
- 
+
   .empty { text-align: center; padding: 48px 24px; color: var(--text2); }
   .empty-icon { font-size: 52px; margin-bottom: 12px; }
   .empty-text { font-size: 16px; font-weight: 700; }
- 
+
   .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
   .tag-btn { padding: 6px 14px; border-radius: 99px; font-family: var(--font); font-size: 12px; font-weight: 700; cursor: pointer; border: 2px solid var(--border); background: var(--surface); color: var(--text2); }
   .tag-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
- 
+
   .section-title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 10px; }
- 
+
   .welcome-banner { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%); border-radius: 20px; padding: 20px; color: #fff; margin-bottom: 14px; position: relative; overflow: hidden; }
   .welcome-banner::after { content: '💰'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 52px; opacity: 0.2; }
- 
+
   .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #222; color: #fff; padding: 12px 24px; border-radius: 99px; font-size: 14px; font-weight: 600; z-index: 300; opacity: 0; transition: opacity 0.2s; white-space: nowrap; pointer-events: none; }
   .toast.show { opacity: 1; }
- 
+
   .loading-overlay { position: fixed; inset: 0; background: rgba(13,27,62,0.45); z-index: 400; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
   .loading-overlay.show { display: flex; }
   .spinner { width: 48px; height: 48px; border: 5px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-text { color: #fff; font-weight: 700; font-size: 14px; }
- 
+
   .conn-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; }
   .conn-ok { background: #E8F5E9; color: var(--success); }
   .conn-err { background: #FFEBEE; color: var(--danger); }
- 
+
   /* ── SEMANA TABLE ── */
   .semana-table-wrap { overflow-x: auto; margin-bottom: 14px; border-radius: 14px; box-shadow: var(--shadow); }
   .semana-table { width: 100%; border-collapse: collapse; min-width: 520px; font-family: var(--mono); }
@@ -174,20 +174,20 @@
   .saldo-pos { color: var(--success); }
   .saldo-neg { color: var(--danger); }
   .cobrador-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; }
- 
+
 </style>
 </head>
 <body>
- 
+
 <!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
   <div class="loading-text" id="loadingText">Conectando...</div>
 </div>
- 
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
- 
+
 <!-- ══════════════ LOGIN ══════════════ -->
 <div id="loginScreen" class="screen active">
   <div class="login-logo">💳</div>
@@ -208,7 +208,7 @@
     <div class="error-msg" id="loginError"></div>
   </div>
 </div>
- 
+
 <!-- ══════════════ APP ══════════════ -->
 <div id="appScreen" class="screen">
   <div class="topbar">
@@ -237,22 +237,22 @@
     </button>
   </div>
 </div>
- 
+
 <!-- ══════════════ MODAL ══════════════ -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal" id="modalContent"></div>
 </div>
- 
+
 <script>
 // ══════════════════════════════════════════
 //  CREDENCIALES SUPABASE — fijas en el código
 // ══════════════════════════════════════════
 const SUPABASE_URL = 'https://rjnbxjxgrbrysnjuhlrl.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqbmJ4anhncmJyeXNuanVobHJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MDg4NTksImV4cCI6MjA4OTM4NDg1OX0.E-ZuwfxcSJ-xSPZyzys8I6wiH6cOav97YaRLQXtw-j4';
- 
+
 let sbClient = null;
 let demoMode = false;
- 
+
 // Demo DB en memoria
 let demoDB = {
   usuarios: [
@@ -263,12 +263,12 @@ let demoDB = {
   pagos: [],
   semanas: []
 };
- 
+
 // ── Conectar automáticamente al cargar ──
 window.addEventListener('load', () => {
   iniciarConexion();
 });
- 
+
 function iniciarConexion() {
   if (!window.supabase) {
     setTimeout(iniciarConexion, 800);
@@ -290,7 +290,7 @@ function iniciarConexion() {
     demoMode = true;
   }
 }
- 
+
 // ══════════════════════════════════════════
 //  DB LAYER
 // ══════════════════════════════════════════
@@ -306,7 +306,7 @@ async function dbSelect(tabla, filtros = {}) {
   if (error) throw error;
   return data || [];
 }
- 
+
 async function dbInsert(tabla, obj) {
   if (demoMode) {
     const arr = demoDB[tabla];
@@ -318,7 +318,7 @@ async function dbInsert(tabla, obj) {
   if (error) throw error;
   return data;
 }
- 
+
 async function dbUpdate(tabla, id, obj) {
   if (demoMode) {
     const idx = demoDB[tabla].findIndex(x => x.id === id);
@@ -329,7 +329,7 @@ async function dbUpdate(tabla, id, obj) {
   if (error) throw error;
   return data;
 }
- 
+
 async function dbDelete(tabla, id) {
   if (demoMode) {
     demoDB[tabla] = demoDB[tabla].filter(x => x.id !== id);
@@ -338,7 +338,7 @@ async function dbDelete(tabla, id) {
   const { error } = await sbClient.from(tabla).delete().eq('id', id);
   if (error) throw error;
 }
- 
+
 // ══════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════
@@ -347,7 +347,7 @@ let currentNav = 'dash';
 let cache = { clientes: [], prestamos: [], pagos: [], usuarios: [] };
 let filtroClientes = '';
 let filtroPrestamos = 'todos';
- 
+
 // ══════════════════════════════════════════
 //  UI HELPERS
 // ══════════════════════════════════════════
@@ -378,18 +378,18 @@ function closeModal() {
 document.getElementById('modalOverlay').addEventListener('click', e => {
   if (e.target === document.getElementById('modalOverlay')) closeModal();
 });
- 
+
 function fmt(n) { return '$' + Number(n || 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 function fmtDate(d) { if (!d) return '—'; const [y, m, day] = d.split('T')[0].split('-'); return `${day}/${m}/${y}`; }
 function today() { return new Date().toISOString().split('T')[0]; }
 function avatarText(name) { return (name || '?').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase(); }
- 
+
 function cuotaDiaria(p) { return (p.monto * (1 + p.interes / 100)) / p.plazo; }
 function totalPrestamo(p) { return p.monto * (1 + p.interes / 100); }
 function totalPagado(prestamoId) { return cache.pagos.filter(pg => pg.prestamo_id == prestamoId).reduce((s, pg) => s + Number(pg.monto), 0); }
 function saldoPendiente(p) { return Math.max(0, totalPrestamo(p) - totalPagado(p.id)); }
 function getCliente(id) { return cache.clientes.find(c => c.id == id) || { nombre: '—', color: '#999' }; }
- 
+
 // ══════════════════════════════════════════
 //  AUTH
 // ══════════════════════════════════════════
@@ -417,14 +417,14 @@ async function doLogin() {
   }
 }
 document.getElementById('loginPass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
- 
+
 function doLogout() {
   currentUser = null;
   show('loginScreen');
   document.getElementById('loginUser').value = '';
   document.getElementById('loginPass').value = '';
 }
- 
+
 // ══════════════════════════════════════════
 //  CACHE
 // ══════════════════════════════════════════
@@ -456,13 +456,13 @@ async function cargarCache() {
     hideLoading();
   }
 }
- 
+
 // ══════════════════════════════════════════
 //  NAVIGATION
 // ══════════════════════════════════════════
 const navTitles = { dash: 'Dashboard', clientes: 'Clientes', prestamos: 'Préstamos', pagos: 'Pagos', semana: 'Semanas', config: 'Configuración' };
 const navRenderers = { dash: renderDash, clientes: renderClientes, prestamos: renderPrestamos, pagos: renderPagos, semana: renderSemana, config: renderConfig };
- 
+
 async function navTo(section) {
   currentNav = section;
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
@@ -470,9 +470,9 @@ async function navTo(section) {
   if (el) el.classList.add('active');
   document.getElementById('mainTitle').textContent = navTitles[section];
   await cargarCache();
-  navRenderers[section]();
+  await navRenderers[section]();
 }
- 
+
 // ══════════════════════════════════════════
 //  DASHBOARD
 // ══════════════════════════════════════════
@@ -483,7 +483,7 @@ function renderDash() {
   const activos = cache.prestamos.filter(p => p.estado === 'activo');
   const now = new Date();
   const dateStr = now.toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' });
- 
+
   let html = `
   <div class="welcome-banner">
     <div style="font-size:20px;font-weight:900">Hola, ${currentUser.nombre.split(' ')[0]} 👋</div>
@@ -496,7 +496,7 @@ function renderDash() {
     <div class="stat-card red"><div class="stat-icon">⏳</div><div class="stat-value">${fmt(totalPendiente)}</div><div class="stat-label">Por cobrar</div></div>
     <div class="stat-card orange"><div class="stat-icon">📋</div><div class="stat-value">${activos.length}</div><div class="stat-label">Activos</div></div>
   </div>`;
- 
+
   if (activos.length) {
     html += `<div class="card"><div class="card-title" style="margin-bottom:12px">📊 Préstamos activos</div>`;
     activos.slice(0, 4).forEach(p => {
@@ -514,7 +514,7 @@ function renderDash() {
     });
     html += `</div>`;
   }
- 
+
   const recientes = [...cache.pagos].sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, 4);
   if (recientes.length) {
     html += `<div class="card"><div class="card-title" style="margin-bottom:12px">💳 Pagos recientes</div>`;
@@ -529,41 +529,41 @@ function renderDash() {
     });
     html += `</div>`;
   }
- 
+
   if (!activos.length && !cache.pagos.length) {
     html += `<div class="empty"><div class="empty-icon">🚀</div><div class="empty-text">¡Empieza agregando clientes!</div></div>`;
   }
   document.getElementById('mainContent').innerHTML = html;
 }
- 
+
 // ══════════════════════════════════════════
 //  CLIENTES
 // ══════════════════════════════════════════
 function getCobrador(usuarioId) {
   return cache.usuarios.find(u => u.id == usuarioId) || null;
 }
- 
+
 function renderClientes() {
   const isAdmin = currentUser.rol === 'admin';
- 
+
   // Para admin: filtro por cobrador seleccionado
   let filtroCobrador = window._filtroCobrador || 'todos';
- 
+
   let filtered = cache.clientes.filter(c =>
     c.nombre.toLowerCase().includes(filtroClientes.toLowerCase()) ||
     (c.telefono || '').includes(filtroClientes)
   );
- 
+
   // Aplicar filtro de cobrador si es admin
   if (isAdmin && filtroCobrador !== 'todos') {
     filtered = filtered.filter(c => String(c.usuario_id) === String(filtroCobrador));
   }
- 
+
   let html = `
   <div class="search-wrap"><span class="search-icon">🔍</span>
     <input type="text" placeholder="Buscar cliente..." value="${filtroClientes}" oninput="filtroClientes=this.value;renderClientes()">
   </div>`;
- 
+
   // Selector de cobrador solo para admin
   if (isAdmin) {
     const cobradores = cache.usuarios;
@@ -583,12 +583,12 @@ function renderClientes() {
     });
     html += `</div>`;
   }
- 
+
   html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
     <div class="section-title" style="margin:0">👥 ${filtered.length} cliente${filtered.length !== 1 ? 's' : ''}</div>
     <button class="btn sm" onclick="modalCliente()">+ Nuevo</button>
   </div>`;
- 
+
   if (!filtered.length) {
     html += `<div class="empty"><div class="empty-icon">🧑‍💼</div><div class="empty-text">Sin clientes</div><div style="font-size:13px;color:var(--text2);margin-top:6px">Agrega tu primer cliente</div></div>`;
   } else {
@@ -617,7 +617,7 @@ function renderClientes() {
   }
   document.getElementById('mainContent').innerHTML = html;
 }
- 
+
 function modalCliente(id) {
   const c = id ? cache.clientes.find(x => x.id == id) : null;
   const colors = ['#AD1457', '#6A1B9A', '#1565C0', '#00695C', '#E65100', '#37474F'];
@@ -639,7 +639,7 @@ function modalCliente(id) {
     ${c ? `<button class="btn danger" style="margin-top:10px" onclick="eliminarCliente(${id})">🗑️ Eliminar</button>` : ''}
   `);
 }
- 
+
 async function guardarCliente(id) {
   const nombre = document.getElementById('cNombre').value.trim();
   const telefono = document.getElementById('cTel').value.trim();
@@ -662,7 +662,7 @@ async function guardarCliente(id) {
   } catch (e) { toast('❌ Error: ' + e.message); }
   finally { hideLoading(); }
 }
- 
+
 async function eliminarCliente(id) {
   if (!confirm('¿Eliminar este cliente y todos sus préstamos y pagos?')) return;
   showLoading('Eliminando...');
@@ -681,7 +681,7 @@ async function eliminarCliente(id) {
   } catch (e) { toast('❌ Error: ' + e.message); }
   finally { hideLoading(); }
 }
- 
+
 function verCliente(id) {
   const c = cache.clientes.find(x => x.id == id);
   const prestamos = cache.prestamos.filter(p => p.cliente_id == id);
@@ -718,7 +718,7 @@ function verCliente(id) {
   </div>`;
   openModal(html);
 }
- 
+
 // ══════════════════════════════════════════
 //  PRÉSTAMOS
 // ══════════════════════════════════════════
@@ -762,7 +762,7 @@ function renderPrestamos() {
   }
   document.getElementById('mainContent').innerHTML = html;
 }
- 
+
 function modalPrestamo(id) {
   const p = id ? cache.prestamos.find(x => x.id == id) : null;
   const clientesOpts = cache.clientes.map(c => `<option value="${c.id}" ${p && p.cliente_id == c.id ? 'selected' : ''}>${c.nombre}</option>`).join('');
@@ -787,7 +787,7 @@ function modalPrestamo(id) {
     </div>
   `);
 }
- 
+
 async function guardarPrestamo(id) {
   const cliente_id = parseInt(document.getElementById('pCliente').value);
   const monto = parseFloat(document.getElementById('pMonto').value);
@@ -813,7 +813,7 @@ async function guardarPrestamo(id) {
   } catch (e) { toast('❌ Error: ' + e.message); }
   finally { hideLoading(); }
 }
- 
+
 function verPrestamo(id) {
   const p = cache.prestamos.find(x => x.id == id);
   const cl = getCliente(p.cliente_id);
@@ -865,7 +865,7 @@ function verPrestamo(id) {
   </div>`;
   openModal(html);
 }
- 
+
 // ══════════════════════════════════════════
 //  PAGOS
 // ══════════════════════════════════════════
@@ -905,7 +905,7 @@ function renderPagos() {
   }
   document.getElementById('mainContent').innerHTML = html;
 }
- 
+
 function modalSeleccionarPrestamo() {
   const activos = cache.prestamos.filter(p => p.estado === 'activo');
   let html = `<div class="modal-title">Seleccionar préstamo</div>`;
@@ -924,7 +924,7 @@ function modalSeleccionarPrestamo() {
   html += `<button class="btn outline" style="margin-top:16px" onclick="closeModal()">Cancelar</button>`;
   openModal(html);
 }
- 
+
 function modalNuevoPago(prestamoId) {
   const p = cache.prestamos.find(x => x.id == prestamoId);
   const cl = getCliente(p.cliente_id);
@@ -949,7 +949,7 @@ function modalNuevoPago(prestamoId) {
     </div>
   `);
 }
- 
+
 async function guardarPago(prestamoId) {
   const monto = parseFloat(document.getElementById('pgMonto').value);
   const fecha = document.getElementById('pgFecha').value;
@@ -973,7 +973,7 @@ async function guardarPago(prestamoId) {
   } catch (e) { toast('❌ Error: ' + e.message); }
   finally { hideLoading(); }
 }
- 
+
 async function eliminarPago(pagoId, prestamoId) {
   if (!confirm('¿Eliminar este pago?')) return;
   showLoading('Eliminando...');
@@ -986,7 +986,7 @@ async function eliminarPago(pagoId, prestamoId) {
   } catch (e) { toast('❌ Error: ' + e.message); }
   finally { hideLoading(); }
 }
- 
+
 // ══════════════════════════════════════════
 //  CONFIG / USUARIOS
 // ══════════════════════════════════════════
@@ -1003,7 +1003,7 @@ function renderConfig() {
       </div>
     </div>
   </div>`;
- 
+
   if (isAdmin) {
     html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
       <div class="section-title" style="margin:0">👥 Usuarios</div>
@@ -1022,7 +1022,7 @@ function renderConfig() {
     });
     html += `</div>`;
   }
- 
+
   html += `
   <div class="section-title">📊 Sistema</div>
   <div class="card">
@@ -1036,7 +1036,7 @@ function renderConfig() {
   <button class="btn danger" onclick="doLogout()">🚪 Cerrar sesión</button>`;
   document.getElementById('mainContent').innerHTML = html;
 }
- 
+
 function modalUsuario(id) {
   const u = id ? cache.usuarios.find(x => x.id == id) : null;
   const colors = ['#1565C0', '#00897B', '#AD1457', '#6A1B9A', '#E65100', '#37474F'];
@@ -1061,7 +1061,7 @@ function modalUsuario(id) {
     ${u ? `<button class="btn danger" style="margin-top:10px" onclick="eliminarUsuario(${id})">🗑️ Eliminar</button>` : ''}
   `);
 }
- 
+
 async function guardarUsuario(id) {
   const nombre = document.getElementById('uNombre').value.trim();
   const usuario = document.getElementById('uUsuario').value.trim();
@@ -1086,7 +1086,7 @@ async function guardarUsuario(id) {
   } catch (e) { toast('❌ Error: ' + e.message); }
   finally { hideLoading(); }
 }
- 
+
 async function eliminarUsuario(id) {
   if (id == currentUser.id) { toast('❌ No puedes eliminarte'); return; }
   if (!confirm('¿Eliminar usuario?')) return;
@@ -1100,21 +1100,20 @@ async function eliminarUsuario(id) {
   } catch (e) { toast('❌ Error: ' + e.message); }
   finally { hideLoading(); }
 }
- 
+
 // ══════════════════════════════════════════
-//  SEMANAS
+//  SEMANAS — Tablas automáticas por semana
 // ══════════════════════════════════════════
- 
-// Días de la semana (Lunes a Sábado, Domingo = descanso)
+
 const DIAS = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
- 
+
 function semanaLabel(fechaInicio) {
   const d = new Date(fechaInicio + 'T00:00:00');
   const fin = new Date(d); fin.setDate(fin.getDate() + 6);
   const fmt2 = x => x.toLocaleDateString('es-MX', { day:'2-digit', month:'short' });
   return `${fmt2(d)} – ${fmt2(fin)}`;
 }
- 
+
 function getLunes(offsetSemanas = 0) {
   const hoy = new Date();
   const dow = hoy.getDay();
@@ -1123,13 +1122,62 @@ function getLunes(offsetSemanas = 0) {
   lunes.setDate(hoy.getDate() + diffLunes + offsetSemanas * 7);
   return lunes.toISOString().split('T')[0];
 }
- 
-function renderSemana() {
+
+// Genera automáticamente las semanas faltantes desde inicio hasta hoy
+async function generarSemanasAutomaticas(usuario_id) {
+  const semanasExistentes = (cache.semanas || []).filter(s => String(s.usuario_id) === String(usuario_id));
+  const hoy = new Date();
+  const lunesActual = getLunes(0);
+
+  // Buscar la semana más antigua registrada o usar hace 4 semanas como punto de partida
+  let fechaInicio;
+  if (semanasExistentes.length) {
+    // Calcular el lunes siguiente a la última semana registrada
+    const fechas = semanasExistentes.map(s => s.fecha_inicio).sort();
+    const ultimaFecha = fechas[fechas.length - 1];
+    const ultimaDate = new Date(ultimaFecha + 'T00:00:00');
+    ultimaDate.setDate(ultimaDate.getDate() + 7);
+    fechaInicio = ultimaDate.toISOString().split('T')[0];
+  } else {
+    // Primera vez: crear solo la semana actual
+    fechaInicio = lunesActual;
+  }
+
+  // Crear semanas faltantes hasta el lunes actual
+  const semanasACrear = [];
+  let fecha = new Date(fechaInicio + 'T00:00:00');
+  const lunesActualDate = new Date(lunesActual + 'T00:00:00');
+
+  while (fecha <= lunesActualDate) {
+    const fechaStr = fecha.toISOString().split('T')[0];
+    // Verificar que no exista ya
+    const yaExiste = semanasExistentes.some(s => s.fecha_inicio === fechaStr);
+    if (!yaExiste) {
+      semanasACrear.push(fechaStr);
+    }
+    fecha.setDate(fecha.getDate() + 7);
+  }
+
+  // Insertar semanas vacías
+  for (const f of semanasACrear) {
+    const diasVacios = DIAS.map(() => ({ cobrado: 0, prestado: 0, gasto: 0 }));
+    await dbInsert('semanas', {
+      usuario_id,
+      fecha_inicio: f,
+      saldo_anterior: 0,
+      dias: JSON.stringify(diasVacios)
+    });
+  }
+
+  return semanasACrear.length;
+}
+
+async function renderSemana() {
   const isAdmin = currentUser.rol === 'admin';
   let filtroTrabajador = window._filtroTrabajadorSemana || (isAdmin ? 'todos' : String(currentUser.id));
- 
+
   let html = '';
- 
+
   // Selector de trabajador para admin
   if (isAdmin) {
     html += `<div class="tag-row" style="margin-bottom:12px">
@@ -1145,41 +1193,85 @@ function renderSemana() {
     });
     html += `</div>`;
   }
- 
+
   html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
     <div class="section-title" style="margin:0">📅 Semanas de trabajo</div>
-    <button class="btn sm" onclick="modalNuevaSemana()">+ Nueva</button>
+    <button class="btn sm accent" onclick="crearSemanaManual()">+ Semana anterior</button>
   </div>`;
- 
-  // Filtrar semanas
+
+  // Auto-generar semanas para el usuario actual si es cobrador
+  // o para todos si es admin y hay filtro
+  document.getElementById('mainContent').innerHTML = html + `<div style="text-align:center;padding:20px;color:var(--text2)"><div class="spinner" style="margin:0 auto;border-color:rgba(21,101,192,0.3);border-top-color:var(--primary)"></div></div>`;
+
+  // Generar semanas automáticas según filtro
+  const usuariosAGenerar = isAdmin && filtroTrabajador === 'todos'
+    ? cache.usuarios.map(u => u.id)
+    : isAdmin
+      ? [parseInt(filtroTrabajador)]
+      : [currentUser.id];
+
+  for (const uid of usuariosAGenerar) {
+    await generarSemanasAutomaticas(uid);
+  }
+
+  await cargarCache();
+
+  // Re-renderizar con datos actualizados
   let semanas = [...(cache.semanas || [])].sort((a,b) => b.fecha_inicio.localeCompare(a.fecha_inicio));
   if (filtroTrabajador !== 'todos') {
     semanas = semanas.filter(s => String(s.usuario_id) === String(filtroTrabajador));
+  } else if (!isAdmin) {
+    semanas = semanas.filter(s => String(s.usuario_id) === String(currentUser.id));
   }
- 
+
+  let htmlFinal = isAdmin ? `<div class="tag-row" style="margin-bottom:12px">
+      <button class="tag-btn ${filtroTrabajador === 'todos' ? 'active' : ''}"
+        onclick="window._filtroTrabajadorSemana='todos';renderSemana()">👥 Todos</button>` : '';
+
+  if (isAdmin) {
+    cache.usuarios.forEach(u => {
+      htmlFinal += `<button class="tag-btn ${filtroTrabajador === String(u.id) ? 'active' : ''}"
+        onclick="window._filtroTrabajadorSemana='${u.id}';renderSemana()"
+        style="${filtroTrabajador === String(u.id) ? `background:${u.color};border-color:${u.color}` : ''}">
+        <span style="width:8px;height:8px;border-radius:50%;background:${u.color};display:inline-block;margin-right:4px"></span>
+        ${u.nombre.split(' ')[0]}
+      </button>`;
+    });
+    htmlFinal += `</div>`;
+  }
+
+  htmlFinal += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <div class="section-title" style="margin:0">📅 Semanas de trabajo</div>
+    <button class="btn sm accent" onclick="crearSemanaManual()">+ Semana anterior</button>
+  </div>`;
+
   if (!semanas.length) {
-    html += `<div class="empty"><div class="empty-icon">📅</div>
+    htmlFinal += `<div class="empty"><div class="empty-icon">📅</div>
       <div class="empty-text">Sin semanas registradas</div>
-      <div style="font-size:13px;color:var(--text2);margin-top:6px">Crea la primera tabla semanal</div>
     </div>`;
-    document.getElementById('mainContent').innerHTML = html;
+    document.getElementById('mainContent').innerHTML = htmlFinal;
     return;
   }
- 
+
   semanas.forEach(sem => {
     const usuario = cache.usuarios.find(u => u.id == sem.usuario_id) || { nombre: '—', color: '#999' };
-    const dias = sem.dias || [];
-    let saldoAcum = Number(sem.saldo_anterior || 0);
- 
-    const totalCobrado = dias.reduce((s,d) => s + Number(d.cobrado||0), 0);
-    const totalPrestado = dias.reduce((s,d) => s + Number(d.prestado||0), 0);
-    const totalGasto = dias.reduce((s,d) => s + Number(d.gasto||0), 0);
-    const saldoFinal = saldoAcum + totalCobrado - totalPrestado - totalGasto;
- 
-    html += `<div class="semana-card">
+    const dias = sem.dias || Array(7).fill({cobrado:0,prestado:0,gasto:0});
+    const saldoAcum = Number(sem.saldo_anterior || 0);
+
+    const totalCobrado  = dias.slice(0,6).reduce((s,d) => s + Number(d.cobrado||0), 0);
+    const totalPrestado = dias.slice(0,6).reduce((s,d) => s + Number(d.prestado||0), 0);
+    const totalGasto    = dias.slice(0,6).reduce((s,d) => s + Number(d.gasto||0), 0);
+    const saldoFinal    = saldoAcum + totalCobrado - totalPrestado - totalGasto;
+
+    const esActual = sem.fecha_inicio === getLunes(0);
+
+    htmlFinal += `<div class="semana-card" ${esActual ? 'style="border:2px solid var(--primary)"' : ''}>
       <div class="semana-header">
         <div>
-          <div class="semana-title">📅 ${semanaLabel(sem.fecha_inicio)}</div>
+          <div class="semana-title">
+            📅 ${semanaLabel(sem.fecha_inicio)}
+            ${esActual ? '<span style="font-size:11px;background:var(--primary);color:#fff;border-radius:99px;padding:2px 8px;margin-left:6px;font-family:var(--font)">Semana actual</span>' : ''}
+          </div>
           ${isAdmin ? `<div style="margin-top:4px"><span class="cobrador-pill" style="background:${usuario.color}22;color:${usuario.color}">
             <span style="width:8px;height:8px;border-radius:50%;background:${usuario.color};display:inline-block"></span>
             ${usuario.nombre}
@@ -1190,169 +1282,256 @@ function renderSemana() {
           <div style="font-size:18px;font-weight:900;font-family:var(--mono)" class="${saldoFinal >= 0 ? 'saldo-pos' : 'saldo-neg'}">${fmt(saldoFinal)}</div>
         </div>
       </div>
- 
+
       <div class="semana-table-wrap">
         <table class="semana-table">
           <thead>
-            <tr>
-              <th>Día</th>
-              <th>Cobrado</th>
-              <th>Prestado</th>
-              <th>Gasto</th>
-              <th>Saldo día</th>
-              <th>Acumulado</th>
-            </tr>
+            <tr><th>Día</th><th>Cobrado</th><th>Prestado</th><th>Gasto</th><th>Saldo día</th><th>Acumulado</th></tr>
           </thead>
           <tbody>`;
- 
-    let acum = saldoAcum;
+
+    let acumDias = 0;
     dias.forEach((dia, i) => {
       const esDomingo = i === 6;
-      const cobrado = Number(dia.cobrado || 0);
+      const cobrado  = Number(dia.cobrado  || 0);
       const prestado = Number(dia.prestado || 0);
-      const gasto = Number(dia.gasto || 0);
+      const gasto    = Number(dia.gasto    || 0);
       const saldoDia = esDomingo ? 0 : cobrado - prestado - gasto;
-      if (!esDomingo) acum += saldoDia;
-      const acumMostrar = esDomingo ? '—' : fmt(acum);
-      const saldoClass = saldoDia >= 0 ? 'saldo-pos' : 'saldo-neg';
- 
-      html += `<tr class="${esDomingo ? 'domingo' : ''}">
-        <td>${DIAS[i]}${esDomingo ? ' 🔴' : ''}</td>
+      if (!esDomingo) acumDias += saldoDia;
+      const sc     = saldoDia >= 0 ? 'saldo-pos' : 'saldo-neg';
+      const scAcum = acumDias >= 0 ? 'saldo-pos' : 'saldo-neg';
+
+      htmlFinal += `<tr class="${esDomingo ? 'domingo' : ''}">
+        <td><b>${DIAS[i]}</b>${esDomingo ? ' 🔴' : ''}</td>
         <td>${esDomingo ? '—' : fmt(cobrado)}</td>
         <td>${esDomingo ? '—' : fmt(prestado)}</td>
         <td>${esDomingo ? '—' : fmt(gasto)}</td>
-        <td>${esDomingo ? 'Descanso' : `<span class="${saldoClass}">${fmt(saldoDia)}</span>`}</td>
-        <td>${esDomingo ? '—' : `<span class="${saldoClass}">${acumMostrar}</span>`}</td>
+        <td>${esDomingo ? '<span style="color:#aaa">Descanso</span>' : `<span class="${sc}">${fmt(saldoDia)}</span>`}</td>
+        <td>${esDomingo ? '—' : `<span class="${scAcum}">${fmt(acumDias)}</span>`}</td>
       </tr>`;
     });
- 
-    html += `<tr class="total-row">
-        <td>TOTAL</td>
+
+    const saldoNetSemana = totalCobrado - totalPrestado - totalGasto;
+    const scT = saldoNetSemana >= 0 ? 'saldo-pos' : 'saldo-neg';
+    htmlFinal += `<tr class="total-row">
+        <td>TOTAL SEMANA</td>
         <td>${fmt(totalCobrado)}</td>
         <td>${fmt(totalPrestado)}</td>
         <td>${fmt(totalGasto)}</td>
-        <td class="${(totalCobrado-totalPrestado-totalGasto)>=0?'saldo-pos':'saldo-neg'}">${fmt(totalCobrado-totalPrestado-totalGasto)}</td>
-        <td class="${saldoFinal>=0?'saldo-pos':'saldo-neg'}">${fmt(saldoFinal)}</td>
+        <td class="${scT}">${fmt(saldoNetSemana)}</td>
+        <td class="${scT}">${fmt(saldoNetSemana)}</td>
       </tr>
     </tbody></table></div>
- 
-    <div style="display:flex;gap:8px;margin-top:10px">
-      <button class="btn sm warning" onclick="editarSemana('${sem.id}')">✏️ Editar</button>
+
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+      <button class="btn sm" onclick="modalIngresarDatos('${sem.id}')">✏️ Ingresar datos</button>
+      <button class="btn sm outline" onclick="modalSaldoAnterior('${sem.id}','${sem.saldo_anterior||0}')">💰 Saldo anterior</button>
       <button class="btn sm danger" onclick="eliminarSemana('${sem.id}')">🗑️</button>
     </div>
     </div>`;
   });
- 
-  document.getElementById('mainContent').innerHTML = html;
+
+  document.getElementById('mainContent').innerHTML = htmlFinal;
 }
- 
-function modalNuevaSemana() {
-  const isAdmin = currentUser.rol === 'admin';
-  const usuariosOpts = isAdmin
-    ? cache.usuarios.map(u => `<option value="${u.id}">${u.nombre}</option>`).join('')
-    : `<option value="${currentUser.id}">${currentUser.nombre}</option>`;
- 
-  const lunesActual = getLunes();
- 
-  openModal(`
-    <div class="modal-title">📅 Nueva semana</div>
-    ${isAdmin ? `<div class="field"><label>Trabajador</label><select id="semUsuario">${usuariosOpts}</select></div>` : `<input type="hidden" id="semUsuario" value="${currentUser.id}">`}
-    <div class="field"><label>Semana que inicia (Lunes)</label><input id="semFecha" type="date" value="${lunesActual}"></div>
-    <div class="field"><label>Saldo anterior ($)</label><input id="semSaldoAnt" type="number" value="0" step="0.01" placeholder="0.00"></div>
-    <div style="background:var(--surface2);border-radius:12px;padding:14px;margin-bottom:12px">
-      <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px">DATOS POR DÍA (Lunes a Sábado)</div>
-      ${[0,1,2,3,4,5].map(i => `
-        <div style="margin-bottom:10px">
-          <div style="font-size:12px;font-weight:800;color:var(--primary);margin-bottom:6px">${DIAS[i]}</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
-            <div><div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:3px">Cobrado</div>
-              <input type="number" id="d${i}_cobrado" placeholder="0" step="0.01" min="0" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg)"></div>
-            <div><div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:3px">Prestado</div>
-              <input type="number" id="d${i}_prestado" placeholder="0" step="0.01" min="0" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg)"></div>
-            <div><div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:3px">Gasto</div>
-              <input type="number" id="d${i}_gasto" placeholder="0" step="0.01" min="0" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg)"></div>
-          </div>
-        </div>`).join('')}
-    </div>
-    <div class="modal-actions">
-      <button class="btn outline" onclick="closeModal()">Cancelar</button>
-      <button class="btn" onclick="guardarSemana(null)">✅ Guardar</button>
-    </div>
-  `);
-}
- 
-function editarSemana(id) {
-  const sem = cache.semanas.find(s => String(s.id) === String(id));
+
+// Modal para ingresar cobrado, prestado y gasto de cada día
+function modalIngresarDatos(semId) {
+  const sem = cache.semanas.find(s => String(s.id) === String(semId));
   if (!sem) return;
-  const isAdmin = currentUser.rol === 'admin';
-  const usuariosOpts = isAdmin
-    ? cache.usuarios.map(u => `<option value="${u.id}" ${u.id == sem.usuario_id ? 'selected' : ''}>${u.nombre}</option>`).join('')
-    : `<option value="${currentUser.id}">${currentUser.nombre}</option>`;
   const dias = sem.dias || Array(7).fill({cobrado:0,prestado:0,gasto:0});
- 
+
+  let filas = '';
+  [0,1,2,3,4,5].forEach(i => {
+    const d = dias[i] || {};
+    filas += `
+    <div style="background:var(--bg);border-radius:12px;padding:12px;margin-bottom:10px">
+      <div style="font-size:13px;font-weight:800;color:var(--primary);margin-bottom:8px">📅 ${DIAS[i]}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <div>
+          <div style="font-size:10px;color:var(--success);font-weight:800;margin-bottom:4px">💰 COBRADO</div>
+          <input type="number" id="d${i}_cobrado" value="${d.cobrado||0}" step="0.01" min="0"
+            style="width:100%;padding:10px 8px;border:2px solid var(--border);border-radius:10px;font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;background:#fff;color:var(--success)"
+            oninput="recalcularFila(${i})">
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--primary);font-weight:800;margin-bottom:4px">💵 PRESTADO</div>
+          <input type="number" id="d${i}_prestado" value="${d.prestado||0}" step="0.01" min="0"
+            style="width:100%;padding:10px 8px;border:2px solid var(--border);border-radius:10px;font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;background:#fff;color:var(--primary)"
+            oninput="recalcularFila(${i})">
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--warning);font-weight:800;margin-bottom:4px">🧾 GASTO</div>
+          <input type="number" id="d${i}_gasto" value="${d.gasto||0}" step="0.01" min="0"
+            style="width:100%;padding:10px 8px;border:2px solid var(--border);border-radius:10px;font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;background:#fff;color:var(--warning)"
+            oninput="recalcularFila(${i})">
+        </div>
+      </div>
+      <div style="margin-top:8px;display:flex;justify-content:space-between;font-size:12px;font-weight:700">
+        <span style="color:var(--text2)">Saldo del día:</span>
+        <span id="saldo_dia_${i}" style="font-family:var(--mono);font-weight:900">$0.00</span>
+      </div>
+      <div style="margin-top:4px;display:flex;justify-content:space-between;font-size:11px;font-weight:700">
+        <span style="color:var(--text2)">Saldo acumulado:</span>
+        <span id="acum_dia_${i}" style="font-family:var(--mono);font-weight:800;color:var(--text2)">$0.00</span>
+      </div>
+    </div>`;
+  });
+
   openModal(`
-    <div class="modal-title">✏️ Editar semana</div>
-    ${isAdmin ? `<div class="field"><label>Trabajador</label><select id="semUsuario">${usuariosOpts}</select></div>` : `<input type="hidden" id="semUsuario" value="${currentUser.id}">`}
-    <div class="field"><label>Semana que inicia (Lunes)</label><input id="semFecha" type="date" value="${(sem.fecha_inicio||'').split('T')[0]}"></div>
-    <div class="field"><label>Saldo anterior ($)</label><input id="semSaldoAnt" type="number" value="${sem.saldo_anterior||0}" step="0.01"></div>
-    <div style="background:var(--surface2);border-radius:12px;padding:14px;margin-bottom:12px">
-      <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px">DATOS POR DÍA (Lunes a Sábado)</div>
-      ${[0,1,2,3,4,5].map(i => {
-        const d = dias[i] || {};
-        return `<div style="margin-bottom:10px">
-          <div style="font-size:12px;font-weight:800;color:var(--primary);margin-bottom:6px">${DIAS[i]}</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
-            <div><div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:3px">Cobrado</div>
-              <input type="number" id="d${i}_cobrado" value="${d.cobrado||0}" step="0.01" min="0" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg)"></div>
-            <div><div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:3px">Prestado</div>
-              <input type="number" id="d${i}_prestado" value="${d.prestado||0}" step="0.01" min="0" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg)"></div>
-            <div><div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:3px">Gasto</div>
-              <input type="number" id="d${i}_gasto" value="${d.gasto||0}" step="0.01" min="0" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:13px;background:var(--bg)"></div>
-          </div>
-        </div>`;
-      }).join('')}
+    <div class="modal-title">✏️ Ingresar datos — ${semanaLabel(sem.fecha_inicio)}</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:14px;font-weight:600">
+      Ingresa los montos de cada día laborable. El domingo es descanso automático.
     </div>
+    ${filas}
     <div class="modal-actions">
       <button class="btn outline" onclick="closeModal()">Cancelar</button>
-      <button class="btn" onclick="guardarSemana('${id}')">✅ Guardar</button>
+      <button class="btn" onclick="guardarDatosSemana('${semId}')">✅ Guardar</button>
     </div>
   `);
+
+  // Calcular saldos iniciales
+  [0,1,2,3,4,5].forEach(i => recalcularFila(i));
 }
- 
-async function guardarSemana(id) {
-  const usuarioEl = document.getElementById('semUsuario');
-  const usuario_id = parseInt(usuarioEl.value || usuarioEl.getAttribute('value'));
-  const fecha_inicio = document.getElementById('semFecha').value;
-  const saldo_anterior = parseFloat(document.getElementById('semSaldoAnt').value || 0);
-  if (!fecha_inicio) { toast('❌ Selecciona la fecha'); return; }
- 
-  // Recoger datos de los 7 días (domingo = 0 automático)
+
+function recalcularFila(i) {
+  const cobrado  = parseFloat(document.getElementById(`d${i}_cobrado`)?.value  || 0);
+  const prestado = parseFloat(document.getElementById(`d${i}_prestado`)?.value || 0);
+  const gasto    = parseFloat(document.getElementById(`d${i}_gasto`)?.value    || 0);
+  const saldo = cobrado - prestado - gasto;
+  const el = document.getElementById(`saldo_dia_${i}`);
+  if (el) {
+    el.textContent = fmt(saldo);
+    el.style.color = saldo >= 0 ? 'var(--success)' : 'var(--danger)';
+  }
+  // Recalcular acumulado para todos los días
+  let acum = 0;
+  [0,1,2,3,4,5].forEach(j => {
+    const c = parseFloat(document.getElementById(`d${j}_cobrado`)?.value  || 0);
+    const p = parseFloat(document.getElementById(`d${j}_prestado`)?.value || 0);
+    const g = parseFloat(document.getElementById(`d${j}_gasto`)?.value    || 0);
+    acum += c - p - g;
+    const elA = document.getElementById(`acum_dia_${j}`);
+    if (elA) {
+      elA.textContent = fmt(acum);
+      elA.style.color = acum >= 0 ? 'var(--success)' : 'var(--danger)';
+    }
+  });
+}
+
+async function guardarDatosSemana(semId) {
+  const sem = cache.semanas.find(s => String(s.id) === String(semId));
+  if (!sem) return;
+  const diasActuales = sem.dias || Array(7).fill({cobrado:0,prestado:0,gasto:0});
+
   const dias = DIAS.map((_, i) => {
-    if (i === 6) return { cobrado: 0, prestado: 0, gasto: 0 }; // domingo
+    if (i === 6) return { cobrado: 0, prestado: 0, gasto: 0 };
     return {
       cobrado:  parseFloat(document.getElementById(`d${i}_cobrado`)?.value  || 0),
       prestado: parseFloat(document.getElementById(`d${i}_prestado`)?.value || 0),
       gasto:    parseFloat(document.getElementById(`d${i}_gasto`)?.value    || 0),
     };
   });
- 
+
   showLoading('Guardando...');
   try {
-    const obj = { usuario_id, fecha_inicio, saldo_anterior, dias: JSON.stringify(dias) };
-    if (id) {
-      await dbUpdate('semanas', id, obj);
-      toast('✅ Semana actualizada');
-    } else {
-      await dbInsert('semanas', obj);
-      toast('✅ Semana creada');
-    }
+    await dbUpdate('semanas', semId, { dias: JSON.stringify(dias) });
     await cargarCache();
     closeModal();
+    toast('✅ Datos guardados');
     renderSemana();
   } catch(e) { toast('❌ Error: ' + e.message); }
   finally { hideLoading(); }
 }
- 
+
+// Modal para ajustar saldo anterior
+function modalSaldoAnterior(semId, saldoActual) {
+  openModal(`
+    <div class="modal-title">💰 Saldo anterior</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:16px">
+      Este es el saldo con el que inicia la semana (saldo final de la semana anterior).
+    </div>
+    <div class="field">
+      <label>Saldo anterior ($)</label>
+      <input id="inputSaldoAnt" type="number" value="${saldoActual}" step="0.01"
+        style="font-size:20px;font-weight:800;font-family:var(--mono);text-align:right">
+    </div>
+    <div class="modal-actions">
+      <button class="btn outline" onclick="closeModal()">Cancelar</button>
+      <button class="btn" onclick="guardarSaldoAnterior('${semId}')">✅ Guardar</button>
+    </div>
+  `);
+}
+
+async function guardarSaldoAnterior(semId) {
+  const saldo = parseFloat(document.getElementById('inputSaldoAnt').value || 0);
+  showLoading('Guardando...');
+  try {
+    await dbUpdate('semanas', semId, { saldo_anterior: saldo });
+    await cargarCache();
+    closeModal();
+    toast('✅ Saldo actualizado');
+    renderSemana();
+  } catch(e) { toast('❌ Error: ' + e.message); }
+  finally { hideLoading(); }
+}
+
+// Crear semana anterior manualmente (para semanas pasadas no generadas)
+function crearSemanaManual() {
+  const isAdmin = currentUser.rol === 'admin';
+  const usuariosOpts = isAdmin
+    ? cache.usuarios.map(u => `<option value="${u.id}">${u.nombre}</option>`).join('')
+    : `<option value="${currentUser.id}">${currentUser.nombre}</option>`;
+
+  openModal(`
+    <div class="modal-title">📅 Agregar semana anterior</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:16px">
+      Usa esto para registrar semanas pasadas que no se generaron automáticamente.
+    </div>
+    ${isAdmin ? `<div class="field"><label>Trabajador</label><select id="semUsuarioManual">${usuariosOpts}</select></div>`
+              : `<input type="hidden" id="semUsuarioManual" value="${currentUser.id}">`}
+    <div class="field">
+      <label>Fecha del Lunes de esa semana</label>
+      <input id="semFechaManual" type="date" value="${getLunes(-1)}">
+    </div>
+    <div class="field">
+      <label>Saldo anterior ($)</label>
+      <input id="semSaldoManual" type="number" value="0" step="0.01">
+    </div>
+    <div class="modal-actions">
+      <button class="btn outline" onclick="closeModal()">Cancelar</button>
+      <button class="btn" onclick="guardarSemanaManual()">✅ Crear</button>
+    </div>
+  `);
+}
+
+async function guardarSemanaManual() {
+  const usuarioEl = document.getElementById('semUsuarioManual');
+  const usuario_id = parseInt(usuarioEl.value || usuarioEl.getAttribute('value'));
+  const fecha_inicio = document.getElementById('semFechaManual').value;
+  const saldo_anterior = parseFloat(document.getElementById('semSaldoManual').value || 0);
+  if (!fecha_inicio) { toast('❌ Selecciona la fecha'); return; }
+
+  // Verificar que no exista ya
+  const yaExiste = cache.semanas.some(s =>
+    String(s.usuario_id) === String(usuario_id) && s.fecha_inicio === fecha_inicio
+  );
+  if (yaExiste) { toast('⚠️ Ya existe una semana para esa fecha'); return; }
+
+  const diasVacios = DIAS.map(() => ({ cobrado: 0, prestado: 0, gasto: 0 }));
+  showLoading('Creando semana...');
+  try {
+    await dbInsert('semanas', {
+      usuario_id, fecha_inicio, saldo_anterior,
+      dias: JSON.stringify(diasVacios)
+    });
+    await cargarCache();
+    closeModal();
+    toast('✅ Semana creada');
+    renderSemana();
+  } catch(e) { toast('❌ Error: ' + e.message); }
+  finally { hideLoading(); }
+}
+
 async function eliminarSemana(id) {
   if (!confirm('¿Eliminar esta semana?')) return;
   showLoading('Eliminando...');
@@ -1364,6 +1543,10 @@ async function eliminarSemana(id) {
   } catch(e) { toast('❌ Error: ' + e.message); }
   finally { hideLoading(); }
 }
+
+</script>
+</body>
+</html>
  
 </script>
 </body>
