@@ -234,29 +234,7 @@
     <button class="topbar-action" onclick="doLogout()">🚪</button>
   </div>
   <div class="content" id="mainContent"></div>
-  <div class="bottomnav">
-    <button class="nav-item active" id="nav-dash" onclick="navTo('dash')">
-      <div class="nav-icon">🏠</div><div class="nav-label">Inicio</div>
-    </button>
-    <button class="nav-item" id="nav-cobro" onclick="navTo('cobro')">
-      <div class="nav-icon">📋</div><div class="nav-label">Cobro</div>
-    </button>
-    <button class="nav-item" id="nav-clientes" onclick="navTo('clientes')">
-      <div class="nav-icon">👥</div><div class="nav-label">Clientes</div>
-    </button>
-    <button class="nav-item" id="nav-prestamos" onclick="navTo('prestamos')">
-      <div class="nav-icon">💵</div><div class="nav-label">Préstamos</div>
-    </button>
-    <button class="nav-item" id="nav-pagos" onclick="navTo('pagos')">
-      <div class="nav-icon">💳</div><div class="nav-label">Pagos</div>
-    </button>
-    <button class="nav-item" id="nav-semana" onclick="navTo('semana')">
-      <div class="nav-icon">📅</div><div class="nav-label">Semana</div>
-    </button>
-    <button class="nav-item" id="nav-config" onclick="navTo('config')">
-      <div class="nav-icon">⚙️</div><div class="nav-label">Config</div>
-    </button>
-  </div>
+  <div class="bottomnav" id="bottomnav"></div>
 </div>
  
 <!-- ══════════════ MODAL ══════════════ -->
@@ -428,6 +406,7 @@ async function doLogin() {
       document.getElementById('loginError').textContent = '';
       show('appScreen');
       await cargarCache();
+      renderNav();
       navTo('dash');
     } else {
       document.getElementById('loginError').textContent = '❌ Usuario o contraseña incorrectos';
@@ -484,11 +463,37 @@ async function cargarCache() {
 const navTitles = { dash: 'Dashboard', cobro: 'Lista de Cobro', clientes: 'Clientes', prestamos: 'Préstamos', pagos: 'Pagos', semana: 'Semanas', config: 'Configuración' };
 const navRenderers = { dash: renderDash, cobro: renderCobro, clientes: renderClientes, prestamos: renderPrestamos, pagos: renderPagos, semana: renderSemana, config: renderConfig };
  
+function renderNav() {
+  const isAdmin = currentUser.rol === 'admin';
+  // Cobrador: 5 items — Admin: 5 items (diferentes)
+  const itemsCobrador = [
+    { id: 'dash',     icon: '🏠', label: 'Inicio'   },
+    { id: 'cobro',    icon: '📋', label: 'Cobro'    },
+    { id: 'prestamos',icon: '💵', label: 'Préstamos'},
+    { id: 'semana',   icon: '📅', label: 'Semana'   },
+    { id: 'config',   icon: '⚙️', label: 'Config'   },
+  ];
+  const itemsAdmin = [
+    { id: 'dash',     icon: '🏠', label: 'Inicio'   },
+    { id: 'cobro',    icon: '📋', label: 'Cobro'    },
+    { id: 'clientes', icon: '👥', label: 'Clientes' },
+    { id: 'prestamos',icon: '💵', label: 'Préstamos'},
+    { id: 'pagos',    icon: '💳', label: 'Pagos'    },
+    { id: 'semana',   icon: '📅', label: 'Semana'   },
+    { id: 'config',   icon: '⚙️', label: 'Config'   },
+  ];
+  const items = isAdmin ? itemsAdmin : itemsCobrador;
+  document.getElementById('bottomnav').innerHTML = items.map(it =>
+    `<button class="nav-item ${currentNav === it.id ? 'active' : ''}" id="nav-${it.id}" onclick="navTo('${it.id}')">
+      <div class="nav-icon">${it.icon}</div>
+      <div class="nav-label">${it.label}</div>
+    </button>`
+  ).join('');
+}
+ 
 async function navTo(section) {
   currentNav = section;
-  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-  const el = document.getElementById('nav-' + section);
-  if (el) el.classList.add('active');
+  renderNav();
   document.getElementById('mainTitle').textContent = navTitles[section];
   await cargarCache();
   await navRenderers[section]();
@@ -1948,7 +1953,3 @@ async function quitarNoPago(prestamoId) {
 </body>
 </html>
  
-
-</script>
-</body>
-</html>
