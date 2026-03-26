@@ -380,8 +380,22 @@
   });
 
   function fmt(n) { return '$' + Number(n || 0).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
-  function fmtDate(d) { if (!d) return '—'; const [y, m, day] = d.split('T')[0].split('-'); return `${day}/${m}/${y}`; }
-  function today() { return new Date().toISOString().split('T')[0]; }
+  function fmtDate(d) {
+    if (!d) return '—';
+    let date = new Date(d);
+    if (isNaN(date.getTime())) return '—';
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const yyyy = date.getFullYear();
+    return `${dd}/${mm}/${yyyy}`;
+  }
+  function today() {
+    const now = new Date();
+    const dd = String(now.getDate()).padStart(2, '0');
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const yyyy = now.getFullYear();
+    return `${yyyy}-${mm}-${dd}`;
+  }
   function avatarText(name) { return (name || '?').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase(); }
 
   function cuotaDiaria(p) { return (p.monto * (1 + p.interes / 100)) / p.plazo; }
@@ -2047,6 +2061,10 @@
     } catch(e) { toast('❌ Error: ' + e.message); }
     finally { hideLoading(); }
   }
+
+</script>
+</body>
+</html>
 
 </script>
 </body>
