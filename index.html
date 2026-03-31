@@ -192,6 +192,197 @@
   .resumen-item { background: rgba(255,255,255,0.15); border-radius: 12px; padding: 12px; text-align: center; }
   .resumen-item .val { font-size: 18px; font-weight: 900; font-family: var(--mono); }
   .resumen-item .lbl { font-size: 10px; opacity: 0.8; font-weight: 700; margin-top: 2px; text-transform: uppercase; }
+
+  /* ── BÚSQUEDA GLOBAL ── */
+  .search-global-wrap { position: relative; margin-bottom: 16px; }
+  .search-global-input {
+    width: 100%;
+    padding: 16px 20px 16px 50px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--surface);
+    outline: none;
+    transition: all 0.2s;
+    box-shadow: 0 2px 12px rgba(21,101,192,0.08);
+  }
+  .search-global-input:focus {
+    border-color: var(--primary);
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(21,101,192,0.18);
+  }
+  .search-global-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+  }
+  .search-global-clear {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text2);
+    font-weight: 700;
+  }
+  .search-category-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+  .search-category-tabs::-webkit-scrollbar { display: none; }
+  .search-cat-btn {
+    padding: 7px 16px;
+    border-radius: 99px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    color: var(--text2);
+    white-space: nowrap;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .search-cat-btn.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+  .search-cat-count {
+    background: rgba(255,255,255,0.25);
+    border-radius: 99px;
+    padding: 1px 7px;
+    font-size: 10px;
+    font-weight: 900;
+  }
+  .search-cat-btn:not(.active) .search-cat-count {
+    background: var(--surface2);
+    color: var(--text2);
+  }
+  .search-section-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin: 16px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .search-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 16px;
+    background: var(--surface);
+    border-radius: 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(21,101,192,0.07);
+    transition: all 0.15s;
+    border: 1.5px solid transparent;
+  }
+  .search-result-item:active {
+    transform: scale(0.98);
+    border-color: var(--primary);
+  }
+  .search-result-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: 900;
+    flex-shrink: 0;
+    color: #fff;
+  }
+  .search-result-body { flex: 1; min-width: 0; }
+  .search-result-name {
+    font-size: 14px;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .search-result-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .search-result-right { text-align: right; flex-shrink: 0; }
+  .search-highlight {
+    background: #FFF59D;
+    color: #333;
+    border-radius: 3px;
+    padding: 0 2px;
+    font-weight: 900;
+  }
+  .search-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text2);
+  }
+  .search-empty-icon { font-size: 48px; margin-bottom: 12px; }
+  .search-empty-title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+  .search-empty-sub { font-size: 13px; }
+  .search-stats-bar {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    border-radius: 16px;
+    padding: 14px 18px;
+    color: #fff;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .search-placeholder {
+    text-align: center;
+    padding: 32px 20px;
+  }
+  .search-placeholder-icon { font-size: 56px; margin-bottom: 16px; filter: grayscale(0.2); }
+  .search-placeholder-title { font-size: 18px; font-weight: 900; color: var(--text); margin-bottom: 8px; }
+  .search-placeholder-sub { font-size: 13px; color: var(--text2); line-height: 1.6; }
+  .search-shortcut-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+  .search-shortcut {
+    padding: 8px 16px;
+    border-radius: 99px;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text2);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: all 0.15s;
+  }
+  .search-shortcut:active { transform: scale(0.96); border-color: var(--primary); color: var(--primary); }
 </style>
 </head>
 <body>
@@ -243,7 +434,7 @@
 
 <script>
 // ══════════════════════════════════════════
-//  CREDENCIALES SUPABASE — fijas en el código
+//  CREDENCIALES SUPABASE
 // ══════════════════════════════════════════
 const SUPABASE_URL = 'https://rjnbxjxgrbrysnjuhlrl.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqbmJ4anhncmJyeXNuanVobHJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MDg4NTksImV4cCI6MjA4OTM4NDg1OX0.E-ZuwfxcSJ-xSPZyzys8I6wiH6cOav97YaRLQXtw-j4';
@@ -251,7 +442,6 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 let sbClient = null;
 let demoMode = false;
 
-// Demo DB en memoria
 let demoDB = {
   usuarios: [
     { id: 1, nombre: 'Administrador', usuario: 'admin', password: '1234', rol: 'admin', color: '#1565C0', activo: true }
@@ -262,29 +452,19 @@ let demoDB = {
   semanas: []
 };
 
-// ── Conectar automáticamente al cargar ──
-window.addEventListener('load', () => {
-  iniciarConexion();
-});
+window.addEventListener('load', () => { iniciarConexion(); });
 
 function iniciarConexion() {
-  if (!window.supabase) {
-    setTimeout(iniciarConexion, 800);
-    return;
-  }
+  if (!window.supabase) { setTimeout(iniciarConexion, 800); return; }
   showLoading('Conectando...');
   try {
-    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-      auth: { persistSession: false }
-    });
+    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
     demoMode = false;
     hideLoading();
-    document.getElementById('connBadge').innerHTML =
-      '<span class="conn-badge conn-ok">☁️ Supabase conectado</span>';
+    document.getElementById('connBadge').innerHTML = '<span class="conn-badge conn-ok">☁️ Supabase conectado</span>';
   } catch(e) {
     hideLoading();
-    document.getElementById('connBadge').innerHTML =
-      '<span class="conn-badge conn-err">❌ Sin conexión — modo demo</span>';
+    document.getElementById('connBadge').innerHTML = '<span class="conn-badge conn-err">❌ Sin conexión — modo demo</span>';
     demoMode = true;
   }
 }
@@ -329,10 +509,7 @@ async function dbUpdate(tabla, id, obj) {
 }
 
 async function dbDelete(tabla, id) {
-  if (demoMode) {
-    demoDB[tabla] = demoDB[tabla].filter(x => x.id !== id);
-    return;
-  }
+  if (demoMode) { demoDB[tabla] = demoDB[tabla].filter(x => x.id !== id); return; }
   const { error } = await sbClient.from(tabla).delete().eq('id', id);
   if (error) throw error;
 }
@@ -346,6 +523,10 @@ let cache = { clientes: [], prestamos: [], pagos: [], usuarios: [] };
 let filtroClientes = '';
 let filtroPrestamos = 'todos';
 
+// Estado búsqueda global
+let searchQuery = '';
+let searchCategory = 'todos';
+
 // ══════════════════════════════════════════
 //  UI HELPERS
 // ══════════════════════════════════════════
@@ -357,9 +538,7 @@ function showLoading(msg = 'Cargando...') {
   document.getElementById('loadingText').textContent = msg;
   document.getElementById('loadingOverlay').classList.add('show');
 }
-function hideLoading() {
-  document.getElementById('loadingOverlay').classList.remove('show');
-}
+function hideLoading() { document.getElementById('loadingOverlay').classList.remove('show'); }
 function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -370,9 +549,7 @@ function openModal(html) {
   document.getElementById('modalContent').innerHTML = html;
   document.getElementById('modalOverlay').classList.add('open');
 }
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
 document.getElementById('modalOverlay').addEventListener('click', e => {
   if (e.target === document.getElementById('modalOverlay')) closeModal();
 });
@@ -381,13 +558,9 @@ function fmt(n) { return '$' + Number(n || 0).toLocaleString('es-MX', { minimumF
 function fmtDate(d) { if (!d) return '—'; const [y, m, day] = d.split('T')[0].split('-'); return `${day}/${m}/${y}`; }
 function today() {
   const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 function avatarText(name) { return (name || '?').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase(); }
-
 function cuotaDiaria(p) { return (p.monto * (1 + p.interes / 100)) / p.plazo; }
 function totalPrestamo(p) { return p.monto * (1 + p.interes / 100); }
 function totalPagado(prestamoId) { return cache.pagos.filter(pg => pg.prestamo_id == prestamoId && pg.metodo !== 'no_pago').reduce((s, pg) => s + Number(pg.monto), 0); }
@@ -425,6 +598,8 @@ document.getElementById('loginPass').addEventListener('keydown', e => { if (e.ke
 
 function doLogout() {
   currentUser = null;
+  searchQuery = '';
+  searchCategory = 'todos';
   show('loginScreen');
   document.getElementById('loginUser').value = '';
   document.getElementById('loginPass').value = '';
@@ -445,16 +620,9 @@ async function cargarCache() {
       dbSelect('semanas')
     ]);
     const clienteIds = clientes.map(c => c.id);
-    const prestamosFiltrados = currentUser.rol === 'admin'
-      ? prestamos
-      : prestamos.filter(p => clienteIds.includes(p.cliente_id));
-    const pagosFiltrados = currentUser.rol === 'admin'
-      ? pagos
-      : pagos.filter(pg => prestamosFiltrados.map(p => p.id).includes(pg.prestamo_id));
-    const semanasParsed = (semanas || []).map(s => ({
-      ...s,
-      dias: typeof s.dias === 'string' ? JSON.parse(s.dias) : (s.dias || [])
-    }));
+    const prestamosFiltrados = currentUser.rol === 'admin' ? prestamos : prestamos.filter(p => clienteIds.includes(p.cliente_id));
+    const pagosFiltrados = currentUser.rol === 'admin' ? pagos : pagos.filter(pg => prestamosFiltrados.map(p => p.id).includes(pg.prestamo_id));
+    const semanasParsed = (semanas || []).map(s => ({ ...s, dias: typeof s.dias === 'string' ? JSON.parse(s.dias) : (s.dias || []) }));
     cache = { clientes, prestamos: prestamosFiltrados, pagos: pagosFiltrados, usuarios, semanas: semanasParsed };
   } finally {
     hideLoading();
@@ -464,25 +632,35 @@ async function cargarCache() {
 // ══════════════════════════════════════════
 //  NAVIGATION
 // ══════════════════════════════════════════
-const navTitles = { dash: 'Dashboard', cobro: 'Lista de Cobro', clientes: 'Clientes', prestamos: 'Préstamos', pagos: 'Pagos', semana: 'Semanas', config: 'Configuración', historial: 'Historial de Cobros', resumenSemana: '📊 Resumen Semanal' };
-const navRenderers = { dash: renderDash, cobro: renderCobro, clientes: renderClientes, prestamos: renderPrestamos, pagos: renderPagos, semana: renderSemana, config: renderConfig, historial: renderHistorialCobro, resumenSemana: renderResumenSemana };
+const navTitles = {
+  dash: 'Dashboard', cobro: 'Lista de Cobro', clientes: 'Clientes',
+  prestamos: 'Préstamos', pagos: 'Pagos', semana: 'Semanas',
+  config: 'Configuración', historial: 'Historial de Cobros',
+  resumenSemana: '📊 Resumen Semanal', buscar: '🔍 Búsqueda Global'
+};
+const navRenderers = {
+  dash: renderDash, cobro: renderCobro, clientes: renderClientes,
+  prestamos: renderPrestamos, pagos: renderPagos, semana: renderSemana,
+  config: renderConfig, historial: renderHistorialCobro,
+  resumenSemana: renderResumenSemana, buscar: renderBuscar
+};
 
 function renderNav() {
   const isAdmin = currentUser.rol === 'admin';
   const itemsCobrador = [
     { id: 'dash',      icon: '🏠', label: 'Inicio'   },
     { id: 'cobro',     icon: '📋', label: 'Cobro'    },
+    { id: 'buscar',    icon: '🔍', label: 'Buscar'   },
     { id: 'clientes',  icon: '👥', label: 'Clientes' },
-    { id: 'prestamos', icon: '💵', label: 'Préstamos'},
     { id: 'semana',    icon: '📅', label: 'Semana'   },
     { id: 'config',    icon: '⚙️', label: 'Config'   },
   ];
   const itemsAdmin = [
     { id: 'dash',     icon: '🏠', label: 'Inicio'   },
     { id: 'cobro',    icon: '📋', label: 'Cobro'    },
+    { id: 'buscar',   icon: '🔍', label: 'Buscar'   },
     { id: 'clientes', icon: '👥', label: 'Clientes' },
     { id: 'prestamos',icon: '💵', label: 'Préstamos'},
-    { id: 'pagos',    icon: '💳', label: 'Pagos'    },
     { id: 'semana',   icon: '📅', label: 'Semana'   },
     { id: 'config',   icon: '⚙️', label: 'Config'   },
   ];
@@ -501,6 +679,222 @@ async function navTo(section) {
   document.getElementById('mainTitle').textContent = navTitles[section];
   await cargarCache();
   await navRenderers[section]();
+}
+
+// ══════════════════════════════════════════
+//  BÚSQUEDA GLOBAL
+// ══════════════════════════════════════════
+
+// Resalta el texto que coincide con la búsqueda
+function highlight(text, query) {
+  if (!query || !text) return text || '';
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return String(text).replace(new RegExp(`(${escaped})`, 'gi'),
+    '<mark class="search-highlight">$1</mark>');
+}
+
+function renderBuscar() {
+  const q = searchQuery.trim().toLowerCase();
+
+  // ── Contar resultados por categoría ──
+  let resClientes = [], resPrestamos = [], resPagos = [];
+
+  if (q.length >= 1) {
+    // Clientes: buscar por nombre y teléfono
+    resClientes = cache.clientes.filter(c =>
+      c.nombre.toLowerCase().includes(q) ||
+      (c.telefono || '').includes(q) ||
+      (c.direccion || '').toLowerCase().includes(q)
+    );
+
+    // Préstamos: buscar por monto, fecha, notas, nombre de cliente
+    resPrestamos = cache.prestamos.filter(p => {
+      const cl = getCliente(p.cliente_id);
+      return cl.nombre.toLowerCase().includes(q) ||
+        String(p.monto).includes(q) ||
+        (p.fecha_inicio || '').includes(q) ||
+        (p.notas || '').toLowerCase().includes(q) ||
+        (p.estado || '').includes(q);
+    });
+
+    // Pagos: buscar por monto, fecha, método, nombre de cliente
+    resPagos = cache.pagos.filter(pg => {
+      const prest = cache.prestamos.find(x => x.id == pg.prestamo_id);
+      const cl = prest ? getCliente(prest.cliente_id) : null;
+      return (cl && cl.nombre.toLowerCase().includes(q)) ||
+        String(pg.monto).includes(q) ||
+        (pg.fecha || '').includes(q) ||
+        (pg.metodo || '').toLowerCase().includes(q) ||
+        (pg.notas || '').toLowerCase().includes(q);
+    });
+  }
+
+  const totalResultados = resClientes.length + resPrestamos.length + resPagos.length;
+
+  let html = `
+  <div class="search-global-wrap">
+    <span class="search-global-icon">🔍</span>
+    <input
+      class="search-global-input"
+      type="text"
+      id="globalSearchInput"
+      placeholder="Busca clientes, préstamos, pagos..."
+      value="${searchQuery}"
+      oninput="searchQuery=this.value;renderBuscar()"
+      autocomplete="off"
+      autofocus
+    >
+    ${searchQuery ? `<button class="search-global-clear" onclick="searchQuery='';renderBuscar();document.getElementById('globalSearchInput').focus()">✕</button>` : ''}
+  </div>`;
+
+  if (q.length >= 1) {
+    // Tabs de categoría con conteos
+    html += `<div class="search-category-tabs">
+      <button class="search-cat-btn ${searchCategory==='todos'?'active':''}" onclick="searchCategory='todos';renderBuscar()">
+        📋 Todos <span class="search-cat-count">${totalResultados}</span>
+      </button>
+      <button class="search-cat-btn ${searchCategory==='clientes'?'active':''}" onclick="searchCategory='clientes';renderBuscar()">
+        👥 Clientes <span class="search-cat-count">${resClientes.length}</span>
+      </button>
+      <button class="search-cat-btn ${searchCategory==='prestamos'?'active':''}" onclick="searchCategory='prestamos';renderBuscar()">
+        💵 Préstamos <span class="search-cat-count">${resPrestamos.length}</span>
+      </button>
+      <button class="search-cat-btn ${searchCategory==='pagos'?'active':''}" onclick="searchCategory='pagos';renderBuscar()">
+        💳 Pagos <span class="search-cat-count">${resPagos.length}</span>
+      </button>
+    </div>`;
+
+    if (totalResultados === 0) {
+      html += `<div class="search-empty">
+        <div class="search-empty-icon">🔎</div>
+        <div class="search-empty-title">Sin resultados</div>
+        <div class="search-empty-sub">No encontramos nada para "<b>${searchQuery}</b>"<br>Intenta con otro nombre, monto o fecha</div>
+      </div>`;
+    } else {
+      // Barra de resumen
+      html += `<div class="search-stats-bar">
+        <div>
+          <div style="font-size:13px;font-weight:700;opacity:0.85">Resultados para</div>
+          <div style="font-size:16px;font-weight:900">"${searchQuery}"</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:28px;font-weight:900;font-family:var(--mono)">${totalResultados}</div>
+          <div style="font-size:11px;opacity:0.8">encontrado${totalResultados!==1?'s':''}</div>
+        </div>
+      </div>`;
+
+      // ─── CLIENTES ───
+      if ((searchCategory === 'todos' || searchCategory === 'clientes') && resClientes.length > 0) {
+        html += `<div class="search-section-label">👥 Clientes (${resClientes.length})</div>`;
+        resClientes.forEach(c => {
+          const prestActivos = cache.prestamos.filter(p => p.cliente_id == c.id && p.estado === 'activo').length;
+          const deuda = cache.prestamos.filter(p => p.cliente_id == c.id && p.estado === 'activo').reduce((s, p) => s + saldoPendiente(p), 0);
+          html += `<div class="search-result-item" onclick="verCliente(${c.id})">
+            <div class="search-result-avatar" style="background:${c.color}">${avatarText(c.nombre)}</div>
+            <div class="search-result-body">
+              <div class="search-result-name">${highlight(c.nombre, searchQuery)}</div>
+              <div class="search-result-sub">📞 ${highlight(c.telefono || '—', searchQuery)}</div>
+              ${c.direccion ? `<div class="search-result-sub" style="margin-top:1px">📍 ${highlight(c.direccion, searchQuery)}</div>` : ''}
+            </div>
+            <div class="search-result-right">
+              <div style="font-size:13px;font-weight:800;font-family:var(--mono);color:${deuda>0?'var(--danger)':'var(--success)'}">${fmt(deuda)}</div>
+              <div style="font-size:10px;color:var(--text2);margin-top:2px">${prestActivos} activo${prestActivos!==1?'s':''}</div>
+            </div>
+          </div>`;
+        });
+      }
+
+      // ─── PRÉSTAMOS ───
+      if ((searchCategory === 'todos' || searchCategory === 'prestamos') && resPrestamos.length > 0) {
+        html += `<div class="search-section-label">💵 Préstamos (${resPrestamos.length})</div>`;
+        resPrestamos.forEach(p => {
+          const cl = getCliente(p.cliente_id);
+          const pct = Math.min(100, Math.round(totalPagado(p.id) / totalPrestamo(p) * 100));
+          html += `<div class="search-result-item" onclick="verPrestamo(${p.id})">
+            <div class="search-result-avatar" style="background:${cl.color}">${avatarText(cl.nombre)}</div>
+            <div class="search-result-body">
+              <div class="search-result-name">${highlight(cl.nombre, searchQuery)}</div>
+              <div class="search-result-sub">
+                ${highlight(fmtDate(p.fecha_inicio), searchQuery)} · ${p.plazo} días · ${p.interes}%
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
+                <div style="flex:1;height:4px;background:var(--surface2);border-radius:99px;overflow:hidden">
+                  <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:99px"></div>
+                </div>
+                <span style="font-size:10px;font-weight:700;color:var(--text2)">${pct}%</span>
+              </div>
+            </div>
+            <div class="search-result-right">
+              <div style="font-size:13px;font-weight:800;font-family:var(--mono);color:var(--primary)">${highlight(fmt(p.monto), searchQuery)}</div>
+              <span class="chip ${p.estado==='activo'?'chip-blue':'chip-green'}" style="margin-top:3px;padding:2px 8px;font-size:10px">${p.estado}</span>
+            </div>
+          </div>`;
+        });
+      }
+
+      // ─── PAGOS ───
+      if ((searchCategory === 'todos' || searchCategory === 'pagos') && resPagos.length > 0) {
+        html += `<div class="search-section-label">💳 Pagos (${resPagos.length})</div>`;
+        // Agrupar pagos recientes primero
+        const pagosOrdenados = [...resPagos].sort((a, b) => b.fecha.localeCompare(a.fecha));
+        pagosOrdenados.forEach(pg => {
+          const prest = cache.prestamos.find(x => x.id == pg.prestamo_id);
+          const cl = prest ? getCliente(prest.cliente_id) : { nombre: '—', color: '#999' };
+          const esNoPago = pg.metodo === 'no_pago';
+          const esRenovacion = pg.metodo === 'renovacion';
+          html += `<div class="search-result-item" onclick="${prest ? `verPrestamo(${prest.id})` : ''}">
+            <div class="search-result-avatar" style="background:${cl.color}">${avatarText(cl.nombre)}</div>
+            <div class="search-result-body">
+              <div class="search-result-name">${highlight(cl.nombre, searchQuery)}</div>
+              <div class="search-result-sub">
+                📅 ${highlight(fmtDate(pg.fecha), searchQuery)} ·
+                ${esNoPago ? '❌ No pagó' : esRenovacion ? '🔄 Renovación' : highlight(pg.metodo, searchQuery)}
+              </div>
+              ${pg.notas ? `<div class="search-result-sub" style="margin-top:1px;font-style:italic">${highlight(pg.notas, searchQuery)}</div>` : ''}
+            </div>
+            <div class="search-result-right">
+              <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:${esNoPago?'#AD1457':esRenovacion?'#6A1B9A':'var(--success)'}">
+                ${esNoPago ? '—' : highlight(fmt(pg.monto), searchQuery)}
+              </div>
+            </div>
+          </div>`;
+        });
+      }
+    }
+
+  } else {
+    // Estado inicial — sin búsqueda
+    html += `<div class="search-placeholder">
+      <div class="search-placeholder-icon">🔍</div>
+      <div class="search-placeholder-title">Busca en toda tu cartera</div>
+      <div class="search-placeholder-sub">
+        Encuentra clientes, préstamos y pagos<br>en un solo lugar
+      </div>
+      <div class="search-shortcut-row">
+        ${cache.clientes.slice(0, 3).map(c =>
+          `<button class="search-shortcut" onclick="searchQuery='${c.nombre.split(' ')[0]}';renderBuscar()">👤 ${c.nombre.split(' ')[0]}</button>`
+        ).join('')}
+        <button class="search-shortcut" onclick="searchQuery='${today().slice(0,7)}';renderBuscar()">📅 Este mes</button>
+        <button class="search-shortcut" onclick="searchQuery='atrasado';renderBuscar()">🔴 Atrasados</button>
+        <button class="search-shortcut" onclick="searchQuery='efectivo';renderBuscar()">💵 Efectivo</button>
+      </div>
+    </div>
+    <div style="margin-top:8px">
+      <div class="search-section-label">📊 Resumen de cartera</div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-value">${cache.clientes.length}</div><div class="stat-label">Clientes</div></div>
+        <div class="stat-card orange"><div class="stat-icon">💵</div><div class="stat-value">${cache.prestamos.filter(p=>p.estado==='activo').length}</div><div class="stat-label">Activos</div></div>
+        <div class="stat-card green"><div class="stat-icon">💳</div><div class="stat-value">${cache.pagos.filter(pg=>pg.fecha===today()&&pg.metodo!=='no_pago').length}</div><div class="stat-label">Pagos hoy</div></div>
+        <div class="stat-card red"><div class="stat-icon">📋</div><div class="stat-value">${cache.prestamos.length}</div><div class="stat-label">Préstamos</div></div>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('mainContent').innerHTML = html;
+
+  // Enfocar el input y poner cursor al final
+  const inp = document.getElementById('globalSearchInput');
+  if (inp) { inp.focus(); const len = inp.value.length; inp.setSelectionRange(len, len); }
 }
 
 // ══════════════════════════════════════════
@@ -569,54 +963,38 @@ function renderDash() {
 // ══════════════════════════════════════════
 //  CLIENTES
 // ══════════════════════════════════════════
-function getCobrador(usuarioId) {
-  return cache.usuarios.find(u => u.id == usuarioId) || null;
-}
+function getCobrador(usuarioId) { return cache.usuarios.find(u => u.id == usuarioId) || null; }
 
 function renderClientes() {
   const isAdmin = currentUser.rol === 'admin';
   let filtroCobrador = window._filtroCobrador || 'todos';
-
   let filtered = cache.clientes.filter(c =>
     c.nombre.toLowerCase().includes(filtroClientes.toLowerCase()) ||
     (c.telefono || '').includes(filtroClientes)
   );
-
   if (isAdmin && filtroCobrador !== 'todos') {
     filtered = filtered.filter(c => String(c.usuario_id) === String(filtroCobrador));
   }
-
-  let html = `
-  <div class="search-wrap"><span class="search-icon">🔍</span>
+  let html = `<div class="search-wrap"><span class="search-icon">🔍</span>
     <input type="text" placeholder="Buscar cliente..." value="${filtroClientes}" oninput="filtroClientes=this.value;renderClientes()">
   </div>`;
-
   if (isAdmin) {
     const cobradores = cache.usuarios;
     html += `<div class="tag-row" style="margin-bottom:12px">
-      <button class="tag-btn ${filtroCobrador === 'todos' ? 'active' : ''}"
-        onclick="window._filtroCobrador='todos';renderClientes()">
-        👥 Todos (${cache.clientes.length})
-      </button>`;
+      <button class="tag-btn ${filtroCobrador==='todos'?'active':''}" onclick="window._filtroCobrador='todos';renderClientes()">👥 Todos (${cache.clientes.length})</button>`;
     cobradores.forEach(u => {
       const count = cache.clientes.filter(c => String(c.usuario_id) === String(u.id)).length;
-      html += `<button class="tag-btn ${filtroCobrador === String(u.id) ? 'active' : ''}"
-        onclick="window._filtroCobrador='${u.id}';renderClientes()"
-        style="${filtroCobrador === String(u.id) ? `background:${u.color};border-color:${u.color}` : ''}">
-        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${u.color};margin-right:4px"></span>
-        ${u.nombre.split(' ')[0]} (${count})
-      </button>`;
+      html += `<button class="tag-btn ${filtroCobrador===String(u.id)?'active':''}" onclick="window._filtroCobrador='${u.id}';renderClientes()" style="${filtroCobrador===String(u.id)?`background:${u.color};border-color:${u.color}`:''}">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${u.color};margin-right:4px"></span>${u.nombre.split(' ')[0]} (${count})</button>`;
     });
     html += `</div>`;
   }
-
   html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-    <div class="section-title" style="margin:0">👥 ${filtered.length} cliente${filtered.length !== 1 ? 's' : ''}</div>
+    <div class="section-title" style="margin:0">👥 ${filtered.length} cliente${filtered.length!==1?'s':''}</div>
     <button class="btn sm" onclick="modalCliente()">+ Nuevo</button>
   </div>`;
-
   if (!filtered.length) {
-    html += `<div class="empty"><div class="empty-icon">🧑‍💼</div><div class="empty-text">Sin clientes</div><div style="font-size:13px;color:var(--text2);margin-top:6px">Agrega tu primer cliente</div></div>`;
+    html += `<div class="empty"><div class="empty-icon">🧑‍💼</div><div class="empty-text">Sin clientes</div></div>`;
   } else {
     html += `<div class="card">`;
     filtered.forEach(c => {
@@ -628,14 +1006,11 @@ function renderClientes() {
         <div class="list-info">
           <div class="list-name">${c.nombre}</div>
           <div class="list-sub">📞 ${c.telefono || '—'}</div>
-          ${isAdmin && cobrador ? `<div style="display:inline-flex;align-items:center;gap:4px;margin-top:3px;background:${cobrador.color}22;border-radius:99px;padding:2px 8px">
-            <span style="width:7px;height:7px;border-radius:50%;background:${cobrador.color};display:inline-block"></span>
-            <span style="font-size:11px;font-weight:700;color:${cobrador.color}">${cobrador.nombre.split(' ')[0]}</span>
-          </div>` : ''}
+          ${isAdmin&&cobrador?`<div style="display:inline-flex;align-items:center;gap:4px;margin-top:3px;background:${cobrador.color}22;border-radius:99px;padding:2px 8px"><span style="width:7px;height:7px;border-radius:50%;background:${cobrador.color};display:inline-block"></span><span style="font-size:11px;font-weight:700;color:${cobrador.color}">${cobrador.nombre.split(' ')[0]}</span></div>`:''}
         </div>
         <div class="list-amount">
-          <div class="amount ${deuda > 0 ? 'red' : 'green'}">${fmt(deuda)}</div>
-          <div class="badge ${prestActivos > 0 ? 'badge-active' : 'badge-paid'}">${prestActivos} préstamo${prestActivos !== 1 ? 's' : ''}</div>
+          <div class="amount ${deuda>0?'red':'green'}">${fmt(deuda)}</div>
+          <div class="badge ${prestActivos>0?'badge-active':'badge-paid'}">${prestActivos} préstamo${prestActivos!==1?'s':''}</div>
         </div>
       </div>`;
     });
@@ -646,23 +1021,22 @@ function renderClientes() {
 
 function modalCliente(id) {
   const c = id ? cache.clientes.find(x => x.id == id) : null;
-  const colors = ['#AD1457', '#6A1B9A', '#1565C0', '#00695C', '#E65100', '#37474F'];
+  const colors = ['#AD1457','#6A1B9A','#1565C0','#00695C','#E65100','#37474F'];
   openModal(`
-    <div class="modal-title">${c ? 'Editar cliente' : 'Nuevo cliente'}</div>
-    <div class="field"><label>Nombre</label><input id="cNombre" type="text" value="${c ? c.nombre : ''}" placeholder="Nombre completo"></div>
-    <div class="field"><label>Teléfono</label><input id="cTel" type="tel" value="${c ? c.telefono || '' : ''}" placeholder="555-0000"></div>
-    <div class="field"><label>Dirección</label><input id="cDir" type="text" value="${c ? c.direccion || '' : ''}" placeholder="Calle, colonia..."></div>
-    <div class="field"><label>Email</label><input id="cEmail" type="email" value="${c ? c.email || '' : ''}" placeholder="correo@email.com"></div>
+    <div class="modal-title">${c?'Editar cliente':'Nuevo cliente'}</div>
+    <div class="field"><label>Nombre</label><input id="cNombre" type="text" value="${c?c.nombre:''}" placeholder="Nombre completo"></div>
+    <div class="field"><label>Teléfono</label><input id="cTel" type="tel" value="${c?c.telefono||'':''}" placeholder="555-0000"></div>
+    <div class="field"><label>Dirección</label><input id="cDir" type="text" value="${c?c.direccion||'':''}" placeholder="Calle, colonia..."></div>
+    <div class="field"><label>Email</label><input id="cEmail" type="email" value="${c?c.email||'':''}" placeholder="correo@email.com"></div>
     <div class="field"><label>Color</label><div style="display:flex;gap:8px;margin-top:4px">
-      ${colors.map(col => `<div onclick="document.querySelectorAll('.cc').forEach(x=>x.style.outline='none');this.style.outline='3px solid #000';document.getElementById('cColor').value='${col}'"
-        class="cc" style="width:28px;height:28px;border-radius:8px;background:${col};cursor:pointer;outline:${c && c.color === col ? '3px solid #000' : 'none'}"></div>`).join('')}
-      <input type="hidden" id="cColor" value="${c ? c.color : colors[2]}">
+      ${colors.map(col=>`<div onclick="document.querySelectorAll('.cc').forEach(x=>x.style.outline='none');this.style.outline='3px solid #000';document.getElementById('cColor').value='${col}'" class="cc" style="width:28px;height:28px;border-radius:8px;background:${col};cursor:pointer;outline:${c&&c.color===col?'3px solid #000':'none'}"></div>`).join('')}
+      <input type="hidden" id="cColor" value="${c?c.color:colors[2]}">
     </div></div>
     <div class="modal-actions">
       <button class="btn outline" onclick="closeModal()">Cancelar</button>
-      <button class="btn" onclick="guardarCliente(${id || 'null'})">${c ? 'Guardar' : 'Agregar'}</button>
+      <button class="btn" onclick="guardarCliente(${id||'null'})">${c?'Guardar':'Agregar'}</button>
     </div>
-    ${c ? `<button class="btn danger" style="margin-top:10px" onclick="eliminarCliente(${id})">🗑️ Eliminar</button>` : ''}
+    ${c?`<button class="btn danger" style="margin-top:10px" onclick="eliminarCliente(${id})">🗑️ Eliminar</button>`:''}
   `);
 }
 
@@ -675,18 +1049,10 @@ async function guardarCliente(id) {
   if (!nombre) { toast('❌ El nombre es requerido'); return; }
   showLoading('Guardando...');
   try {
-    if (id) {
-      await dbUpdate('clientes', id, { nombre, telefono, direccion, email, color });
-      toast('✅ Cliente actualizado');
-    } else {
-      await dbInsert('clientes', { nombre, telefono, direccion, email, color, activo: true, usuario_id: currentUser.id });
-      toast('✅ Cliente agregado');
-    }
-    await cargarCache();
-    closeModal();
-    renderClientes();
-  } catch (e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+    if (id) { await dbUpdate('clientes', id, { nombre, telefono, direccion, email, color }); toast('✅ Cliente actualizado'); }
+    else { await dbInsert('clientes', { nombre, telefono, direccion, email, color, activo: true, usuario_id: currentUser.id }); toast('✅ Cliente agregado'); }
+    await cargarCache(); closeModal(); renderClientes();
+  } catch (e) { toast('❌ Error: ' + e.message); } finally { hideLoading(); }
 }
 
 async function eliminarCliente(id) {
@@ -695,17 +1061,12 @@ async function eliminarCliente(id) {
   try {
     const prestamosCliente = cache.prestamos.filter(p => p.cliente_id == id);
     for (const p of prestamosCliente) {
-      const pagosDelPrestamo = cache.pagos.filter(pg => pg.prestamo_id == p.id);
-      for (const pg of pagosDelPrestamo) { await dbDelete('pagos', pg.id); }
+      for (const pg of cache.pagos.filter(pg => pg.prestamo_id == p.id)) await dbDelete('pagos', pg.id);
       await dbDelete('prestamos', p.id);
     }
     await dbDelete('clientes', id);
-    await cargarCache();
-    closeModal();
-    renderClientes();
-    toast('🗑️ Cliente eliminado');
-  } catch (e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+    await cargarCache(); closeModal(); renderClientes(); toast('🗑️ Cliente eliminado');
+  } catch (e) { toast('❌ Error: ' + e.message); } finally { hideLoading(); }
 }
 
 function verCliente(id) {
@@ -717,21 +1078,21 @@ function verCliente(id) {
     <div class="list-avatar" style="background:${c.color};width:60px;height:60px;border-radius:18px;font-size:24px">${avatarText(c.nombre)}</div>
     <div>
       <div style="font-size:20px;font-weight:900">${c.nombre}</div>
-      <div style="font-size:13px;color:var(--text2)">📞 ${c.telefono || '—'}</div>
-      ${c.email ? `<div style="font-size:12px;color:var(--text2)">✉️ ${c.email}</div>` : ''}
+      <div style="font-size:13px;color:var(--text2)">📞 ${c.telefono||'—'}</div>
+      ${c.email?`<div style="font-size:12px;color:var(--text2)">✉️ ${c.email}</div>`:''}
     </div>
   </div>
   <div class="card" style="margin-bottom:12px">
-    <div class="detail-row"><span class="detail-label">Dirección</span><span class="detail-value" style="font-family:var(--font);font-size:13px">${c.direccion || '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Dirección</span><span class="detail-value" style="font-family:var(--font);font-size:13px">${c.direccion||'—'}</span></div>
     <div class="detail-row"><span class="detail-label">Saldo pendiente</span><span class="detail-value" style="color:var(--danger)">${fmt(deuda)}</span></div>
-    ${(() => { if (currentUser.rol !== 'admin') return ''; const cob = getCobrador(c.usuario_id); if (!cob) return ''; return `<div class="detail-row"><span class="detail-label">Cobrador</span><span style="display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:13px"><span style="width:10px;height:10px;border-radius:50%;background:${cob.color};display:inline-block"></span>${cob.nombre}</span></div>`; })()}
+    ${(()=>{if(currentUser.rol!=='admin')return '';const cob=getCobrador(c.usuario_id);if(!cob)return '';return `<div class="detail-row"><span class="detail-label">Cobrador</span><span style="display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:13px"><span style="width:10px;height:10px;border-radius:50%;background:${cob.color};display:inline-block"></span>${cob.nombre}</span></div>`;})()}
   </div>
   <div class="section-title">💵 Préstamos (${prestamos.length})</div>`;
   prestamos.forEach(p => {
     const pct = Math.min(100, Math.round(totalPagado(p.id) / totalPrestamo(p) * 100));
     html += `<div class="card" onclick="closeModal();verPrestamo(${p.id})" style="cursor:pointer;margin-bottom:10px">
       <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-        <span class="chip ${p.estado === 'activo' ? 'chip-blue' : 'chip-green'}">${p.estado}</span>
+        <span class="chip ${p.estado==='activo'?'chip-blue':'chip-green'}">${p.estado}</span>
         <span style="font-weight:800;font-family:var(--mono)">${fmt(p.monto)}</span>
       </div>
       <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
@@ -749,12 +1110,12 @@ function verCliente(id) {
 //  PRÉSTAMOS
 // ══════════════════════════════════════════
 function renderPrestamos() {
-  const filtered = cache.prestamos.filter(p => filtroPrestamos === 'todos' || p.estado === filtroPrestamos);
+  const filtered = cache.prestamos.filter(p => filtroPrestamos==='todos' || p.estado===filtroPrestamos);
   let html = `
   <div class="tag-row">
-    <button class="tag-btn ${filtroPrestamos === 'todos' ? 'active' : ''}" onclick="filtroPrestamos='todos';renderPrestamos()">Todos (${cache.prestamos.length})</button>
-    <button class="tag-btn ${filtroPrestamos === 'activo' ? 'active' : ''}" onclick="filtroPrestamos='activo';renderPrestamos()">Activos (${cache.prestamos.filter(p=>p.estado==='activo').length})</button>
-    <button class="tag-btn ${filtroPrestamos === 'liquidado' ? 'active' : ''}" onclick="filtroPrestamos='liquidado';renderPrestamos()">Liquidados (${cache.prestamos.filter(p=>p.estado==='liquidado').length})</button>
+    <button class="tag-btn ${filtroPrestamos==='todos'?'active':''}" onclick="filtroPrestamos='todos';renderPrestamos()">Todos (${cache.prestamos.length})</button>
+    <button class="tag-btn ${filtroPrestamos==='activo'?'active':''}" onclick="filtroPrestamos='activo';renderPrestamos()">Activos (${cache.prestamos.filter(p=>p.estado==='activo').length})</button>
+    <button class="tag-btn ${filtroPrestamos==='liquidado'?'active':''}" onclick="filtroPrestamos='liquidado';renderPrestamos()">Liquidados (${cache.prestamos.filter(p=>p.estado==='liquidado').length})</button>
   </div>
   <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
     <button class="btn sm" onclick="modalPrestamo()">+ Nuevo préstamo</button>
@@ -766,7 +1127,7 @@ function renderPrestamos() {
       const cl = getCliente(p.cliente_id);
       const pagado = totalPagado(p.id);
       const total = totalPrestamo(p);
-      const pct = Math.min(100, Math.round(pagado / total * 100));
+      const pct = Math.min(100, Math.round(pagado/total*100));
       html += `<div class="card" onclick="verPrestamo(${p.id})" style="cursor:pointer">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
           <div class="list-avatar" style="background:${cl.color}">${avatarText(cl.nombre)}</div>
@@ -774,7 +1135,7 @@ function renderPrestamos() {
             <div style="font-size:15px;font-weight:800">${cl.nombre}</div>
             <div style="font-size:12px;color:var(--text2)">${fmtDate(p.fecha_inicio)} · ${p.plazo} días · ${p.interes}%</div>
           </div>
-          <span class="chip ${p.estado === 'activo' ? 'chip-blue' : 'chip-green'}">${p.estado}</span>
+          <span class="chip ${p.estado==='activo'?'chip-blue':'chip-green'}">${p.estado}</span>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
           <div style="text-align:center"><div style="font-size:10px;color:var(--text2);font-weight:700">Prestado</div><div style="font-size:13px;font-weight:800;font-family:var(--mono)">${fmt(p.monto)}</div></div>
@@ -791,25 +1152,25 @@ function renderPrestamos() {
 
 function modalPrestamo(id) {
   const p = id ? cache.prestamos.find(x => x.id == id) : null;
-  const clientesOpts = cache.clientes.map(c => `<option value="${c.id}" ${p && p.cliente_id == c.id ? 'selected' : ''}>${c.nombre}</option>`).join('');
-  const cobOpts = cache.usuarios.map(u => `<option value="${u.id}" ${p && p.cobrador_id == u.id ? 'selected' : ''}>${u.nombre}</option>`).join('');
+  const clientesOpts = cache.clientes.map(c => `<option value="${c.id}" ${p&&p.cliente_id==c.id?'selected':''}>${c.nombre}</option>`).join('');
+  const cobOpts = cache.usuarios.map(u => `<option value="${u.id}" ${p&&p.cobrador_id==u.id?'selected':''}>${u.nombre}</option>`).join('');
   openModal(`
-    <div class="modal-title">${p ? 'Editar préstamo' : 'Nuevo préstamo'}</div>
-    ${cache.clientes.length === 0 ? '<div style="color:var(--danger);font-size:13px;margin-bottom:12px">⚠️ Primero agrega un cliente</div>' : ''}
+    <div class="modal-title">${p?'Editar préstamo':'Nuevo préstamo'}</div>
+    ${cache.clientes.length===0?'<div style="color:var(--danger);font-size:13px;margin-bottom:12px">⚠️ Primero agrega un cliente</div>':''}
     <div class="field"><label>Cliente</label><select id="pCliente">${clientesOpts}</select></div>
-    <div class="field"><label>Monto ($)</label><input id="pMonto" type="number" value="${p ? p.monto : ''}" placeholder="0.00" min="0" step="0.01"></div>
-    <div class="field"><label>Interés (%)</label><input id="pInteres" type="number" value="${p ? p.interes : 10}" min="0" step="0.5"></div>
-    <div class="field"><label>Plazo (días)</label><input id="pPlazo" type="number" value="${p ? p.plazo : 30}" min="1"></div>
-    <div class="field"><label>Fecha inicio</label><input id="pFecha" type="date" value="${p ? (p.fecha_inicio || '').split('T')[0] : today()}"></div>
+    <div class="field"><label>Monto ($)</label><input id="pMonto" type="number" value="${p?p.monto:''}" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Interés (%)</label><input id="pInteres" type="number" value="${p?p.interes:10}" min="0" step="0.5"></div>
+    <div class="field"><label>Plazo (días)</label><input id="pPlazo" type="number" value="${p?p.plazo:30}" min="1"></div>
+    <div class="field"><label>Fecha inicio</label><input id="pFecha" type="date" value="${p?(p.fecha_inicio||'').split('T')[0]:today()}"></div>
     <div class="field"><label>Cobrador</label><select id="pCobrador">${cobOpts}</select></div>
     <div class="field"><label>Estado</label><select id="pEstado">
-      <option value="activo" ${!p || p.estado === 'activo' ? 'selected' : ''}>Activo</option>
-      <option value="liquidado" ${p && p.estado === 'liquidado' ? 'selected' : ''}>Liquidado</option>
+      <option value="activo" ${!p||p.estado==='activo'?'selected':''}>Activo</option>
+      <option value="liquidado" ${p&&p.estado==='liquidado'?'selected':''}>Liquidado</option>
     </select></div>
-    <div class="field"><label>Notas</label><textarea id="pNotas">${p ? p.notas || '' : ''}</textarea></div>
+    <div class="field"><label>Notas</label><textarea id="pNotas">${p?p.notas||'':''}</textarea></div>
     <div class="modal-actions">
       <button class="btn outline" onclick="closeModal()">Cancelar</button>
-      <button class="btn" onclick="guardarPrestamo(${id || 'null'})">${p ? 'Guardar' : 'Crear'}</button>
+      <button class="btn" onclick="guardarPrestamo(${id||'null'})">${p?'Guardar':'Crear'}</button>
     </div>
   `);
 }
@@ -823,36 +1184,28 @@ async function guardarPrestamo(id) {
   const cobrador_id = parseInt(document.getElementById('pCobrador').value);
   const estado = document.getElementById('pEstado').value;
   const notas = document.getElementById('pNotas').value.trim();
-  if (!monto || monto <= 0 || !plazo || !fecha_inicio) { toast('❌ Completa los campos requeridos'); return; }
+  if (!monto||monto<=0||!plazo||!fecha_inicio) { toast('❌ Completa los campos requeridos'); return; }
   showLoading('Guardando...');
   try {
-    if (id) {
-      await dbUpdate('prestamos', id, { cliente_id, monto, interes, plazo, fecha_inicio, cobrador_id, estado, notas });
-      toast('✅ Préstamo actualizado');
-    } else {
-      await dbInsert('prestamos', { cliente_id, monto, interes, plazo, fecha_inicio, cobrador_id, estado: 'activo', notas });
-      toast('✅ Préstamo creado');
-    }
-    await cargarCache();
-    closeModal();
-    renderPrestamos();
-  } catch (e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+    if (id) { await dbUpdate('prestamos', id, { cliente_id, monto, interes, plazo, fecha_inicio, cobrador_id, estado, notas }); toast('✅ Préstamo actualizado'); }
+    else { await dbInsert('prestamos', { cliente_id, monto, interes, plazo, fecha_inicio, cobrador_id, estado: 'activo', notas }); toast('✅ Préstamo creado'); }
+    await cargarCache(); closeModal(); renderPrestamos();
+  } catch (e) { toast('❌ Error: ' + e.message); } finally { hideLoading(); }
 }
 
 function verPrestamo(id) {
   const p = cache.prestamos.find(x => x.id == id);
   const cl = getCliente(p.cliente_id);
-  const pagados = cache.pagos.filter(pg => pg.prestamo_id == id).sort((a, b) => b.fecha.localeCompare(a.fecha));
+  const pagados = cache.pagos.filter(pg => pg.prestamo_id == id).sort((a,b) => b.fecha.localeCompare(a.fecha));
   const pagado = totalPagado(id);
   const total = totalPrestamo(p);
-  const pct = Math.min(100, Math.round(pagado / total * 100));
+  const pct = Math.min(100, Math.round(pagado/total*100));
   let html = `
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
     <div class="list-avatar" style="background:${cl.color};width:52px;height:52px;border-radius:16px;font-size:22px">${avatarText(cl.nombre)}</div>
     <div>
       <div style="font-size:19px;font-weight:900">${cl.nombre}</div>
-      <span class="chip ${p.estado === 'activo' ? 'chip-blue' : 'chip-green'}">${p.estado}</span>
+      <span class="chip ${p.estado==='activo'?'chip-blue':'chip-green'}">${p.estado}</span>
     </div>
   </div>
   <div class="card" style="margin-bottom:12px">
@@ -866,7 +1219,7 @@ function verPrestamo(id) {
   <div class="card" style="margin-bottom:12px">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
       <div style="text-align:center"><div style="font-size:11px;color:var(--success);font-weight:700">Cobrado</div><div style="font-size:18px;font-weight:900;color:var(--success);font-family:var(--mono)">${fmt(pagado)}</div></div>
-      <div style="text-align:center"><div style="font-size:11px;color:var(--danger);font-weight:700">Pendiente</div><div style="font-size:18px;font-weight:900;color:var(--danger);font-family:var(--mono)">${fmt(Math.max(0, total - pagado))}</div></div>
+      <div style="text-align:center"><div style="font-size:11px;color:var(--danger);font-weight:700">Pendiente</div><div style="font-size:18px;font-weight:900;color:var(--danger);font-family:var(--mono)">${fmt(Math.max(0,total-pagado))}</div></div>
     </div>
     <div class="progress-bar" style="height:10px"><div class="progress-fill" style="width:${pct}%"></div></div>
     <div class="progress-labels"><span style="font-weight:800">${pct}% cobrado</span></div>
@@ -878,7 +1231,7 @@ function verPrestamo(id) {
         <div>
           <div style="font-size:14px;font-weight:800;color:var(--success)">${fmt(pg.monto)}</div>
           <div style="font-size:12px;color:var(--text2)">${fmtDate(pg.fecha)} · ${pg.metodo}</div>
-          ${pg.notas ? `<div style="font-size:11px;color:var(--text2)">${pg.notas}</div>` : ''}
+          ${pg.notas?`<div style="font-size:11px;color:var(--text2)">${pg.notas}</div>`:''}
         </div>
         <button class="btn danger sm" onclick="eliminarPago(${pg.id},${id})">🗑️</button>
       </div>
@@ -887,15 +1240,14 @@ function verPrestamo(id) {
   html += `<div class="modal-actions">
     <button class="btn outline" onclick="closeModal()">Cerrar</button>
     <button class="btn warning" onclick="closeModal();modalPrestamo(${id})">✏️</button>
-    ${p.estado === 'activo' ? `<button class="btn accent" onclick="closeModal();modalNuevoPago(${id})">💳 Pago</button>` : ''}
-    ${p.estado === 'activo' ? `<button class="btn" style="background:linear-gradient(135deg,#6A1B9A,#AB47BC)" onclick="closeModal();modalRenovar(${id})">🔄 Renovar</button>` : ''}
+    ${p.estado==='activo'?`<button class="btn accent" onclick="closeModal();modalNuevoPago(${id})">💳 Pago</button>`:''}
+    ${p.estado==='activo'?`<button class="btn" style="background:linear-gradient(135deg,#6A1B9A,#AB47BC)" onclick="closeModal();modalRenovar(${id})">🔄 Renovar</button>`:''}
   </div>`;
   openModal(html);
 }
 
-
 // ══════════════════════════════════════════
-//  RENOVACIÓN DE PRÉSTAMOS
+//  RENOVACIÓN
 // ══════════════════════════════════════════
 function modalRenovar(id) {
   const p = cache.prestamos.find(x => x.id == id);
@@ -905,65 +1257,25 @@ function modalRenovar(id) {
   const enMano = Math.max(0, montoNuevo - pendiente);
   const totalNuevo = montoNuevo * (1 + p.interes / 100);
   const cuotaNueva = totalNuevo / p.plazo;
-
   openModal(`
     <div class="modal-title">🔄 Renovar préstamo</div>
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
       <div class="list-avatar" style="background:${cl.color};width:50px;height:50px;border-radius:15px;font-size:20px">${avatarText(cl.nombre)}</div>
-      <div>
-        <div style="font-weight:900;font-size:16px">${cl.nombre}</div>
-        <div style="font-size:12px;color:var(--text2)">Préstamo actual: ${fmt(montoNuevo)} · ${p.interes}% · ${p.plazo} días</div>
-      </div>
+      <div><div style="font-weight:900;font-size:16px">${cl.nombre}</div><div style="font-size:12px;color:var(--text2)">Préstamo: ${fmt(montoNuevo)} · ${p.interes}% · ${p.plazo} días</div></div>
     </div>
-
     <div style="background:linear-gradient(135deg,#6A1B9A,#AB47BC);border-radius:16px;padding:16px;color:#fff;margin-bottom:16px">
-      <div style="font-size:12px;opacity:0.85;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Resumen de renovación</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:10px;text-align:center">
-          <div style="font-size:10px;opacity:0.8;font-weight:700">Saldo pendiente</div>
-          <div style="font-size:16px;font-weight:900;font-family:var(--mono);margin-top:2px">−${fmt(pendiente)}</div>
-        </div>
-        <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:10px;text-align:center">
-          <div style="font-size:10px;opacity:0.8;font-weight:700">Nuevo préstamo</div>
-          <div style="font-size:16px;font-weight:900;font-family:var(--mono);margin-top:2px">${fmt(montoNuevo)}</div>
-        </div>
+        <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;opacity:0.8;font-weight:700">Saldo pendiente</div><div style="font-size:16px;font-weight:900;font-family:var(--mono);margin-top:2px">−${fmt(pendiente)}</div></div>
+        <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:10px;text-align:center"><div style="font-size:10px;opacity:0.8;font-weight:700">Nuevo préstamo</div><div style="font-size:16px;font-weight:900;font-family:var(--mono);margin-top:2px">${fmt(montoNuevo)}</div></div>
       </div>
       <div style="margin-top:10px;padding:12px;background:rgba(255,255,255,0.2);border-radius:12px;text-align:center">
         <div style="font-size:11px;opacity:0.85;font-weight:700">💵 Cliente recibe en mano</div>
         <div style="font-size:26px;font-weight:900;font-family:var(--mono);margin-top:4px">${fmt(enMano)}</div>
       </div>
     </div>
-
-    <div style="background:var(--bg);border-radius:14px;padding:14px;margin-bottom:16px">
-      <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Nuevo préstamo tendrá</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
-        <div>
-          <div style="font-size:10px;color:var(--text2);font-weight:700">Monto</div>
-          <div style="font-size:14px;font-weight:900;font-family:var(--mono);color:var(--primary)">${fmt(montoNuevo)}</div>
-        </div>
-        <div>
-          <div style="font-size:10px;color:var(--text2);font-weight:700">Interés</div>
-          <div style="font-size:14px;font-weight:900;font-family:var(--mono);color:var(--primary)">${p.interes}%</div>
-        </div>
-        <div>
-          <div style="font-size:10px;color:var(--text2);font-weight:700">Plazo</div>
-          <div style="font-size:14px;font-weight:900;font-family:var(--mono);color:var(--primary)">${p.plazo} días</div>
-        </div>
-      </div>
-      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between">
-        <span style="font-size:12px;color:var(--text2);font-weight:700">Cuota diaria nueva</span>
-        <span style="font-size:14px;font-weight:900;font-family:var(--mono);color:var(--primary)">${fmt(cuotaNueva)}</span>
-      </div>
-    </div>
-
-    <div style="background:#FFF8E1;border-radius:12px;padding:12px;margin-bottom:16px;font-size:12px;color:#E65100;font-weight:600;display:flex;gap:8px;align-items:flex-start">
-      <span style="font-size:16px">⚠️</span>
-      <span>El préstamo actual quedará <b>liquidado</b> con nota "Renovado". Se creará un nuevo préstamo desde hoy por ${fmt(montoNuevo)}.</span>
-    </div>
-
     <div class="modal-actions">
       <button class="btn outline" onclick="closeModal()">Cancelar</button>
-      <button class="btn" style="background:linear-gradient(135deg,#6A1B9A,#AB47BC)" onclick="confirmarRenovacion(${id})">🔄 Confirmar renovación</button>
+      <button class="btn" style="background:linear-gradient(135deg,#6A1B9A,#AB47BC)" onclick="confirmarRenovacion(${id})">🔄 Confirmar</button>
     </div>
   `);
 }
@@ -973,55 +1285,25 @@ async function confirmarRenovacion(id) {
   if (!p) return;
   const pendiente = saldoPendiente(p);
   const montoNuevo = Number(p.monto);
-
-  showLoading('Renovando préstamo...');
+  showLoading('Renovando...');
   try {
-    // 1. Liquidar el préstamo viejo: registrar un pago por el saldo pendiente con nota "Renovado"
-    if (pendiente > 0) {
-      await dbInsert('pagos', {
-        prestamo_id: id,
-        monto: pendiente,
-        fecha: today(),
-        metodo: 'renovacion',
-        notas: 'Liquidado por renovación'
-      });
-    }
-    // 2. Marcar el préstamo viejo como liquidado
-    await dbUpdate('prestamos', id, {
-      estado: 'liquidado',
-      notas: (p.notas ? p.notas + ' | ' : '') + 'Renovado el ' + today()
-    });
-
-    // 3. Crear el nuevo préstamo con mismo monto, interés y plazo, desde hoy
-    await dbInsert('prestamos', {
-      cliente_id: p.cliente_id,
-      monto: montoNuevo,
-      interes: p.interes,
-      plazo: p.plazo,
-      fecha_inicio: today(),
-      cobrador_id: p.cobrador_id,
-      estado: 'activo',
-      notas: 'Renovación de préstamo anterior'
-    });
-
-    await cargarCache();
-    closeModal();
-    toast('🔄 Préstamo renovado correctamente');
-    renderPrestamos();
-  } catch(e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+    if (pendiente > 0) await dbInsert('pagos', { prestamo_id: id, monto: pendiente, fecha: today(), metodo: 'renovacion', notas: 'Liquidado por renovación' });
+    await dbUpdate('prestamos', id, { estado: 'liquidado', notas: (p.notas?p.notas+' | ':'')+'Renovado el '+today() });
+    await dbInsert('prestamos', { cliente_id: p.cliente_id, monto: montoNuevo, interes: p.interes, plazo: p.plazo, fecha_inicio: today(), cobrador_id: p.cobrador_id, estado: 'activo', notas: 'Renovación de préstamo anterior' });
+    await cargarCache(); closeModal(); toast('🔄 Préstamo renovado'); renderPrestamos();
+  } catch(e) { toast('❌ Error: ' + e.message); } finally { hideLoading(); }
 }
 
 // ══════════════════════════════════════════
 //  PAGOS
 // ══════════════════════════════════════════
 function renderPagos() {
-  const sorted = [...cache.pagos].sort((a, b) => b.fecha.localeCompare(a.fecha));
+  const sorted = [...cache.pagos].sort((a,b) => b.fecha.localeCompare(a.fecha));
   const hoy = today();
-  const totalHoy = cache.pagos.filter(pg => pg.fecha === hoy).reduce((s, pg) => s + Number(pg.monto), 0);
+  const totalHoy = cache.pagos.filter(pg=>pg.fecha===hoy).reduce((s,pg)=>s+Number(pg.monto),0);
   let html = `
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-    <div class="section-title" style="margin:0">💳 ${sorted.length} pago${sorted.length !== 1 ? 's' : ''}</div>
+    <div class="section-title" style="margin:0">💳 ${sorted.length} pago${sorted.length!==1?'s':''}</div>
     <button class="btn sm" onclick="modalSeleccionarPrestamo()">+ Registrar</button>
   </div>
   <div class="card" style="background:linear-gradient(135deg,var(--primary-dark),var(--primary-light));color:#fff;margin-bottom:14px">
@@ -1034,8 +1316,8 @@ function renderPagos() {
   } else {
     let lastDate = '';
     sorted.forEach(pg => {
-      const prest = cache.prestamos.find(x => x.id == pg.prestamo_id);
-      const cl = prest ? getCliente(prest.cliente_id) : { nombre: '—', color: '#999' };
+      const prest = cache.prestamos.find(x=>x.id==pg.prestamo_id);
+      const cl = prest ? getCliente(prest.cliente_id) : { nombre:'—', color:'#999' };
       if (pg.fecha !== lastDate) {
         if (lastDate) html += `</div>`;
         html += `<div style="font-size:11px;font-weight:700;color:var(--text2);margin:12px 0 6px;text-transform:uppercase">${fmtDate(pg.fecha)}</div><div class="card">`;
@@ -1043,7 +1325,7 @@ function renderPagos() {
       }
       html += `<div class="list-item">
         <div class="list-avatar" style="background:${cl.color}">${avatarText(cl.nombre)}</div>
-        <div class="list-info"><div class="list-name">${cl.nombre}</div><div class="list-sub">${pg.metodo}${pg.notas ? ' · ' + pg.notas : ''}</div></div>
+        <div class="list-info"><div class="list-name">${cl.nombre}</div><div class="list-sub">${pg.metodo}${pg.notas?' · '+pg.notas:''}</div></div>
         <div class="list-amount"><div class="amount green">${fmt(pg.monto)}</div></div>
       </div>`;
     });
@@ -1053,26 +1335,16 @@ function renderPagos() {
 }
 
 function modalSeleccionarPrestamo() {
-  const activos = cache.prestamos.filter(p => p.estado === 'activo');
+  const activos = cache.prestamos.filter(p=>p.estado==='activo');
   let html = `<div class="modal-title">Seleccionar préstamo</div>`;
-  if (!activos.length) {
-    html += `<div style="text-align:center;padding:24px;color:var(--text2)">No hay préstamos activos</div>`;
-  } else {
-    activos.forEach(p => {
-      const cl = getCliente(p.cliente_id);
-      html += `<div class="list-item" onclick="closeModal();modalNuevoPago(${p.id})">
-        <div class="list-avatar" style="background:${cl.color}">${avatarText(cl.nombre)}</div>
-        <div class="list-info"><div class="list-name">${cl.nombre}</div><div class="list-sub">Pendiente: ${fmt(saldoPendiente(p))}</div></div>
-        <div style="font-size:20px">›</div>
-      </div>`;
-    });
-  }
+  if (!activos.length) { html += `<div style="text-align:center;padding:24px;color:var(--text2)">No hay préstamos activos</div>`; }
+  else { activos.forEach(p => { const cl=getCliente(p.cliente_id); html+=`<div class="list-item" onclick="closeModal();modalNuevoPago(${p.id})"><div class="list-avatar" style="background:${cl.color}">${avatarText(cl.nombre)}</div><div class="list-info"><div class="list-name">${cl.nombre}</div><div class="list-sub">Pendiente: ${fmt(saldoPendiente(p))}</div></div><div style="font-size:20px">›</div></div>`; }); }
   html += `<button class="btn outline" style="margin-top:16px" onclick="closeModal()">Cancelar</button>`;
   openModal(html);
 }
 
 function modalNuevoPago(prestamoId) {
-  const p = cache.prestamos.find(x => x.id == prestamoId);
+  const p = cache.prestamos.find(x=>x.id==prestamoId);
   const cl = getCliente(p.cliente_id);
   openModal(`
     <div class="modal-title">Registrar pago</div>
@@ -1101,23 +1373,16 @@ async function guardarPago(prestamoId) {
   const fecha = document.getElementById('pgFecha').value;
   const metodo = document.getElementById('pgMetodo').value;
   const notas = document.getElementById('pgNotas').value.trim();
-  if (!monto || monto <= 0 || !fecha) { toast('❌ Completa los campos'); return; }
+  if (!monto||monto<=0||!fecha) { toast('❌ Completa los campos'); return; }
   showLoading('Guardando pago...');
   try {
     await dbInsert('pagos', { prestamo_id: prestamoId, monto, fecha, metodo, notas });
     await cargarCache();
-    const p = cache.prestamos.find(x => x.id == prestamoId);
-    if (saldoPendiente(p) <= 0.01) {
-      await dbUpdate('prestamos', prestamoId, { estado: 'liquidado' });
-      await cargarCache();
-      toast('🎉 ¡Préstamo liquidado!');
-    } else {
-      toast('✅ Pago registrado');
-    }
-    closeModal();
-    renderPagos();
-  } catch (e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+    const p = cache.prestamos.find(x=>x.id==prestamoId);
+    if (saldoPendiente(p) <= 0.01) { await dbUpdate('prestamos', prestamoId, { estado:'liquidado' }); await cargarCache(); toast('🎉 ¡Préstamo liquidado!'); }
+    else { toast('✅ Pago registrado'); }
+    closeModal(); renderPagos();
+  } catch (e) { toast('❌ Error: ' + e.message); } finally { hideLoading(); }
 }
 
 async function eliminarPago(pagoId, prestamoId) {
@@ -1125,12 +1390,8 @@ async function eliminarPago(pagoId, prestamoId) {
   showLoading('Eliminando...');
   try {
     await dbDelete('pagos', pagoId);
-    await cargarCache();
-    closeModal();
-    toast('🗑️ Pago eliminado');
-    verPrestamo(prestamoId);
-  } catch (e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+    await cargarCache(); closeModal(); toast('🗑️ Pago eliminado'); verPrestamo(prestamoId);
+  } catch (e) { toast('❌ Error: ' + e.message); } finally { hideLoading(); }
 }
 
 // ══════════════════════════════════════════
@@ -1145,32 +1406,24 @@ function renderConfig() {
       <div>
         <div style="font-size:18px;font-weight:900">${currentUser.nombre}</div>
         <div style="font-size:13px;opacity:0.8">@${currentUser.usuario} · ${currentUser.rol}</div>
-        <div style="font-size:11px;opacity:0.7;margin-top:4px">☁️ Supabase conectado</div>
       </div>
     </div>
   </div>`;
-
   if (isAdmin) {
     html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
       <div class="section-title" style="margin:0">👥 Usuarios</div>
       <button class="btn sm" onclick="modalUsuario()">+ Nuevo</button>
-    </div>
-    <div class="card">`;
+    </div><div class="card">`;
     cache.usuarios.forEach(u => {
-      html += `<div class="list-item" onclick="${u.id !== currentUser.id ? `modalUsuario(${u.id})` : ''}">
+      html += `<div class="list-item" onclick="${u.id!==currentUser.id?`modalUsuario(${u.id})`:''}">
         <div class="list-avatar" style="background:${u.color}">${avatarText(u.nombre)}</div>
-        <div class="list-info">
-          <div class="list-name">${u.nombre} ${u.id == currentUser.id ? '(tú)' : ''}</div>
-          <div class="list-sub">@${u.usuario} · ${u.rol}</div>
-        </div>
-        ${u.id != currentUser.id ? '<div style="font-size:18px;color:var(--text2)">✏️</div>' : ''}
+        <div class="list-info"><div class="list-name">${u.nombre} ${u.id==currentUser.id?'(tú)':''}</div><div class="list-sub">@${u.usuario} · ${u.rol}</div></div>
+        ${u.id!=currentUser.id?'<div style="font-size:18px;color:var(--text2)">✏️</div>':''}
       </div>`;
     });
     html += `</div>`;
   }
-
-  html += `
-  <div class="section-title">📊 Sistema</div>
+  html += `<div class="section-title">📊 Sistema</div>
   <div class="card">
     <div class="detail-row"><span class="detail-label">Clientes</span><span class="detail-value" style="font-family:var(--font)">${cache.clientes.length}</span></div>
     <div class="detail-row"><span class="detail-label">Préstamos totales</span><span class="detail-value" style="font-family:var(--font)">${cache.prestamos.length}</span></div>
@@ -1184,27 +1437,26 @@ function renderConfig() {
 }
 
 function modalUsuario(id) {
-  const u = id ? cache.usuarios.find(x => x.id == id) : null;
-  const colors = ['#1565C0', '#00897B', '#AD1457', '#6A1B9A', '#E65100', '#37474F'];
+  const u = id ? cache.usuarios.find(x=>x.id==id) : null;
+  const colors = ['#1565C0','#00897B','#AD1457','#6A1B9A','#E65100','#37474F'];
   openModal(`
-    <div class="modal-title">${u ? 'Editar usuario' : 'Nuevo usuario'}</div>
-    <div class="field"><label>Nombre</label><input id="uNombre" type="text" value="${u ? u.nombre : ''}" placeholder="Nombre completo"></div>
-    <div class="field"><label>Usuario (login)</label><input id="uUsuario" type="text" value="${u ? u.usuario : ''}" placeholder="usuario123"></div>
-    <div class="field"><label>Contraseña</label><input id="uPass" type="password" value="${u ? u.password : ''}" placeholder="${u ? 'Vacío = no cambiar' : 'Contraseña'}"></div>
+    <div class="modal-title">${u?'Editar usuario':'Nuevo usuario'}</div>
+    <div class="field"><label>Nombre</label><input id="uNombre" type="text" value="${u?u.nombre:''}" placeholder="Nombre completo"></div>
+    <div class="field"><label>Usuario (login)</label><input id="uUsuario" type="text" value="${u?u.usuario:''}" placeholder="usuario123"></div>
+    <div class="field"><label>Contraseña</label><input id="uPass" type="password" value="${u?u.password:''}" placeholder="${u?'Vacío = no cambiar':'Contraseña'}"></div>
     <div class="field"><label>Rol</label><select id="uRol">
-      <option value="cobrador" ${u && u.rol === 'cobrador' ? 'selected' : ''}>Cobrador</option>
-      <option value="admin" ${u && u.rol === 'admin' ? 'selected' : ''}>Administrador</option>
+      <option value="cobrador" ${u&&u.rol==='cobrador'?'selected':''}>Cobrador</option>
+      <option value="admin" ${u&&u.rol==='admin'?'selected':''}>Administrador</option>
     </select></div>
     <div class="field"><label>Color</label><div style="display:flex;gap:8px;margin-top:4px">
-      ${colors.map(col => `<div onclick="document.querySelectorAll('.uc').forEach(x=>x.style.outline='none');this.style.outline='3px solid #000';document.getElementById('uColor').value='${col}'"
-        class="uc" style="width:28px;height:28px;border-radius:8px;background:${col};cursor:pointer;outline:${u&&u.color===col?'3px solid #000':'none'}"></div>`).join('')}
-      <input type="hidden" id="uColor" value="${u ? u.color : colors[0]}">
+      ${colors.map(col=>`<div onclick="document.querySelectorAll('.uc').forEach(x=>x.style.outline='none');this.style.outline='3px solid #000';document.getElementById('uColor').value='${col}'" class="uc" style="width:28px;height:28px;border-radius:8px;background:${col};cursor:pointer;outline:${u&&u.color===col?'3px solid #000':'none'}"></div>`).join('')}
+      <input type="hidden" id="uColor" value="${u?u.color:colors[0]}">
     </div></div>
     <div class="modal-actions">
       <button class="btn outline" onclick="closeModal()">Cancelar</button>
-      <button class="btn" onclick="guardarUsuario(${id || 'null'})">${u ? 'Guardar' : 'Crear'}</button>
+      <button class="btn" onclick="guardarUsuario(${id||'null'})">${u?'Guardar':'Crear'}</button>
     </div>
-    ${u ? `<button class="btn danger" style="margin-top:10px" onclick="eliminarUsuario(${id})">🗑️ Eliminar</button>` : ''}
+    ${u?`<button class="btn danger" style="margin-top:10px" onclick="eliminarUsuario(${id})">🗑️ Eliminar</button>`:''}
   `);
 }
 
@@ -1214,56 +1466,37 @@ async function guardarUsuario(id) {
   const pass = document.getElementById('uPass').value;
   const rol = document.getElementById('uRol').value;
   const color = document.getElementById('uColor').value;
-  if (!nombre || !usuario) { toast('❌ Nombre y usuario son requeridos'); return; }
+  if (!nombre||!usuario) { toast('❌ Nombre y usuario son requeridos'); return; }
   showLoading('Guardando...');
   try {
-    if (id) {
-      const obj = { nombre, usuario, rol, color, ...(pass ? { password: pass } : {}) };
-      await dbUpdate('usuarios', id, obj);
-      toast('✅ Usuario actualizado');
-    } else {
-      if (!pass) { toast('❌ Contraseña requerida'); hideLoading(); return; }
-      await dbInsert('usuarios', { nombre, usuario, password: pass, rol, color, activo: true });
-      toast('✅ Usuario creado');
-    }
-    await cargarCache();
-    closeModal();
-    renderConfig();
-  } catch (e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+    if (id) { await dbUpdate('usuarios', id, { nombre, usuario, rol, color, ...(pass?{password:pass}:{}) }); toast('✅ Usuario actualizado'); }
+    else { if (!pass) { toast('❌ Contraseña requerida'); hideLoading(); return; } await dbInsert('usuarios', { nombre, usuario, password: pass, rol, color, activo: true }); toast('✅ Usuario creado'); }
+    await cargarCache(); closeModal(); renderConfig();
+  } catch (e) { toast('❌ Error: ' + e.message); } finally { hideLoading(); }
 }
 
 async function eliminarUsuario(id) {
   if (id == currentUser.id) { toast('❌ No puedes eliminarte'); return; }
-  if (!confirm('¿Eliminar este usuario?\n\nSe eliminarán también todos sus clientes, préstamos, pagos y semanas. Esta acción no se puede deshacer.')) return;
-
-  showLoading('Eliminando usuario...');
+  if (!confirm('¿Eliminar este usuario?')) return;
+  showLoading('Eliminando...');
   try {
-    const clientesUsuario = cache.clientes.filter(c => c.usuario_id == id);
+    const clientesUsuario = cache.clientes.filter(c=>c.usuario_id==id);
     for (const c of clientesUsuario) {
-      const prestamosCliente = cache.prestamos.filter(p => p.cliente_id == c.id);
+      const prestamosCliente = cache.prestamos.filter(p=>p.cliente_id==c.id);
       for (const p of prestamosCliente) {
-        const pagosDelPrestamo = cache.pagos.filter(pg => pg.prestamo_id == p.id);
-        for (const pg of pagosDelPrestamo) { await dbDelete('pagos', pg.id); }
-        await dbDelete('prestamos', p.id);
+        for (const pg of cache.pagos.filter(pg=>pg.prestamo_id==p.id)) await dbDelete('pagos',pg.id);
+        await dbDelete('prestamos',p.id);
       }
-      await dbDelete('clientes', c.id);
+      await dbDelete('clientes',c.id);
     }
-    const prestamosComoCobrador = cache.prestamos.filter(p => p.cobrador_id == id);
-    for (const p of prestamosComoCobrador) {
-      const pagosDelPrestamo = cache.pagos.filter(pg => pg.prestamo_id == p.id);
-      for (const pg of pagosDelPrestamo) { await dbDelete('pagos', pg.id); }
-      await dbDelete('prestamos', p.id);
+    for (const p of cache.prestamos.filter(p=>p.cobrador_id==id)) {
+      for (const pg of cache.pagos.filter(pg=>pg.prestamo_id==p.id)) await dbDelete('pagos',pg.id);
+      await dbDelete('prestamos',p.id);
     }
-    const semanasUsuario = (cache.semanas || []).filter(s => s.usuario_id == id);
-    for (const s of semanasUsuario) { await dbDelete('semanas', s.id); }
-    await dbDelete('usuarios', id);
-    await cargarCache();
-    closeModal();
-    renderConfig();
-    toast('🗑️ Usuario eliminado correctamente');
-  } catch (e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+    for (const s of (cache.semanas||[]).filter(s=>s.usuario_id==id)) await dbDelete('semanas',s.id);
+    await dbDelete('usuarios',id);
+    await cargarCache(); closeModal(); renderConfig(); toast('🗑️ Usuario eliminado');
+  } catch (e) { toast('❌ Error: ' + e.message); } finally { hideLoading(); }
 }
 
 // ══════════════════════════════════════════
@@ -1272,278 +1505,156 @@ async function eliminarUsuario(id) {
 const DIAS = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
 
 function semanaLabel(fechaInicio) {
-  const d = new Date(fechaInicio + 'T00:00:00');
-  const fin = new Date(d); fin.setDate(fin.getDate() + 6);
-  const fmt2 = x => x.toLocaleDateString('es-MX', { day:'2-digit', month:'short' });
+  const d = new Date(fechaInicio+'T00:00:00');
+  const fin = new Date(d); fin.setDate(fin.getDate()+6);
+  const fmt2 = x => x.toLocaleDateString('es-MX',{day:'2-digit',month:'short'});
   return `${fmt2(d)} – ${fmt2(fin)}`;
 }
 
-function getLunes(offsetSemanas = 0) {
+function getLunes(offsetSemanas=0) {
   const hoy = new Date();
   const dow = hoy.getDay();
-  const diffLunes = dow === 0 ? -6 : 1 - dow;
-  const lunes = new Date(hoy);
-  lunes.setDate(hoy.getDate() + diffLunes + offsetSemanas * 7);
+  const diffLunes = dow===0?-6:1-dow;
+  const lunes = new Date(hoy); lunes.setDate(hoy.getDate()+diffLunes+offsetSemanas*7);
   return lunes.toISOString().split('T')[0];
 }
 
 async function generarSemanasAutomaticas(usuario_id) {
-  const semanasExistentes = (cache.semanas || []).filter(s => String(s.usuario_id) === String(usuario_id));
+  const semanasExistentes = (cache.semanas||[]).filter(s=>String(s.usuario_id)===String(usuario_id));
   const lunesActual = getLunes(0);
   let fechaInicio;
   if (semanasExistentes.length) {
-    const fechas = semanasExistentes.map(s => s.fecha_inicio).sort();
-    const ultimaFecha = fechas[fechas.length - 1];
-    const ultimaDate = new Date(ultimaFecha + 'T00:00:00');
-    ultimaDate.setDate(ultimaDate.getDate() + 7);
+    const fechas = semanasExistentes.map(s=>s.fecha_inicio).sort();
+    const ultimaDate = new Date(fechas[fechas.length-1]+'T00:00:00'); ultimaDate.setDate(ultimaDate.getDate()+7);
     fechaInicio = ultimaDate.toISOString().split('T')[0];
-  } else {
-    fechaInicio = lunesActual;
-  }
+  } else { fechaInicio = lunesActual; }
   const semanasACrear = [];
-  let fecha = new Date(fechaInicio + 'T00:00:00');
-  const lunesActualDate = new Date(lunesActual + 'T00:00:00');
+  let fecha = new Date(fechaInicio+'T00:00:00');
+  const lunesActualDate = new Date(lunesActual+'T00:00:00');
   while (fecha <= lunesActualDate) {
     const fechaStr = fecha.toISOString().split('T')[0];
-    const yaExiste = semanasExistentes.some(s => s.fecha_inicio === fechaStr);
-    if (!yaExiste) semanasACrear.push(fechaStr);
-    fecha.setDate(fecha.getDate() + 7);
+    if (!semanasExistentes.some(s=>s.fecha_inicio===fechaStr)) semanasACrear.push(fechaStr);
+    fecha.setDate(fecha.getDate()+7);
   }
   for (const f of semanasACrear) {
-    const diasVacios = DIAS.map(() => ({ cobrado: 0, prestado: 0, gasto: 0 }));
-    await dbInsert('semanas', { usuario_id, fecha_inicio: f, saldo_anterior: 0, dias: JSON.stringify(diasVacios) });
+    await dbInsert('semanas',{usuario_id,fecha_inicio:f,saldo_anterior:0,dias:JSON.stringify(DIAS.map(()=>({cobrado:0,prestado:0,gasto:0})))});
   }
   return semanasACrear.length;
 }
 
-// Calcula la fecha de un dia especifico de la semana (lunes=0 ... sabado=5)
 function fechaDiaSemana(fechaInicioSemana, indiceDia) {
-  const d = new Date(fechaInicioSemana + 'T00:00:00');
-  d.setDate(d.getDate() + indiceDia);
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  const d = new Date(fechaInicioSemana+'T00:00:00'); d.setDate(d.getDate()+indiceDia);
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 
-// Sincroniza cobrado y prestado de TODAS las semanas de un usuario
-// conserva el gasto que el usuario haya ingresado manualmente
 async function sincronizarDatosSemanas(usuario_id) {
-  const semanas = (cache.semanas || []).filter(s => String(s.usuario_id) === String(usuario_id));
+  const semanas = (cache.semanas||[]).filter(s=>String(s.usuario_id)===String(usuario_id));
   if (!semanas.length) return;
-
-  const clienteIds = cache.clientes.filter(c => String(c.usuario_id) === String(usuario_id)).map(c => c.id);
-  const prestamoIds = cache.prestamos.filter(p => clienteIds.includes(p.cliente_id)).map(p => p.id);
+  const clienteIds = cache.clientes.filter(c=>String(c.usuario_id)===String(usuario_id)).map(c=>c.id);
+  const prestamoIds = cache.prestamos.filter(p=>clienteIds.includes(p.cliente_id)).map(p=>p.id);
   const hoyStr = today();
-
   for (const sem of semanas) {
-    const diasActuales = sem.dias || DIAS.map(() => ({ cobrado: 0, prestado: 0, gasto: 0 }));
-    const diasNuevos = diasActuales.map((diaActual, i) => {
-      if (i === 6) return { cobrado: 0, prestado: 0, gasto: 0 };
-
-      const fechaDia = fechaDiaSemana(sem.fecha_inicio, i);
-      if (fechaDia > hoyStr) return { cobrado: diaActual.cobrado || 0, prestado: diaActual.prestado || 0, gasto: diaActual.gasto || 0 };
-
-      const cobrado = cache.pagos
-        .filter(pg => prestamoIds.includes(pg.prestamo_id) && pg.fecha === fechaDia && pg.metodo !== 'no_pago')
-        .reduce((s, pg) => s + Number(pg.monto), 0);
-
-      const prestado = cache.prestamos
-        .filter(p => clienteIds.includes(p.cliente_id) && (p.fecha_inicio || '').split('T')[0] === fechaDia)
-        .reduce((s, p) => s + Number(p.monto), 0);
-
-      const gasto = Number(diaActual.gasto || 0);
-
-      return { cobrado, prestado, gasto };
+    const diasActuales = sem.dias||DIAS.map(()=>({cobrado:0,prestado:0,gasto:0}));
+    const diasNuevos = diasActuales.map((diaActual,i) => {
+      if (i===6) return {cobrado:0,prestado:0,gasto:0};
+      const fechaDia = fechaDiaSemana(sem.fecha_inicio,i);
+      if (fechaDia>hoyStr) return {cobrado:diaActual.cobrado||0,prestado:diaActual.prestado||0,gasto:diaActual.gasto||0};
+      const cobrado = cache.pagos.filter(pg=>prestamoIds.includes(pg.prestamo_id)&&pg.fecha===fechaDia&&pg.metodo!=='no_pago').reduce((s,pg)=>s+Number(pg.monto),0);
+      const prestado = cache.prestamos.filter(p=>clienteIds.includes(p.cliente_id)&&(p.fecha_inicio||'').split('T')[0]===fechaDia).reduce((s,p)=>s+Number(p.monto),0);
+      return {cobrado,prestado,gasto:Number(diaActual.gasto||0)};
     });
-
-    const cambio = diasNuevos.some((d, i) => {
-      const dv = diasActuales[i] || {};
-      return Math.abs(Number(d.cobrado) - Number(dv.cobrado || 0)) > 0.001 ||
-             Math.abs(Number(d.prestado) - Number(dv.prestado || 0)) > 0.001;
-    });
-
-    if (cambio) {
-      await dbUpdate('semanas', sem.id, { dias: JSON.stringify(diasNuevos) });
-    }
+    const cambio = diasNuevos.some((d,i)=>{const dv=diasActuales[i]||{};return Math.abs(Number(d.cobrado)-Number(dv.cobrado||0))>0.001||Math.abs(Number(d.prestado)-Number(dv.prestado||0))>0.001;});
+    if (cambio) await dbUpdate('semanas',sem.id,{dias:JSON.stringify(diasNuevos)});
   }
 }
 
 async function renderSemana() {
   const isAdmin = currentUser.rol === 'admin';
-  let filtroTrabajador = window._filtroTrabajadorSemana || (isAdmin ? 'todos' : String(currentUser.id));
-
+  let filtroTrabajador = window._filtroTrabajadorSemana || (isAdmin?'todos':String(currentUser.id));
   let html = '';
   if (isAdmin) {
-    html += `<div class="tag-row" style="margin-bottom:12px">
-      <button class="tag-btn ${filtroTrabajador === 'todos' ? 'active' : ''}"
-        onclick="window._filtroTrabajadorSemana='todos';renderSemana()">👥 Todos</button>`;
-    cache.usuarios.forEach(u => {
-      html += `<button class="tag-btn ${filtroTrabajador === String(u.id) ? 'active' : ''}"
-        onclick="window._filtroTrabajadorSemana='${u.id}';renderSemana()"
-        style="${filtroTrabajador === String(u.id) ? `background:${u.color};border-color:${u.color}` : ''}">
-        <span style="width:8px;height:8px;border-radius:50%;background:${u.color};display:inline-block;margin-right:4px"></span>
-        ${u.nombre.split(' ')[0]}
-      </button>`;
-    });
+    html += `<div class="tag-row" style="margin-bottom:12px"><button class="tag-btn ${filtroTrabajador==='todos'?'active':''}" onclick="window._filtroTrabajadorSemana='todos';renderSemana()">👥 Todos</button>`;
+    cache.usuarios.forEach(u=>{html+=`<button class="tag-btn ${filtroTrabajador===String(u.id)?'active':''}" onclick="window._filtroTrabajadorSemana='${u.id}';renderSemana()" style="${filtroTrabajador===String(u.id)?`background:${u.color};border-color:${u.color}`:''}"><span style="width:8px;height:8px;border-radius:50%;background:${u.color};display:inline-block;margin-right:4px"></span>${u.nombre.split(' ')[0]}</button>`;});
     html += `</div>`;
   }
-
-  html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-    <div class="section-title" style="margin:0">📅 Semanas de trabajo</div>
-    <button class="btn sm accent" onclick="crearSemanaManual()">+ Semana anterior</button>
-  </div>`;
-
+  html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div class="section-title" style="margin:0">📅 Semanas de trabajo</div><button class="btn sm accent" onclick="crearSemanaManual()">+ Semana anterior</button></div>`;
   document.getElementById('mainContent').innerHTML = html + `<div style="text-align:center;padding:20px;color:var(--text2)"><div class="spinner" style="margin:0 auto;border-color:rgba(21,101,192,0.3);border-top-color:var(--primary)"></div></div>`;
 
-  const usuariosAGenerar = isAdmin && filtroTrabajador === 'todos'
-    ? cache.usuarios.map(u => u.id)
-    : isAdmin ? [parseInt(filtroTrabajador)] : [currentUser.id];
-
-  for (const uid of usuariosAGenerar) { await generarSemanasAutomaticas(uid); }
+  const usuariosAGenerar = isAdmin&&filtroTrabajador==='todos'?cache.usuarios.map(u=>u.id):isAdmin?[parseInt(filtroTrabajador)]:[currentUser.id];
+  for (const uid of usuariosAGenerar) await generarSemanasAutomaticas(uid);
   await cargarCache();
-  // Sincronizar cobrado/prestado automaticamente desde pagos y prestamos reales
-  for (const uid of usuariosAGenerar) { await sincronizarDatosSemanas(uid); }
+  for (const uid of usuariosAGenerar) await sincronizarDatosSemanas(uid);
   await cargarCache();
 
-  let semanas = [...(cache.semanas || [])].sort((a,b) => b.fecha_inicio.localeCompare(a.fecha_inicio));
-  if (filtroTrabajador !== 'todos') {
-    semanas = semanas.filter(s => String(s.usuario_id) === String(filtroTrabajador));
-  } else if (!isAdmin) {
-    semanas = semanas.filter(s => String(s.usuario_id) === String(currentUser.id));
-  }
+  let semanas = [...(cache.semanas||[])].sort((a,b)=>b.fecha_inicio.localeCompare(a.fecha_inicio));
+  if (filtroTrabajador!=='todos') semanas=semanas.filter(s=>String(s.usuario_id)===String(filtroTrabajador));
+  else if (!isAdmin) semanas=semanas.filter(s=>String(s.usuario_id)===String(currentUser.id));
 
-  let htmlFinal = isAdmin ? `<div class="tag-row" style="margin-bottom:12px">
-      <button class="tag-btn ${filtroTrabajador === 'todos' ? 'active' : ''}"
-        onclick="window._filtroTrabajadorSemana='todos';renderSemana()">👥 Todos</button>` : '';
-  if (isAdmin) {
-    cache.usuarios.forEach(u => {
-      htmlFinal += `<button class="tag-btn ${filtroTrabajador === String(u.id) ? 'active' : ''}"
-        onclick="window._filtroTrabajadorSemana='${u.id}';renderSemana()"
-        style="${filtroTrabajador === String(u.id) ? `background:${u.color};border-color:${u.color}` : ''}">
-        <span style="width:8px;height:8px;border-radius:50%;background:${u.color};display:inline-block;margin-right:4px"></span>
-        ${u.nombre.split(' ')[0]}
-      </button>`;
-    });
-    htmlFinal += `</div>`;
-  }
+  let htmlFinal = isAdmin?`<div class="tag-row" style="margin-bottom:12px"><button class="tag-btn ${filtroTrabajador==='todos'?'active':''}" onclick="window._filtroTrabajadorSemana='todos';renderSemana()">👥 Todos</button>`:'' ;
+  if (isAdmin){cache.usuarios.forEach(u=>{htmlFinal+=`<button class="tag-btn ${filtroTrabajador===String(u.id)?'active':''}" onclick="window._filtroTrabajadorSemana='${u.id}';renderSemana()" style="${filtroTrabajador===String(u.id)?`background:${u.color};border-color:${u.color}`:''}"><span style="width:8px;height:8px;border-radius:50%;background:${u.color};display:inline-block;margin-right:4px"></span>${u.nombre.split(' ')[0]}</button>`;});htmlFinal+=`</div>`;}
+  htmlFinal+=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div class="section-title" style="margin:0">📅 Semanas de trabajo</div><button class="btn sm accent" onclick="crearSemanaManual()">+ Semana anterior</button></div>`;
 
-  htmlFinal += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-    <div class="section-title" style="margin:0">📅 Semanas de trabajo</div>
-    <button class="btn sm accent" onclick="crearSemanaManual()">+ Semana anterior</button>
-  </div>`;
-
-  if (!semanas.length) {
-    htmlFinal += `<div class="empty"><div class="empty-icon">📅</div><div class="empty-text">Sin semanas registradas</div></div>`;
-    document.getElementById('mainContent').innerHTML = htmlFinal;
-    return;
-  }
+  if (!semanas.length) { htmlFinal+=`<div class="empty"><div class="empty-icon">📅</div><div class="empty-text">Sin semanas registradas</div></div>`; document.getElementById('mainContent').innerHTML=htmlFinal; return; }
 
   semanas.forEach(sem => {
-    const usuario = cache.usuarios.find(u => u.id == sem.usuario_id) || { nombre: '—', color: '#999' };
-    const dias = sem.dias || Array(7).fill({cobrado:0,prestado:0,gasto:0});
-    const saldoAcum = Number(sem.saldo_anterior || 0);
-    const totalCobrado  = dias.slice(0,6).reduce((s,d) => s + Number(d.cobrado||0), 0);
-    const totalPrestado = dias.slice(0,6).reduce((s,d) => s + Number(d.prestado||0), 0);
-    const totalGasto    = dias.slice(0,6).reduce((s,d) => s + Number(d.gasto||0), 0);
-    const saldoFinal    = saldoAcum + totalCobrado - totalPrestado - totalGasto;
-    const esActual = sem.fecha_inicio === getLunes(0);
-
-    htmlFinal += `<div class="semana-card" ${esActual ? 'style="border:2px solid var(--primary)"' : ''}>
+    const usuario = cache.usuarios.find(u=>u.id==sem.usuario_id)||{nombre:'—',color:'#999'};
+    const dias = sem.dias||Array(7).fill({cobrado:0,prestado:0,gasto:0});
+    const saldoAcum = Number(sem.saldo_anterior||0);
+    const totalCobrado=dias.slice(0,6).reduce((s,d)=>s+Number(d.cobrado||0),0);
+    const totalPrestado=dias.slice(0,6).reduce((s,d)=>s+Number(d.prestado||0),0);
+    const totalGasto=dias.slice(0,6).reduce((s,d)=>s+Number(d.gasto||0),0);
+    const saldoFinal=saldoAcum+totalCobrado-totalPrestado-totalGasto;
+    const esActual=sem.fecha_inicio===getLunes(0);
+    htmlFinal+=`<div class="semana-card" ${esActual?'style="border:2px solid var(--primary)"':''}>
       <div class="semana-header">
         <div>
-          <div class="semana-title">
-            📅 ${semanaLabel(sem.fecha_inicio)}
-            ${esActual ? '<span style="font-size:11px;background:var(--primary);color:#fff;border-radius:99px;padding:2px 8px;margin-left:6px;font-family:var(--font)">Semana actual</span>' : ''}
-          </div>
-          ${isAdmin ? `<div style="margin-top:4px"><span class="cobrador-pill" style="background:${usuario.color}22;color:${usuario.color}">
-            <span style="width:8px;height:8px;border-radius:50%;background:${usuario.color};display:inline-block"></span>
-            ${usuario.nombre}
-          </span></div>` : ''}
+          <div class="semana-title">📅 ${semanaLabel(sem.fecha_inicio)}${esActual?'<span style="font-size:11px;background:var(--primary);color:#fff;border-radius:99px;padding:2px 8px;margin-left:6px;font-family:var(--font)">Actual</span>':''}</div>
+          ${isAdmin?`<div style="margin-top:4px"><span class="cobrador-pill" style="background:${usuario.color}22;color:${usuario.color}"><span style="width:8px;height:8px;border-radius:50%;background:${usuario.color};display:inline-block"></span>${usuario.nombre}</span></div>`:''}
         </div>
         <div style="text-align:right">
           <div style="font-size:11px;color:var(--text2);font-weight:700">Saldo final</div>
-          <div style="font-size:18px;font-weight:900;font-family:var(--mono)" class="${saldoFinal >= 0 ? 'saldo-pos' : 'saldo-neg'}">${fmt(saldoFinal)}</div>
+          <div style="font-size:18px;font-weight:900;font-family:var(--mono)" class="${saldoFinal>=0?'saldo-pos':'saldo-neg'}">${fmt(saldoFinal)}</div>
         </div>
       </div>
-      <div class="semana-table-wrap">
-        <table class="semana-table">
-          <thead><tr><th>Día</th><th>Cobrado</th><th>Prestado</th><th>Gasto</th><th>Saldo día</th><th>Acumulado</th></tr></thead>
-          <tbody>`;
-
-    let acumDias = 0;
-    dias.forEach((dia, i) => {
-      const esDomingo = i === 6;
-      const cobrado  = Number(dia.cobrado  || 0);
-      const prestado = Number(dia.prestado || 0);
-      const gasto    = Number(dia.gasto    || 0);
-      const saldoDia = esDomingo ? 0 : cobrado - prestado - gasto;
-      if (!esDomingo) acumDias += saldoDia;
-      const sc     = saldoDia >= 0 ? 'saldo-pos' : 'saldo-neg';
-      const scAcum = acumDias >= 0 ? 'saldo-pos' : 'saldo-neg';
-      htmlFinal += `<tr class="${esDomingo ? 'domingo' : ''}">
-        <td><b>${DIAS[i]}</b>${esDomingo ? ' 🔴' : ''}</td>
-        <td>${esDomingo ? '—' : fmt(cobrado)}</td>
-        <td>${esDomingo ? '—' : fmt(prestado)}</td>
-        <td>${esDomingo ? '—' : fmt(gasto)}</td>
-        <td>${esDomingo ? '<span style="color:#aaa">Descanso</span>' : `<span class="${sc}">${fmt(saldoDia)}</span>`}</td>
-        <td>${esDomingo ? '—' : `<span class="${scAcum}">${fmt(acumDias)}</span>`}</td>
-      </tr>`;
+      <div class="semana-table-wrap"><table class="semana-table"><thead><tr><th>Día</th><th>Cobrado</th><th>Prestado</th><th>Gasto</th><th>Saldo día</th><th>Acumulado</th></tr></thead><tbody>`;
+    let acumDias=0;
+    dias.forEach((dia,i)=>{
+      const esDomingo=i===6;
+      const cobrado=Number(dia.cobrado||0),prestado=Number(dia.prestado||0),gasto=Number(dia.gasto||0);
+      const saldoDia=esDomingo?0:cobrado-prestado-gasto;
+      if(!esDomingo) acumDias+=saldoDia;
+      htmlFinal+=`<tr class="${esDomingo?'domingo':''}"><td><b>${DIAS[i]}</b>${esDomingo?' 🔴':''}</td><td>${esDomingo?'—':fmt(cobrado)}</td><td>${esDomingo?'—':fmt(prestado)}</td><td>${esDomingo?'—':fmt(gasto)}</td><td>${esDomingo?'<span style="color:#aaa">Descanso</span>':`<span class="${saldoDia>=0?'saldo-pos':'saldo-neg'}">${fmt(saldoDia)}</span>`}</td><td>${esDomingo?'—':`<span class="${acumDias>=0?'saldo-pos':'saldo-neg'}">${fmt(acumDias)}</span>`}</td></tr>`;
     });
-
-    const saldoNetSemana = totalCobrado - totalPrestado - totalGasto;
-    const scT = saldoNetSemana >= 0 ? 'saldo-pos' : 'saldo-neg';
-    htmlFinal += `<tr class="total-row">
-        <td>TOTAL SEMANA</td>
-        <td>${fmt(totalCobrado)}</td>
-        <td>${fmt(totalPrestado)}</td>
-        <td>${fmt(totalGasto)}</td>
-        <td class="${scT}">${fmt(saldoNetSemana)}</td>
-        <td class="${scT}">${fmt(saldoNetSemana)}</td>
-      </tr></tbody></table></div>
+    const saldoNetSemana=totalCobrado-totalPrestado-totalGasto;
+    htmlFinal+=`<tr class="total-row"><td>TOTAL</td><td>${fmt(totalCobrado)}</td><td>${fmt(totalPrestado)}</td><td>${fmt(totalGasto)}</td><td class="${saldoNetSemana>=0?'saldo-pos':'saldo-neg'}">${fmt(saldoNetSemana)}</td><td class="${saldoNetSemana>=0?'saldo-pos':'saldo-neg'}">${fmt(saldoNetSemana)}</td></tr></tbody></table></div>
     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-      <button class="btn sm" onclick="modalIngresarDatos('${sem.id}')">✏️ Ingresar datos</button>
+      <button class="btn sm" onclick="modalIngresarDatos('${sem.id}')">✏️ Gastos</button>
       <button class="btn sm outline" onclick="modalSaldoAnterior('${sem.id}','${sem.saldo_anterior||0}')">💰 Saldo anterior</button>
       <button class="btn sm danger" onclick="eliminarSemana('${sem.id}')">🗑️</button>
     </div></div>`;
   });
-
-  document.getElementById('mainContent').innerHTML = htmlFinal;
+  document.getElementById('mainContent').innerHTML=htmlFinal;
 }
 
 function modalIngresarDatos(semId) {
-  const sem = cache.semanas.find(s => String(s.id) === String(semId));
+  const sem = cache.semanas.find(s=>String(s.id)===String(semId));
   if (!sem) return;
-  const dias = sem.dias || Array(7).fill({cobrado:0,prestado:0,gasto:0});
-  let filas = '';
-  [0,1,2,3,4,5].forEach(i => {
-    const d = dias[i] || {};
-    const estiloReadonly = 'width:100%;padding:10px 8px;border:2px solid var(--surface2);border-radius:10px;font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;background:var(--surface2);cursor:not-allowed;';
-    filas += `
-    <div style="background:var(--bg);border-radius:12px;padding:12px;margin-bottom:10px">
+  const dias = sem.dias||Array(7).fill({cobrado:0,prestado:0,gasto:0});
+  let filas='';
+  [0,1,2,3,4,5].forEach(i=>{
+    const d=dias[i]||{};
+    filas+=`<div style="background:var(--bg);border-radius:12px;padding:12px;margin-bottom:10px">
       <div style="font-size:13px;font-weight:800;color:var(--primary);margin-bottom:8px">📅 ${DIAS[i]}</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-        <div>
-          <div style="font-size:10px;color:var(--success);font-weight:800;margin-bottom:4px">💰 COBRADO <span style="font-size:9px;opacity:0.7">auto</span></div>
-          <input type="number" id="d${i}_cobrado" value="${d.cobrado||0}" readonly
-            style="${estiloReadonly}color:var(--success)">
-        </div>
-        <div>
-          <div style="font-size:10px;color:var(--primary);font-weight:800;margin-bottom:4px">💵 PRESTADO <span style="font-size:9px;opacity:0.7">auto</span></div>
-          <input type="number" id="d${i}_prestado" value="${d.prestado||0}" readonly
-            style="${estiloReadonly}color:var(--primary)">
-        </div>
-        <div>
-          <div style="font-size:10px;color:var(--warning);font-weight:800;margin-bottom:4px">🧾 GASTO</div>
-          <input type="number" id="d${i}_gasto" value="${d.gasto||0}" step="0.01" min="0"
-            style="width:100%;padding:10px 8px;border:2px solid var(--border);border-radius:10px;font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;background:#fff;color:var(--warning)"
-            oninput="recalcularFila(${i})">
-        </div>
+        <div><div style="font-size:10px;color:var(--success);font-weight:800;margin-bottom:4px">💰 COBRADO <span style="font-size:9px;opacity:0.7">auto</span></div>
+          <input type="number" id="d${i}_cobrado" value="${d.cobrado||0}" readonly style="width:100%;padding:10px 8px;border:2px solid var(--surface2);border-radius:10px;font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;background:var(--surface2);cursor:not-allowed;color:var(--success)"></div>
+        <div><div style="font-size:10px;color:var(--primary);font-weight:800;margin-bottom:4px">💵 PRESTADO <span style="font-size:9px;opacity:0.7">auto</span></div>
+          <input type="number" id="d${i}_prestado" value="${d.prestado||0}" readonly style="width:100%;padding:10px 8px;border:2px solid var(--surface2);border-radius:10px;font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;background:var(--surface2);cursor:not-allowed;color:var(--primary)"></div>
+        <div><div style="font-size:10px;color:var(--warning);font-weight:800;margin-bottom:4px">🧾 GASTO</div>
+          <input type="number" id="d${i}_gasto" value="${d.gasto||0}" step="0.01" min="0" style="width:100%;padding:10px 8px;border:2px solid var(--border);border-radius:10px;font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;background:#fff;color:var(--warning)" oninput="recalcularFila(${i})"></div>
       </div>
       <div style="margin-top:8px;display:flex;justify-content:space-between;font-size:12px;font-weight:700">
-        <span style="color:var(--text2)">Saldo del día:</span>
-        <span id="saldo_dia_${i}" style="font-family:var(--mono);font-weight:900">$0.00</span>
-      </div>
-      <div style="margin-top:4px;display:flex;justify-content:space-between;font-size:11px;font-weight:700">
-        <span style="color:var(--text2)">Saldo acumulado:</span>
-        <span id="acum_dia_${i}" style="font-family:var(--mono);font-weight:800;color:var(--text2)">$0.00</span>
+        <span style="color:var(--text2)">Saldo del día:</span><span id="saldo_dia_${i}" style="font-family:var(--mono);font-weight:900">$0.00</span>
       </div>
     </div>`;
   });
@@ -1551,70 +1662,46 @@ function modalIngresarDatos(semId) {
     <div class="modal-title">✏️ Gastos — ${semanaLabel(sem.fecha_inicio)}</div>
     <div style="display:flex;align-items:center;gap:8px;background:#E3F2FD;border-radius:10px;padding:10px 12px;margin-bottom:14px">
       <span style="font-size:16px">🔄</span>
-      <span style="font-size:12px;color:var(--primary);font-weight:700">Cobrado y Prestado se sincronizan automáticamente. Solo ingresa los <b>gastos</b> del día.</span>
+      <span style="font-size:12px;color:var(--primary);font-weight:700">Solo ingresa los <b>gastos</b>. Cobrado y Prestado son automáticos.</span>
     </div>
     ${filas}
     <div class="modal-actions">
       <button class="btn outline" onclick="closeModal()">Cancelar</button>
-      <button class="btn" onclick="guardarDatosSemana('${semId}')">✅ Guardar gastos</button>
+      <button class="btn" onclick="guardarDatosSemana('${semId}')">✅ Guardar</button>
     </div>
   `);
-  [0,1,2,3,4,5].forEach(i => recalcularFila(i));
+  [0,1,2,3,4,5].forEach(i=>recalcularFila(i));
 }
 
 function recalcularFila(i) {
-  const cobrado  = parseFloat(document.getElementById(`d${i}_cobrado`)?.value  || 0);
-  const prestado = parseFloat(document.getElementById(`d${i}_prestado`)?.value || 0);
-  const gasto    = parseFloat(document.getElementById(`d${i}_gasto`)?.value    || 0);
-  const saldo = cobrado - prestado - gasto;
-  const el = document.getElementById(`saldo_dia_${i}`);
-  if (el) { el.textContent = fmt(saldo); el.style.color = saldo >= 0 ? 'var(--success)' : 'var(--danger)'; }
-  let acum = 0;
-  [0,1,2,3,4,5].forEach(j => {
-    const c = parseFloat(document.getElementById(`d${j}_cobrado`)?.value  || 0);
-    const p = parseFloat(document.getElementById(`d${j}_prestado`)?.value || 0);
-    const g = parseFloat(document.getElementById(`d${j}_gasto`)?.value    || 0);
-    acum += c - p - g;
-    const elA = document.getElementById(`acum_dia_${j}`);
-    if (elA) { elA.textContent = fmt(acum); elA.style.color = acum >= 0 ? 'var(--success)' : 'var(--danger)'; }
-  });
+  const cobrado=parseFloat(document.getElementById(`d${i}_cobrado`)?.value||0);
+  const prestado=parseFloat(document.getElementById(`d${i}_prestado`)?.value||0);
+  const gasto=parseFloat(document.getElementById(`d${i}_gasto`)?.value||0);
+  const saldo=cobrado-prestado-gasto;
+  const el=document.getElementById(`saldo_dia_${i}`);
+  if(el){el.textContent=fmt(saldo);el.style.color=saldo>=0?'var(--success)':'var(--danger)';}
 }
 
 async function guardarDatosSemana(semId) {
-  const sem = cache.semanas.find(s => String(s.id) === String(semId));
+  const sem=cache.semanas.find(s=>String(s.id)===String(semId));
   if (!sem) return;
-  // Solo actualizamos el gasto; cobrado y prestado los mantiene la sincronizacion automatica
-  const diasActuales = sem.dias || DIAS.map(() => ({ cobrado: 0, prestado: 0, gasto: 0 }));
-  const dias = DIAS.map((_, i) => {
-    if (i === 6) return { cobrado: 0, prestado: 0, gasto: 0 };
-    const dActual = diasActuales[i] || {};
-    return {
-      cobrado:  Number(dActual.cobrado  || 0),
-      prestado: Number(dActual.prestado || 0),
-      gasto:    parseFloat(document.getElementById(`d${i}_gasto`)?.value || 0),
-    };
+  const diasActuales=sem.dias||DIAS.map(()=>({cobrado:0,prestado:0,gasto:0}));
+  const dias=DIAS.map((_,i)=>{
+    if(i===6) return {cobrado:0,prestado:0,gasto:0};
+    const dActual=diasActuales[i]||{};
+    return {cobrado:Number(dActual.cobrado||0),prestado:Number(dActual.prestado||0),gasto:parseFloat(document.getElementById(`d${i}_gasto`)?.value||0)};
   });
-  showLoading('Guardando gastos...');
-  try {
-    await dbUpdate('semanas', semId, { dias: JSON.stringify(dias) });
-    await cargarCache();
-    closeModal();
-    toast('✅ Gastos guardados');
-    renderSemana();
-  } catch(e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+  showLoading('Guardando...');
+  try { await dbUpdate('semanas',semId,{dias:JSON.stringify(dias)}); await cargarCache(); closeModal(); toast('✅ Gastos guardados'); renderSemana(); }
+  catch(e){toast('❌ Error: '+e.message);} finally{hideLoading();}
 }
 
 function modalSaldoAnterior(semId, saldoActual) {
   openModal(`
     <div class="modal-title">💰 Saldo anterior</div>
-    <div style="font-size:13px;color:var(--text2);margin-bottom:16px">
-      Este es el saldo con el que inicia la semana (saldo final de la semana anterior).
-    </div>
-    <div class="field">
-      <label>Saldo anterior ($)</label>
-      <input id="inputSaldoAnt" type="number" value="${saldoActual}" step="0.01"
-        style="font-size:20px;font-weight:800;font-family:var(--mono);text-align:right">
+    <div style="font-size:13px;color:var(--text2);margin-bottom:16px">Saldo con el que inicia esta semana.</div>
+    <div class="field"><label>Saldo anterior ($)</label>
+      <input id="inputSaldoAnt" type="number" value="${saldoActual}" step="0.01" style="font-size:20px;font-weight:800;font-family:var(--mono);text-align:right">
     </div>
     <div class="modal-actions">
       <button class="btn outline" onclick="closeModal()">Cancelar</button>
@@ -1624,38 +1711,19 @@ function modalSaldoAnterior(semId, saldoActual) {
 }
 
 async function guardarSaldoAnterior(semId) {
-  const saldo = parseFloat(document.getElementById('inputSaldoAnt').value || 0);
-  showLoading('Guardando...');
-  try {
-    await dbUpdate('semanas', semId, { saldo_anterior: saldo });
-    await cargarCache();
-    closeModal();
-    toast('✅ Saldo actualizado');
-    renderSemana();
-  } catch(e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+  const saldo=parseFloat(document.getElementById('inputSaldoAnt').value||0);
+  showLoading('Guardando...'); try { await dbUpdate('semanas',semId,{saldo_anterior:saldo}); await cargarCache(); closeModal(); toast('✅ Saldo actualizado'); renderSemana(); }
+  catch(e){toast('❌ Error: '+e.message);} finally{hideLoading();}
 }
 
 function crearSemanaManual() {
-  const isAdmin = currentUser.rol === 'admin';
-  const usuariosOpts = isAdmin
-    ? cache.usuarios.map(u => `<option value="${u.id}">${u.nombre}</option>`).join('')
-    : `<option value="${currentUser.id}">${currentUser.nombre}</option>`;
+  const isAdmin = currentUser.rol==='admin';
+  const usuariosOpts = isAdmin ? cache.usuarios.map(u=>`<option value="${u.id}">${u.nombre}</option>`).join('') : `<option value="${currentUser.id}">${currentUser.nombre}</option>`;
   openModal(`
     <div class="modal-title">📅 Agregar semana anterior</div>
-    <div style="font-size:13px;color:var(--text2);margin-bottom:16px">
-      Usa esto para registrar semanas pasadas que no se generaron automáticamente.
-    </div>
-    ${isAdmin ? `<div class="field"><label>Trabajador</label><select id="semUsuarioManual">${usuariosOpts}</select></div>`
-              : `<input type="hidden" id="semUsuarioManual" value="${currentUser.id}">`}
-    <div class="field">
-      <label>Fecha del Lunes de esa semana</label>
-      <input id="semFechaManual" type="date" value="${getLunes(-1)}">
-    </div>
-    <div class="field">
-      <label>Saldo anterior ($)</label>
-      <input id="semSaldoManual" type="number" value="0" step="0.01">
-    </div>
+    ${isAdmin?`<div class="field"><label>Trabajador</label><select id="semUsuarioManual">${usuariosOpts}</select></div>`:`<input type="hidden" id="semUsuarioManual" value="${currentUser.id}">`}
+    <div class="field"><label>Fecha del Lunes</label><input id="semFechaManual" type="date" value="${getLunes(-1)}"></div>
+    <div class="field"><label>Saldo anterior ($)</label><input id="semSaldoManual" type="number" value="0" step="0.01"></div>
     <div class="modal-actions">
       <button class="btn outline" onclick="closeModal()">Cancelar</button>
       <button class="btn" onclick="guardarSemanaManual()">✅ Crear</button>
@@ -1664,225 +1732,123 @@ function crearSemanaManual() {
 }
 
 async function guardarSemanaManual() {
-  const usuarioEl = document.getElementById('semUsuarioManual');
-  const usuario_id = parseInt(usuarioEl.value || usuarioEl.getAttribute('value'));
-  const fecha_inicio = document.getElementById('semFechaManual').value;
-  const saldo_anterior = parseFloat(document.getElementById('semSaldoManual').value || 0);
-  if (!fecha_inicio) { toast('❌ Selecciona la fecha'); return; }
-  const yaExiste = cache.semanas.some(s =>
-    String(s.usuario_id) === String(usuario_id) && s.fecha_inicio === fecha_inicio
-  );
-  if (yaExiste) { toast('⚠️ Ya existe una semana para esa fecha'); return; }
-  const diasVacios = DIAS.map(() => ({ cobrado: 0, prestado: 0, gasto: 0 }));
-  showLoading('Creando semana...');
-  try {
-    await dbInsert('semanas', { usuario_id, fecha_inicio, saldo_anterior, dias: JSON.stringify(diasVacios) });
-    await cargarCache();
-    closeModal();
-    toast('✅ Semana creada');
-    renderSemana();
-  } catch(e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+  const usuarioEl=document.getElementById('semUsuarioManual');
+  const usuario_id=parseInt(usuarioEl.value||usuarioEl.getAttribute('value'));
+  const fecha_inicio=document.getElementById('semFechaManual').value;
+  const saldo_anterior=parseFloat(document.getElementById('semSaldoManual').value||0);
+  if (!fecha_inicio){toast('❌ Selecciona la fecha');return;}
+  if (cache.semanas.some(s=>String(s.usuario_id)===String(usuario_id)&&s.fecha_inicio===fecha_inicio)){toast('⚠️ Ya existe esa semana');return;}
+  showLoading('Creando...');
+  try { await dbInsert('semanas',{usuario_id,fecha_inicio,saldo_anterior,dias:JSON.stringify(DIAS.map(()=>({cobrado:0,prestado:0,gasto:0})))}); await cargarCache(); closeModal(); toast('✅ Semana creada'); renderSemana(); }
+  catch(e){toast('❌ Error: '+e.message);} finally{hideLoading();}
 }
 
 async function eliminarSemana(id) {
   if (!confirm('¿Eliminar esta semana?')) return;
   showLoading('Eliminando...');
-  try {
-    await dbDelete('semanas', id);
-    await cargarCache();
-    renderSemana();
-    toast('🗑️ Semana eliminada');
-  } catch(e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+  try { await dbDelete('semanas',id); await cargarCache(); renderSemana(); toast('🗑️ Semana eliminada'); }
+  catch(e){toast('❌ Error: '+e.message);} finally{hideLoading();}
 }
 
 // ══════════════════════════════════════════
-//  LISTA DE COBRO DIARIO
+//  COBRO DIARIO
 // ══════════════════════════════════════════
-
-function diasDesdeInicio(p) {
-  if (!p.fecha_inicio) return 0;
-  const inicio = new Date(p.fecha_inicio + 'T00:00:00');
-  const hoy = new Date();
-  hoy.setHours(0,0,0,0);
-  return Math.floor((hoy - inicio) / (1000 * 60 * 60 * 24));
-}
-
-// ── BUG CORREGIDO: se reemplazó parseLocalDate() (función inexistente)
-// ── por new Date(fechaInicio + 'T00:00:00') que es el patrón correcto
-function pagosDiasHabilesHastaAyer(fechaInicio) {
-  const inicio = new Date(fechaInicio + 'T00:00:00');
-  const ayer = new Date(); ayer.setDate(ayer.getDate()-1); ayer.setHours(0,0,0,0);
-  if (inicio >= ayer) return 0;
-  let dias = 0;
-  const cur = new Date(inicio); cur.setDate(cur.getDate()+1);
-  while (cur <= ayer) {
-    if (cur.getDay() !== 0) dias++;
-    cur.setDate(cur.getDate() + 1);
-  }
-  return dias;
-}
-
 function pagosHoy(prestamoId) {
-  return cache.pagos
-    .filter(pg => pg.prestamo_id == prestamoId && pg.fecha === today() && pg.metodo !== 'no_pago')
-    .reduce((s, pg) => s + Number(pg.monto), 0);
+  return cache.pagos.filter(pg=>pg.prestamo_id==prestamoId&&pg.fecha===today()&&pg.metodo!=='no_pago').reduce((s,pg)=>s+Number(pg.monto),0);
 }
-
 function noPagoHoy(prestamoId) {
-  return cache.pagos.some(pg =>
-    pg.prestamo_id == prestamoId && pg.fecha === today() && pg.metodo === 'no_pago'
-  );
+  return cache.pagos.some(pg=>pg.prestamo_id==prestamoId&&pg.fecha===today()&&pg.metodo==='no_pago');
 }
 
 function renderCobro() {
-  const isAdmin = currentUser.rol === 'admin';
-  let filtroCobro = window._filtroCobro || 'pendientes';
-  let filtroCobradorCobro = window._filtroCobradorCobro || (isAdmin ? 'todos' : String(currentUser.id));
-
-  const hoy = today();
-  const fechaHoy = new Date();
-  const diasSemana = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-  const fechaStr = `${diasSemana[fechaHoy.getDay()]} ${fechaHoy.getDate()} ${meses[fechaHoy.getMonth()]}`;
-
-  let prestamos = cache.prestamos.filter(p => p.estado === 'activo');
-
-  if (filtroCobradorCobro !== 'todos') {
-    const clienteIds = cache.clientes
-      .filter(c => String(c.usuario_id) === String(filtroCobradorCobro))
-      .map(c => c.id);
-    prestamos = prestamos.filter(p => clienteIds.includes(p.cliente_id));
+  const isAdmin = currentUser.rol==='admin';
+  let filtroCobro = window._filtroCobro||'pendientes';
+  let filtroCobradorCobro = window._filtroCobradorCobro||(isAdmin?'todos':String(currentUser.id));
+  const hoy=today();
+  const fechaHoy=new Date();
+  const diasSemana=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const meses=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const fechaStr=`${diasSemana[fechaHoy.getDay()]} ${fechaHoy.getDate()} ${meses[fechaHoy.getMonth()]}`;
+  let prestamos=cache.prestamos.filter(p=>p.estado==='activo');
+  if (filtroCobradorCobro!=='todos') {
+    const clienteIds=cache.clientes.filter(c=>String(c.usuario_id)===String(filtroCobradorCobro)).map(c=>c.id);
+    prestamos=prestamos.filter(p=>clienteIds.includes(p.cliente_id));
   }
-
-  const lista = prestamos.map(p => {
-    const cl = getCliente(p.cliente_id);
-    const cuota = cuotaDiaria(p);
-    const pagadoHoy = pagosHoy(p.id);
-    const nopagoHoy = noPagoHoy(p.id);
-    // Días de atraso = registros "no_pago" anteriores a hoy (sin contar el de hoy)
-    const pagosAtrasados = cache.pagos.filter(pg =>
-      pg.prestamo_id == p.id &&
-      pg.metodo === 'no_pago' &&
-      pg.fecha < today()
-    ).length;
-    const pendiente = saldoPendiente(p);
-    const cobrador = cache.usuarios.find(u => u.id == p.cobrador_id) || null;
-
+  const lista=prestamos.map(p=>{
+    const cl=getCliente(p.cliente_id);
+    const cuota=cuotaDiaria(p);
+    const pagadoHoy=pagosHoy(p.id);
+    const nopagoHoy=noPagoHoy(p.id);
+    const pagosAtrasados=cache.pagos.filter(pg=>pg.prestamo_id==p.id&&pg.metodo==='no_pago'&&pg.fecha<today()).length;
+    const pendiente=saldoPendiente(p);
+    const cobrador=cache.usuarios.find(u=>u.id==p.cobrador_id)||null;
     let estado;
-    if (pagadoHoy >= cuota * 0.99) estado = 'pagado';
-    else if (nopagoHoy) estado = 'no_pago';
-    else if (pagosAtrasados > 0) estado = 'atrasado';
-    else estado = 'pendiente';
-
-    return { p, cl, cuota, pagadoHoy, nopagoHoy, pagosAtrasados, pendiente, estado, cobrador };
+    if (pagadoHoy>=cuota*0.99) estado='pagado';
+    else if (nopagoHoy) estado='no_pago';
+    else if (pagosAtrasados>0) estado='atrasado';
+    else estado='pendiente';
+    return {p,cl,cuota,pagadoHoy,nopagoHoy,pagosAtrasados,pendiente,estado,cobrador};
   });
-
-  const totalPagados   = lista.filter(x => x.estado === 'pagado').length;
-  const totalAtrasados = lista.filter(x => x.estado === 'atrasado').length;
-  const totalNoPago    = lista.filter(x => x.estado === 'no_pago').length;
-  const totalPendientes= lista.filter(x => x.estado === 'pendiente').length;
-  const montoCobradoHoy = lista.reduce((s, x) => s + x.pagadoHoy, 0);
-  const montoPorCobrar  = lista
-    .filter(x => x.estado !== 'pagado' && x.estado !== 'no_pago')
-    .reduce((s, x) => s + x.cuota, 0);
-
-  let listaFiltrada = lista;
-  if (filtroCobro === 'pendientes') listaFiltrada = lista.filter(x => x.estado === 'pendiente' || x.estado === 'atrasado');
-  else if (filtroCobro === 'pagados')   listaFiltrada = lista.filter(x => x.estado === 'pagado');
-  else if (filtroCobro === 'atrasados') listaFiltrada = lista.filter(x => x.estado === 'atrasado');
-  else if (filtroCobro === 'no_pago')   listaFiltrada = lista.filter(x => x.estado === 'no_pago');
-
-  const orden = { atrasado: 0, pendiente: 1, no_pago: 2, pagado: 3 };
-  listaFiltrada.sort((a, b) => orden[a.estado] - orden[b.estado] || b.pagosAtrasados - a.pagosAtrasados);
-
-  let html = '';
-
+  const totalPagados=lista.filter(x=>x.estado==='pagado').length;
+  const totalAtrasados=lista.filter(x=>x.estado==='atrasado').length;
+  const totalNoPago=lista.filter(x=>x.estado==='no_pago').length;
+  const totalPendientes=lista.filter(x=>x.estado==='pendiente').length;
+  const montoCobradoHoy=lista.reduce((s,x)=>s+x.pagadoHoy,0);
+  const montoPorCobrar=lista.filter(x=>x.estado!=='pagado'&&x.estado!=='no_pago').reduce((s,x)=>s+x.cuota,0);
+  let listaFiltrada=lista;
+  if (filtroCobro==='pendientes') listaFiltrada=lista.filter(x=>x.estado==='pendiente'||x.estado==='atrasado');
+  else if (filtroCobro==='pagados') listaFiltrada=lista.filter(x=>x.estado==='pagado');
+  else if (filtroCobro==='atrasados') listaFiltrada=lista.filter(x=>x.estado==='atrasado');
+  else if (filtroCobro==='no_pago') listaFiltrada=lista.filter(x=>x.estado==='no_pago');
+  const orden={atrasado:0,pendiente:1,no_pago:2,pagado:3};
+  listaFiltrada.sort((a,b)=>orden[a.estado]-orden[b.estado]||b.pagosAtrasados-a.pagosAtrasados);
+  let html='';
   if (isAdmin) {
-    html += `<div class="tag-row" style="margin-bottom:8px">
-      <button class="tag-btn ${filtroCobradorCobro==='todos'?'active':''}"
-        onclick="window._filtroCobradorCobro='todos';renderCobro()">👥 Todos</button>`;
-    cache.usuarios.forEach(u => {
-      html += `<button class="tag-btn ${filtroCobradorCobro===String(u.id)?'active':''}"
-        onclick="window._filtroCobradorCobro='${u.id}';renderCobro()"
-        style="${filtroCobradorCobro===String(u.id)?`background:${u.color};border-color:${u.color}`:''}">
-        <span style="width:7px;height:7px;border-radius:50%;background:${u.color};display:inline-block;margin-right:3px"></span>
-        ${u.nombre.split(' ')[0]}
-      </button>`;
-    });
-    html += `</div>`;
+    html+=`<div class="tag-row" style="margin-bottom:8px"><button class="tag-btn ${filtroCobradorCobro==='todos'?'active':''}" onclick="window._filtroCobradorCobro='todos';renderCobro()">👥 Todos</button>`;
+    cache.usuarios.forEach(u=>{html+=`<button class="tag-btn ${filtroCobradorCobro===String(u.id)?'active':''}" onclick="window._filtroCobradorCobro='${u.id}';renderCobro()" style="${filtroCobradorCobro===String(u.id)?`background:${u.color};border-color:${u.color}`:''}"><span style="width:7px;height:7px;border-radius:50%;background:${u.color};display:inline-block;margin-right:3px"></span>${u.nombre.split(' ')[0]}</button>`;});
+    html+=`</div>`;
   }
-
-  html += `<div class="resumen-cobro">
+  html+=`<div class="resumen-cobro">
     <div style="display:flex;justify-content:space-between;align-items:center">
-      <div>
-        <div style="font-size:16px;font-weight:900">📋 Cobro del día</div>
-        <div style="font-size:12px;opacity:0.8;margin-top:2px">${fechaStr}</div>
-      </div>
-      <div style="text-align:right">
-        <div style="font-size:11px;opacity:0.75">Cobrado hoy</div>
-        <div style="font-size:22px;font-weight:900;font-family:var(--mono)">${fmt(montoCobradoHoy)}</div>
-      </div>
+      <div><div style="font-size:16px;font-weight:900">📋 Cobro del día</div><div style="font-size:12px;opacity:0.8;margin-top:2px">${fechaStr}</div></div>
+      <div style="text-align:right"><div style="font-size:11px;opacity:0.75">Cobrado hoy</div><div style="font-size:22px;font-weight:900;font-family:var(--mono)">${fmt(montoCobradoHoy)}</div></div>
     </div>
     <div class="resumen-grid">
-      <div class="resumen-item"><div class="val">✅ ${totalPagados}</div><div class="lbl">Pagaron hoy</div></div>
+      <div class="resumen-item"><div class="val">✅ ${totalPagados}</div><div class="lbl">Pagaron</div></div>
       <div class="resumen-item"><div class="val">⏳ ${totalPendientes}</div><div class="lbl">Pendientes</div></div>
       <div class="resumen-item"><div class="val" style="color:#FF8A80">🔴 ${totalAtrasados}</div><div class="lbl">Atrasados</div></div>
       <div class="resumen-item"><div class="val" style="color:#FF8A80">❌ ${totalNoPago}</div><div class="lbl">No pagaron</div></div>
     </div>
-    <div style="margin-top:10px;font-size:12px;opacity:0.85;font-weight:700">
-      💰 Por cobrar hoy: <span style="font-family:var(--mono)">${fmt(montoPorCobrar)}</span>
-    </div>
+    <div style="margin-top:10px;font-size:12px;opacity:0.85;font-weight:700">💰 Por cobrar: <span style="font-family:var(--mono)">${fmt(montoPorCobrar)}</span></div>
     <div style="margin-top:8px;text-align:right;display:flex;gap:8px;justify-content:flex-end">
       <button class="btn sm outline" style="font-size:11px;padding:6px 10px;color:#fff;border-color:rgba(255,255,255,0.5)" onclick="navTo('resumenSemana')">📊 Resumen semana</button>
-      <button class="btn sm outline" style="font-size:11px;padding:6px 10px;color:#fff;border-color:rgba(255,255,255,0.5)" onclick="navTo('historial')">Historia de cobros</button>
+      <button class="btn sm outline" style="font-size:11px;padding:6px 10px;color:#fff;border-color:rgba(255,255,255,0.5)" onclick="navTo('historial')">Historial</button>
     </div>
   </div>`;
-
-  html += `<div class="tag-row" style="margin-bottom:14px">
-    <button class="tag-btn ${filtroCobro==='pendientes'?'active':''}"
-      onclick="window._filtroCobro='pendientes';renderCobro()">⏳ Por cobrar (${totalPendientes+totalAtrasados})</button>
-    <button class="tag-btn ${filtroCobro==='atrasados'?'active':''}"
-      onclick="window._filtroCobro='atrasados';renderCobro()"
-      style="${filtroCobro==='atrasados'?'background:var(--danger);border-color:var(--danger)':''}">🔴 Atrasados (${totalAtrasados})</button>
-    <button class="tag-btn ${filtroCobro==='no_pago'?'active':''}"
-      onclick="window._filtroCobro='no_pago';renderCobro()"
-      style="${filtroCobro==='no_pago'?'background:#AD1457;border-color:#AD1457':''}">❌ No pagaron (${totalNoPago})</button>
-    <button class="tag-btn ${filtroCobro==='pagados'?'active':''}"
-      onclick="window._filtroCobro='pagados';renderCobro()"
-      style="${filtroCobro==='pagados'?'background:var(--success);border-color:var(--success)':''}">✅ Pagados (${totalPagados})</button>
-    <button class="tag-btn ${filtroCobro==='todos'?'active':''}"
-      onclick="window._filtroCobro='todos';renderCobro()">📋 Todos (${lista.length})</button>
+  html+=`<div class="tag-row" style="margin-bottom:14px">
+    <button class="tag-btn ${filtroCobro==='pendientes'?'active':''}" onclick="window._filtroCobro='pendientes';renderCobro()">⏳ Por cobrar (${totalPendientes+totalAtrasados})</button>
+    <button class="tag-btn ${filtroCobro==='atrasados'?'active':''}" onclick="window._filtroCobro='atrasados';renderCobro()" style="${filtroCobro==='atrasados'?'background:var(--danger);border-color:var(--danger)':''}">🔴 Atrasados (${totalAtrasados})</button>
+    <button class="tag-btn ${filtroCobro==='no_pago'?'active':''}" onclick="window._filtroCobro='no_pago';renderCobro()" style="${filtroCobro==='no_pago'?'background:#AD1457;border-color:#AD1457':''}">❌ No pagaron (${totalNoPago})</button>
+    <button class="tag-btn ${filtroCobro==='pagados'?'active':''}" onclick="window._filtroCobro='pagados';renderCobro()" style="${filtroCobro==='pagados'?'background:var(--success);border-color:var(--success)':''}">✅ Pagados (${totalPagados})</button>
+    <button class="tag-btn ${filtroCobro==='todos'?'active':''}" onclick="window._filtroCobro='todos';renderCobro()">📋 Todos (${lista.length})</button>
   </div>`;
-
   if (!listaFiltrada.length) {
-    const msgs = { pendientes:'¡Todos pagaron hoy! 🎉', pagados:'Nadie ha pagado aún hoy', atrasados:'¡Sin clientes atrasados! 🎉', no_pago:'Ningún cliente marcado como no pagó', todos:'Sin préstamos activos' };
-    html += `<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">${msgs[filtroCobro] || 'Sin resultados'}</div></div>`;
-    document.getElementById('mainContent').innerHTML = html;
-    return;
+    const msgs={pendientes:'¡Todos pagaron hoy! 🎉',pagados:'Nadie ha pagado aún',atrasados:'¡Sin atrasados! 🎉',no_pago:'Ninguno marcado como no pagó',todos:'Sin préstamos activos'};
+    html+=`<div class="empty"><div class="empty-icon">✅</div><div class="empty-text">${msgs[filtroCobro]||'Sin resultados'}</div></div>`;
+    document.getElementById('mainContent').innerHTML=html; return;
   }
-
-  listaFiltrada.forEach(({ p, cl, cuota, pagadoHoy, nopagoHoy, pagosAtrasados, pendiente, estado, cobrador }) => {
-    const statusLabels = {
-      pagado:   { txt: '✅ Pagó hoy',      cls: 'pagado'   },
-      pendiente:{ txt: '⏳ Pendiente',      cls: 'pendiente' },
-      atrasado: { txt: `🔴 ${pagosAtrasados} día${pagosAtrasados!==1?'s':''} atrasado`, cls: 'atrasado' },
-      no_pago:  { txt: '❌ No pagó hoy',   cls: 'no_pago'  },
-    };
-    const st = statusLabels[estado];
-    const claseCard = estado === 'atrasado' ? 'atrasado' : estado === 'pagado' ? 'pagado-hoy' : estado === 'no_pago' ? 'atrasado' : 'pendiente';
-
-    html += `<div class="cobro-item ${claseCard}">
+  listaFiltrada.forEach(({p,cl,cuota,pagadoHoy,nopagoHoy,pagosAtrasados,pendiente,estado,cobrador})=>{
+    const statusLabels={pagado:{txt:'✅ Pagó hoy',cls:'pagado'},pendiente:{txt:'⏳ Pendiente',cls:'pendiente'},atrasado:{txt:`🔴 ${pagosAtrasados} día${pagosAtrasados!==1?'s':''} atrasado`,cls:'atrasado'},no_pago:{txt:'❌ No pagó hoy',cls:'no_pago'}};
+    const st=statusLabels[estado];
+    const claseCard=estado==='atrasado'?'atrasado':estado==='pagado'?'pagado-hoy':estado==='no_pago'?'atrasado':'pendiente';
+    html+=`<div class="cobro-item ${claseCard}">
       <span class="cobro-status ${st.cls}">${st.txt}</span>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
         <div class="list-avatar" style="background:${cl.color};width:44px;height:44px;border-radius:13px;font-size:16px">${avatarText(cl.nombre)}</div>
         <div style="flex:1;min-width:0">
           <div style="font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${cl.nombre}</div>
-          <div style="font-size:11px;color:var(--text2)">📞 ${cl.telefono || '—'}</div>
-          ${isAdmin && cobrador ? `<div style="font-size:11px;color:${cobrador.color};font-weight:700;margin-top:2px">
-            <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${cobrador.color};margin-right:3px"></span>${cobrador.nombre.split(' ')[0]}
-          </div>` : ''}
+          <div style="font-size:11px;color:var(--text2)">📞 ${cl.telefono||'—'}</div>
+          ${isAdmin&&cobrador?`<div style="font-size:11px;color:${cobrador.color};font-weight:700;margin-top:2px"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${cobrador.color};margin-right:3px"></span>${cobrador.nombre.split(' ')[0]}</div>`:''}
         </div>
         <div style="text-align:right;flex-shrink:0">
           <div style="font-size:18px;font-weight:900;font-family:var(--mono);color:var(--primary)">${fmt(cuota)}</div>
@@ -1890,417 +1856,201 @@ function renderCobro() {
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
-        <div style="background:var(--surface2);border-radius:10px;padding:8px;text-align:center">
-          <div style="font-size:10px;color:var(--text2);font-weight:700">Pagado hoy</div>
-          <div style="font-size:13px;font-weight:800;font-family:var(--mono);color:var(--success)">${fmt(pagadoHoy)}</div>
-        </div>
-        <div style="background:var(--surface2);border-radius:10px;padding:8px;text-align:center">
-          <div style="font-size:10px;color:var(--text2);font-weight:700">Pendiente total</div>
-          <div style="font-size:13px;font-weight:800;font-family:var(--mono);color:var(--danger)">${fmt(pendiente)}</div>
-        </div>
-        <div style="background:var(--surface2);border-radius:10px;padding:8px;text-align:center">
-          <div style="font-size:10px;color:var(--text2);font-weight:700">Días atraso</div>
-          <div style="font-size:13px;font-weight:800;font-family:var(--mono);color:${pagosAtrasados>0?'var(--danger)':'var(--success)'}">${pagosAtrasados}</div>
-        </div>
+        <div style="background:var(--surface2);border-radius:10px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--text2);font-weight:700">Pagado hoy</div><div style="font-size:13px;font-weight:800;font-family:var(--mono);color:var(--success)">${fmt(pagadoHoy)}</div></div>
+        <div style="background:var(--surface2);border-radius:10px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--text2);font-weight:700">Pendiente</div><div style="font-size:13px;font-weight:800;font-family:var(--mono);color:var(--danger)">${fmt(pendiente)}</div></div>
+        <div style="background:var(--surface2);border-radius:10px;padding:8px;text-align:center"><div style="font-size:10px;color:var(--text2);font-weight:700">Días atraso</div><div style="font-size:13px;font-weight:800;font-family:var(--mono);color:${pagosAtrasados>0?'var(--danger)':'var(--success)'}">${pagosAtrasados}</div></div>
       </div>
       <div class="cobro-actions">
-        ${estado !== 'pagado' && !nopagoHoy ? `
-          <button class="btn sm success" onclick="registrarPagoRapido(${p.id},${cuota})">💳 Registrar pago</button>
-          <button class="btn sm" style="background:#AD1457" onclick="marcarNoPago(${p.id})">❌ No pagó</button>
-        ` : ''}
-        ${estado === 'pagado' ? `
-          <button class="btn sm outline" onclick="verPrestamo(${p.id})">Ver detalle</button>
-          <button class="btn sm accent" onclick="registrarPagoRapido(${p.id},${cuota})">📅 + Días</button>
-        ` : ''}
-        ${nopagoHoy ? `
-          <button class="btn sm warning" onclick="quitarNoPago(${p.id})">↩️ Deshacer</button>
-          <button class="btn sm success" onclick="registrarPagoRapido(${p.id},${cuota})">💳 Sí pagó</button>
-        ` : ''}
+        ${estado!=='pagado'&&!nopagoHoy?`<button class="btn sm success" onclick="registrarPagoRapido(${p.id},${cuota})">💳 Registrar pago</button><button class="btn sm" style="background:#AD1457" onclick="marcarNoPago(${p.id})">❌ No pagó</button>`:''}
+        ${estado==='pagado'?`<button class="btn sm outline" onclick="verPrestamo(${p.id})">Ver detalle</button><button class="btn sm accent" onclick="registrarPagoRapido(${p.id},${cuota})">📅 + Días</button>`:''}
+        ${nopagoHoy?`<button class="btn sm warning" onclick="quitarNoPago(${p.id})">↩️ Deshacer</button><button class="btn sm success" onclick="registrarPagoRapido(${p.id},${cuota})">💳 Sí pagó</button>`:''}
       </div>
     </div>`;
   });
-
-  document.getElementById('mainContent').innerHTML = html;
+  document.getElementById('mainContent').innerHTML=html;
 }
 
-// Genera las fechas de dias habiles (lun-sab) a partir de hoy
 function fechasHabilesDesdeHoy(cantidad) {
-  const fechas = [];
-  const cur = new Date();
-  cur.setHours(0,0,0,0);
-  while (fechas.length < cantidad) {
-    if (cur.getDay() !== 0) { // 0 = domingo, se salta
-      const y = cur.getFullYear();
-      const m = String(cur.getMonth()+1).padStart(2,'0');
-      const d = String(cur.getDate()).padStart(2,'0');
-      fechas.push(`${y}-${m}-${d}`);
-    }
-    cur.setDate(cur.getDate() + 1);
+  const fechas=[];
+  const cur=new Date(); cur.setHours(0,0,0,0);
+  while(fechas.length<cantidad){
+    if(cur.getDay()!==0){const y=cur.getFullYear(),m=String(cur.getMonth()+1).padStart(2,'0'),d=String(cur.getDate()).padStart(2,'0');fechas.push(`${y}-${m}-${d}`);}
+    cur.setDate(cur.getDate()+1);
   }
   return fechas;
 }
 
 function actualizarVistaPrevia(cuota) {
-  const dias = parseInt(document.getElementById('pgDias')?.value || 1);
-  const metodo = document.getElementById('pgMetodoRapido')?.value || 'efectivo';
-  const fechas = fechasHabilesDesdeHoy(Math.min(dias, 30));
-  const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-  const diasSemana = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  let html = '';
-  fechas.forEach((f, i) => {
-    const d = new Date(f + 'T00:00:00');
-    const label = i === 0 ? 'Hoy' : i === 1 ? 'Mañana' : `${diasSemana[d.getDay()]} ${d.getDate()} ${meses[d.getMonth()]}`;
-    html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:${i===0?'rgba(67,160,71,0.08)':'var(--bg)'};border-radius:10px;margin-bottom:4px">
+  const dias=parseInt(document.getElementById('pgDias')?.value||1);
+  const fechas=fechasHabilesDesdeHoy(Math.min(dias,30));
+  const meses=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const diasSemana=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  let html='';
+  fechas.forEach((f,i)=>{
+    const d=new Date(f+'T00:00:00');
+    const label=i===0?'Hoy':i===1?'Mañana':`${diasSemana[d.getDay()]} ${d.getDate()} ${meses[d.getMonth()]}`;
+    html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:${i===0?'rgba(67,160,71,0.08)':'var(--bg)'};border-radius:10px;margin-bottom:4px">
       <span style="font-size:12px;font-weight:700;color:${i===0?'var(--success)':'var(--text2)'}">${label}</span>
       <span style="font-family:var(--mono);font-weight:800;font-size:13px;color:var(--success)">+${fmt(cuota)}</span>
     </div>`;
   });
-  const totalLabel = dias > 1 ? `${dias} días · Total: ${fmt(cuota * dias)}` : `Total: ${fmt(cuota)}`;
-  html += `<div style="text-align:right;font-size:11px;font-weight:700;color:var(--text2);margin-top:6px">${totalLabel}</div>`;
-  const el = document.getElementById('vistaPrevia');
-  if (el) el.innerHTML = html;
+  const totalLabel=dias>1?`${dias} días · Total: ${fmt(cuota*dias)}`:`Total: ${fmt(cuota)}`;
+  html+=`<div style="text-align:right;font-size:11px;font-weight:700;color:var(--text2);margin-top:6px">${totalLabel}</div>`;
+  const el=document.getElementById('vistaPrevia');
+  if(el) el.innerHTML=html;
 }
 
 function registrarPagoRapido(prestamoId, cuota) {
-  const p = cache.prestamos.find(x => x.id == prestamoId);
-  const cl = getCliente(p.cliente_id);
-  const maxDias = Math.ceil(saldoPendiente(p) / cuota);
+  const p=cache.prestamos.find(x=>x.id==prestamoId);
+  const cl=getCliente(p.cliente_id);
+  const maxDias=Math.ceil(saldoPendiente(p)/cuota);
   openModal(`
     <div class="modal-title">💳 Registrar pago</div>
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
       <div class="list-avatar" style="background:${cl.color}">${avatarText(cl.nombre)}</div>
-      <div>
-        <div style="font-weight:800;font-size:16px">${cl.nombre}</div>
-        <div style="font-size:12px;color:var(--text2)">Cuota diaria: <b style="font-family:var(--mono)">${fmt(cuota)}</b> · Pendiente: <b style="font-family:var(--mono);color:var(--danger)">${fmt(saldoPendiente(p))}</b></div>
-      </div>
+      <div><div style="font-weight:800;font-size:16px">${cl.nombre}</div><div style="font-size:12px;color:var(--text2)">Cuota: <b>${fmt(cuota)}</b> · Pendiente: <b style="color:var(--danger)">${fmt(saldoPendiente(p))}</b></div></div>
     </div>
-
     <div style="background:var(--bg);border-radius:14px;padding:14px;margin-bottom:14px">
       <div style="font-size:12px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">¿Cuántos días paga?</div>
       <div style="display:flex;align-items:center;gap:12px">
-        <button onclick="const i=document.getElementById('pgDias');i.value=Math.max(1,parseInt(i.value)-1);actualizarVistaPrevia(${cuota})"
-          style="width:40px;height:40px;border-radius:12px;border:2px solid var(--border);background:#fff;font-size:22px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>
-        <input id="pgDias" type="number" value="1" min="1" max="${maxDias}"
-          style="flex:1;padding:10px;border:2px solid var(--primary);border-radius:12px;font-family:var(--mono);font-size:24px;font-weight:900;text-align:center;color:var(--primary)"
-          oninput="actualizarVistaPrevia(${cuota})">
-        <button onclick="const i=document.getElementById('pgDias');i.value=Math.min(${maxDias},parseInt(i.value)+1);actualizarVistaPrevia(${cuota})"
-          style="width:40px;height:40px;border-radius:12px;border:2px solid var(--border);background:#fff;font-size:22px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+        <button onclick="const i=document.getElementById('pgDias');i.value=Math.max(1,parseInt(i.value)-1);actualizarVistaPrevia(${cuota})" style="width:40px;height:40px;border-radius:12px;border:2px solid var(--border);background:#fff;font-size:22px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>
+        <input id="pgDias" type="number" value="1" min="1" max="${maxDias}" style="flex:1;padding:10px;border:2px solid var(--primary);border-radius:12px;font-family:var(--mono);font-size:24px;font-weight:900;text-align:center;color:var(--primary)" oninput="actualizarVistaPrevia(${cuota})">
+        <button onclick="const i=document.getElementById('pgDias');i.value=Math.min(${maxDias},parseInt(i.value)+1);actualizarVistaPrevia(${cuota})" style="width:40px;height:40px;border-radius:12px;border:2px solid var(--border);background:#fff;font-size:22px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
       </div>
       <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-        ${[1,2,3,5,7].filter(n=>n<=maxDias).map(n=>`<button onclick="document.getElementById('pgDias').value=${n};actualizarVistaPrevia(${cuota})"
-          style="flex:1;padding:8px;border-radius:10px;border:2px solid var(--border);background:#fff;font-family:var(--font);font-size:12px;font-weight:800;cursor:pointer;min-width:36px">${n} día${n>1?'s':''}</button>`).join('')}
+        ${[1,2,3,5,7].filter(n=>n<=maxDias).map(n=>`<button onclick="document.getElementById('pgDias').value=${n};actualizarVistaPrevia(${cuota})" style="flex:1;padding:8px;border-radius:10px;border:2px solid var(--border);background:#fff;font-family:var(--font);font-size:12px;font-weight:800;cursor:pointer;min-width:36px">${n} día${n>1?'s':''}</button>`).join('')}
       </div>
     </div>
-
-    <div style="margin-bottom:14px">
-      <div style="font-size:12px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Se registrará así:</div>
-      <div id="vistaPrevia"></div>
-    </div>
-
-    <div class="field"><label>Método de pago</label>
-      <select id="pgMetodoRapido" onchange="actualizarVistaPrevia(${cuota})">
-        <option value="efectivo">💵 Efectivo</option>
-        <option value="transferencia">🏦 Transferencia</option>
-        <option value="tarjeta">💳 Tarjeta</option>
-      </select>
-    </div>
+    <div style="margin-bottom:14px"><div style="font-size:12px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Se registrará así:</div><div id="vistaPrevia"></div></div>
+    <div class="field"><label>Método</label><select id="pgMetodoRapido" onchange="actualizarVistaPrevia(${cuota})">
+      <option value="efectivo">💵 Efectivo</option><option value="transferencia">🏦 Transferencia</option><option value="tarjeta">💳 Tarjeta</option>
+    </select></div>
     <div class="modal-actions">
       <button class="btn outline" onclick="closeModal()">Cancelar</button>
       <button class="btn success" onclick="confirmarPagoRapido(${prestamoId},${cuota})">✅ Confirmar</button>
     </div>
   `);
-  setTimeout(() => actualizarVistaPrevia(cuota), 50);
+  setTimeout(()=>actualizarVistaPrevia(cuota),50);
 }
 
 async function confirmarPagoRapido(prestamoId, cuota) {
-  const dias = parseInt(document.getElementById('pgDias')?.value || 1);
-  const metodo = document.getElementById('pgMetodoRapido').value;
-  if (!dias || dias < 1) { toast('❌ Ingresa un número de días válido'); return; }
-  const fechas = fechasHabilesDesdeHoy(dias);
-  showLoading('Registrando pagos...');
+  const dias=parseInt(document.getElementById('pgDias')?.value||1);
+  const metodo=document.getElementById('pgMetodoRapido').value;
+  if (!dias||dias<1){toast('❌ Ingresa días válidos');return;}
+  const fechas=fechasHabilesDesdeHoy(dias);
+  showLoading('Registrando...');
   try {
-    for (const fecha of fechas) {
-      await dbInsert('pagos', { prestamo_id: prestamoId, monto: cuota, fecha, metodo, notas: dias > 1 ? `Pago adelantado (${dias} días)` : '' });
-    }
+    for (const fecha of fechas) await dbInsert('pagos',{prestamo_id:prestamoId,monto:cuota,fecha,metodo,notas:dias>1?`Pago adelantado (${dias} días)`:''});
     await cargarCache();
-    const p = cache.prestamos.find(x => x.id == prestamoId);
-    if (saldoPendiente(p) <= 0.01) {
-      await dbUpdate('prestamos', prestamoId, { estado: 'liquidado' });
-      await cargarCache();
-      toast('🎉 ¡Préstamo liquidado!');
-    } else if (dias > 1) {
-      toast(`✅ ${dias} pagos registrados correctamente`);
-    } else {
-      toast('✅ Pago registrado');
-    }
-    closeModal();
-    renderCobro();
-  } catch(e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+    const p=cache.prestamos.find(x=>x.id==prestamoId);
+    if (saldoPendiente(p)<=0.01){await dbUpdate('prestamos',prestamoId,{estado:'liquidado'});await cargarCache();toast('🎉 ¡Préstamo liquidado!');}
+    else if (dias>1){toast(`✅ ${dias} pagos registrados`);}
+    else {toast('✅ Pago registrado');}
+    closeModal(); renderCobro();
+  } catch(e){toast('❌ Error: '+e.message);} finally{hideLoading();}
 }
 
 async function marcarNoPago(prestamoId) {
   if (!confirm('¿Marcar que este cliente NO pagó hoy?')) return;
   showLoading('Registrando...');
-  try {
-    await dbInsert('pagos', { prestamo_id: prestamoId, monto: 0, fecha: today(), metodo: 'no_pago', notas: 'Cliente no pagó' });
-    await cargarCache();
-    toast('❌ Marcado como no pagó');
-    renderCobro();
-  } catch(e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+  try { await dbInsert('pagos',{prestamo_id:prestamoId,monto:0,fecha:today(),metodo:'no_pago',notas:'Cliente no pagó'}); await cargarCache(); toast('❌ Marcado como no pagó'); renderCobro(); }
+  catch(e){toast('❌ Error: '+e.message);} finally{hideLoading();}
+}
+
+async function quitarNoPago(prestamoId) {
+  const registro=cache.pagos.find(pg=>pg.prestamo_id==prestamoId&&pg.fecha===today()&&pg.metodo==='no_pago');
+  if (!registro) return;
+  showLoading('Deshaciendo...');
+  try { await dbDelete('pagos',registro.id); await cargarCache(); toast('↩️ Deshecho'); renderCobro(); }
+  catch(e){toast('❌ Error: '+e.message);} finally{hideLoading();}
 }
 
 // ══════════════════════════════════════════
 //  RESUMEN SEMANAL
 // ══════════════════════════════════════════
 function renderResumenSemana() {
-  const isAdmin = currentUser.rol === 'admin';
-  let filtroRS = window._filtroResumenSemana || (isAdmin ? 'todos' : String(currentUser.id));
-
-  const hoy = new Date();
-  const dow = hoy.getDay();
-  const diffLunes = dow === 0 ? -6 : 1 - dow;
-  const lunes = new Date(hoy); lunes.setDate(hoy.getDate() + diffLunes); lunes.setHours(0,0,0,0);
-  const domingo = new Date(lunes); domingo.setDate(lunes.getDate() + 6); domingo.setHours(23,59,59,999);
-
-  const DIAS_SEMANA = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
-  const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-  const lunesStr = `${lunes.getDate()} ${meses[lunes.getMonth()]}`;
-  const domingoStr = `${domingo.getDate()} ${meses[domingo.getMonth()]}`;
-
-  let clientesFiltro = cache.clientes;
-  if (filtroRS !== 'todos') {
-    clientesFiltro = cache.clientes.filter(c => String(c.usuario_id) === String(filtroRS));
+  const isAdmin=currentUser.rol==='admin';
+  let filtroRS=window._filtroResumenSemana||(isAdmin?'todos':String(currentUser.id));
+  const hoy=new Date();
+  const dow=hoy.getDay();
+  const diffLunes=dow===0?-6:1-dow;
+  const lunes=new Date(hoy);lunes.setDate(hoy.getDate()+diffLunes);lunes.setHours(0,0,0,0);
+  const domingo=new Date(lunes);domingo.setDate(lunes.getDate()+6);domingo.setHours(23,59,59,999);
+  const DIAS_SEMANA=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+  const meses=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const lunesStr=`${lunes.getDate()} ${meses[lunes.getMonth()]}`;
+  const domingoStr=`${domingo.getDate()} ${meses[domingo.getMonth()]}`;
+  let clientesFiltro=cache.clientes;
+  if (filtroRS!=='todos') clientesFiltro=cache.clientes.filter(c=>String(c.usuario_id)===String(filtroRS));
+  const clienteIds=clientesFiltro.map(c=>c.id);
+  const prestamosActivos=cache.prestamos.filter(p=>p.estado==='activo'&&clienteIds.includes(p.cliente_id));
+  const prestamosIds=prestamosActivos.map(p=>p.id);
+  const pagosSemanaTodos=cache.pagos.filter(pg=>{const fechaPg=new Date(pg.fecha+'T00:00:00');return fechaPg>=lunes&&fechaPg<=hoy&&prestamosIds.includes(pg.prestamo_id)&&pg.metodo!=='no_pago';});
+  const prestamosNuevosSemana=cache.prestamos.filter(p=>{if(!p.fecha_inicio)return false;const fp=new Date(p.fecha_inicio+'T00:00:00');return fp>=lunes&&fp<=hoy&&clienteIds.includes(p.cliente_id);});
+  const totalCobradoSemana=pagosSemanaTodos.reduce((s,pg)=>s+Number(pg.monto),0);
+  const totalPrestadoSemana=prestamosNuevosSemana.reduce((s,p)=>s+Number(p.monto),0);
+  const saldoNeto=totalCobradoSemana-totalPrestadoSemana;
+  const clientesPagaron=new Set(pagosSemanaTodos.map(pg=>{const prest=cache.prestamos.find(p=>p.id==pg.prestamo_id);return prest?prest.cliente_id:null;})).size;
+  const desgloseDias=[];
+  for(let i=0;i<7;i++){
+    const dia=new Date(lunes);dia.setDate(lunes.getDate()+i);
+    if(dia>hoy){desgloseDias.push({label:DIAS_SEMANA[i],cobrado:0,prestado:0,futuro:true,esDom:i===6});continue;}
+    const diaStr=dia.getFullYear()+'-'+String(dia.getMonth()+1).padStart(2,'0')+'-'+String(dia.getDate()).padStart(2,'0');
+    const cobDia=cache.pagos.filter(pg=>pg.fecha===diaStr&&prestamosIds.includes(pg.prestamo_id)&&pg.metodo!=='no_pago').reduce((s,pg)=>s+Number(pg.monto),0);
+    const prestDia=cache.prestamos.filter(p=>(p.fecha_inicio||'').split('T')[0]===diaStr&&clienteIds.includes(p.cliente_id)).reduce((s,p)=>s+Number(p.monto),0);
+    desgloseDias.push({label:DIAS_SEMANA[i],cobrado:cobDia,prestado:prestDia,futuro:false,esDom:i===6});
   }
-  const clienteIds = clientesFiltro.map(c => c.id);
-  const prestamosActivos = cache.prestamos.filter(p => p.estado === 'activo' && clienteIds.includes(p.cliente_id));
-  const prestamosIds = prestamosActivos.map(p => p.id);
-
-  const pagosSemanaTodos = cache.pagos.filter(pg => {
-    const fechaPg = new Date(pg.fecha + 'T00:00:00');
-    return fechaPg >= lunes && fechaPg <= hoy &&
-           prestamosIds.includes(pg.prestamo_id) &&
-           pg.metodo !== 'no_pago';
-  });
-
-  const prestamosNuevosSemana = cache.prestamos.filter(p => {
-    if (!p.fecha_inicio) return false;
-    const fp = new Date(p.fecha_inicio + 'T00:00:00');
-    return fp >= lunes && fp <= hoy && clienteIds.includes(p.cliente_id);
-  });
-
-  const totalCobradoSemana = pagosSemanaTodos.reduce((s, pg) => s + Number(pg.monto), 0);
-  const totalPrestadoSemana = prestamosNuevosSemana.reduce((s, p) => s + Number(p.monto), 0);
-  const saldoNeto = totalCobradoSemana - totalPrestadoSemana;
-  const clientesPagaron = new Set(pagosSemanaTodos.map(pg => {
-    const prest = cache.prestamos.find(p => p.id == pg.prestamo_id);
-    return prest ? prest.cliente_id : null;
-  })).size;
-
-  const desgloseDias = [];
-  for (let i = 0; i < 7; i++) {
-    const dia = new Date(lunes); dia.setDate(lunes.getDate() + i);
-    if (dia > hoy) { desgloseDias.push({ label: DIAS_SEMANA[i], cobrado: 0, prestado: 0, futuro: true, esDom: i === 6 }); continue; }
-    const diaStr = dia.getFullYear() + '-' + String(dia.getMonth()+1).padStart(2,'0') + '-' + String(dia.getDate()).padStart(2,'0');
-    const cobDia = cache.pagos.filter(pg => pg.fecha === diaStr && prestamosIds.includes(pg.prestamo_id) && pg.metodo !== 'no_pago').reduce((s,pg)=>s+Number(pg.monto),0);
-    const prestDia = cache.prestamos.filter(p => (p.fecha_inicio||'').split('T')[0] === diaStr && clienteIds.includes(p.cliente_id)).reduce((s,p)=>s+Number(p.monto),0);
-    desgloseDias.push({ label: DIAS_SEMANA[i], cobrado: cobDia, prestado: prestDia, futuro: false, esDom: i === 6 });
+  const maxVal=Math.max(...desgloseDias.map(d=>Math.max(d.cobrado,d.prestado)),1);
+  const mejorDia=desgloseDias.reduce((best,d)=>d.cobrado>(best?best.cobrado:0)?d:best,null);
+  const pagosPorCliente={};
+  pagosSemanaTodos.forEach(pg=>{const prest=cache.prestamos.find(p=>p.id==pg.prestamo_id);if(!prest)return;const cl=getCliente(prest.cliente_id);if(!pagosPorCliente[prest.cliente_id])pagosPorCliente[prest.cliente_id]={cl,total:0,count:0};pagosPorCliente[prest.cliente_id].total+=Number(pg.monto);pagosPorCliente[prest.cliente_id].count++;});
+  const topClientes=Object.values(pagosPorCliente).sort((a,b)=>b.total-a.total).slice(0,4);
+  let html='';
+  if(isAdmin){
+    html+=`<div class="tag-row" style="margin-bottom:12px"><button class="tag-btn ${filtroRS==='todos'?'active':''}" onclick="window._filtroResumenSemana='todos';renderResumenSemana()">Todos</button>`;
+    cache.usuarios.forEach(u=>{html+=`<button class="tag-btn ${filtroRS===String(u.id)?'active':''}" onclick="window._filtroResumenSemana='${u.id}';renderResumenSemana()" style="${filtroRS===String(u.id)?`background:${u.color};border-color:${u.color}`:''}"><span style="width:7px;height:7px;border-radius:50%;background:${u.color};display:inline-block;margin-right:3px"></span>${u.nombre.split(' ')[0]}</button>`;});
+    html+=`</div>`;
   }
-
-  const maxVal = Math.max(...desgloseDias.map(d => Math.max(d.cobrado, d.prestado)), 1);
-  const mejorDia = desgloseDias.reduce((best, d) => d.cobrado > (best ? best.cobrado : 0) ? d : best, null);
-
-  const pagosPorCliente = {};
-  pagosSemanaTodos.forEach(pg => {
-    const prest = cache.prestamos.find(p => p.id == pg.prestamo_id);
-    if (!prest) return;
-    const cl = getCliente(prest.cliente_id);
-    if (!pagosPorCliente[prest.cliente_id]) pagosPorCliente[prest.cliente_id] = { cl, total: 0, count: 0 };
-    pagosPorCliente[prest.cliente_id].total += Number(pg.monto);
-    pagosPorCliente[prest.cliente_id].count++;
-  });
-  const topClientes = Object.values(pagosPorCliente).sort((a,b) => b.total - a.total).slice(0, 4);
-
-  let html = '';
-
-  if (isAdmin) {
-    html += `<div class="tag-row" style="margin-bottom:12px">
-      <button class="tag-btn ${filtroRS==='todos'?'active':''}" onclick="window._filtroResumenSemana='todos';renderResumenSemana()">Todos</button>`;
-    cache.usuarios.forEach(u => {
-      html += `<button class="tag-btn ${filtroRS===String(u.id)?'active':''}"
-        onclick="window._filtroResumenSemana='${u.id}';renderResumenSemana()"
-        style="${filtroRS===String(u.id)?`background:${u.color};border-color:${u.color}`:''}">
-        <span style="width:7px;height:7px;border-radius:50%;background:${u.color};display:inline-block;margin-right:3px"></span>
-        ${u.nombre.split(' ')[0]}
-      </button>`;
-    });
-    html += `</div>`;
-  }
-
-  html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-    <div>
-      <div class="section-title" style="margin:0">Semana actual</div>
-      <div style="font-size:12px;color:var(--text2);font-weight:600;margin-top:2px">${lunesStr} – ${domingoStr}</div>
-    </div>
-    <button class="btn sm outline" onclick="navTo('cobro')">← Volver</button>
+  html+=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div><div class="section-title" style="margin:0">Semana actual</div><div style="font-size:12px;color:var(--text2);font-weight:600;margin-top:2px">${lunesStr} – ${domingoStr}</div></div><button class="btn sm outline" onclick="navTo('cobro')">← Volver</button></div>`;
+  html+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+    <div style="background:linear-gradient(135deg,#1B5E20,#43A047);border-radius:18px;padding:18px;color:#fff;box-shadow:0 4px 20px rgba(67,160,71,0.3)"><div style="font-size:22px;margin-bottom:4px">💰</div><div style="font-size:11px;opacity:0.85;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Cobrado</div><div style="font-size:22px;font-weight:900;font-family:var(--mono);margin-top:6px">${fmt(totalCobradoSemana)}</div><div style="font-size:11px;opacity:0.75;margin-top:4px">${pagosSemanaTodos.length} cobros</div></div>
+    <div style="background:linear-gradient(135deg,#0D47A1,#1E88E5);border-radius:18px;padding:18px;color:#fff;box-shadow:0 4px 20px rgba(21,101,192,0.3)"><div style="font-size:22px;margin-bottom:4px">💵</div><div style="font-size:11px;opacity:0.85;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Prestado</div><div style="font-size:22px;font-weight:900;font-family:var(--mono);margin-top:6px">${fmt(totalPrestadoSemana)}</div><div style="font-size:11px;opacity:0.75;margin-top:4px">${prestamosNuevosSemana.length} préstamos</div></div>
   </div>`;
-
-  html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
-    <div style="background:linear-gradient(135deg,#1B5E20,#43A047);border-radius:18px;padding:18px;color:#fff;box-shadow:0 4px 20px rgba(67,160,71,0.3)">
-      <div style="font-size:22px;margin-bottom:4px">💰</div>
-      <div style="font-size:11px;opacity:0.85;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Cobrado esta semana</div>
-      <div style="font-size:22px;font-weight:900;font-family:var(--mono);margin-top:6px">${fmt(totalCobradoSemana)}</div>
-      <div style="font-size:11px;opacity:0.75;margin-top:4px">${pagosSemanaTodos.length} cobros · ${clientesPagaron} clientes</div>
-    </div>
-    <div style="background:linear-gradient(135deg,#0D47A1,#1E88E5);border-radius:18px;padding:18px;color:#fff;box-shadow:0 4px 20px rgba(21,101,192,0.3)">
-      <div style="font-size:22px;margin-bottom:4px">💵</div>
-      <div style="font-size:11px;opacity:0.85;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Prestado esta semana</div>
-      <div style="font-size:22px;font-weight:900;font-family:var(--mono);margin-top:6px">${fmt(totalPrestadoSemana)}</div>
-      <div style="font-size:11px;opacity:0.75;margin-top:4px">${prestamosNuevosSemana.length} préstamo${prestamosNuevosSemana.length!==1?'s':''} nuevo${prestamosNuevosSemana.length!==1?'s':''}</div>
-    </div>
-  </div>`;
-
-  const scNeto = saldoNeto >= 0 ? '#43A047' : '#E53935';
-  const bgNeto = saldoNeto >= 0 ? 'rgba(67,160,71,0.08)' : 'rgba(229,57,53,0.08)';
-  html += `<div style="background:${bgNeto};border:2px solid ${scNeto};border-radius:16px;padding:16px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">
-    <div>
-      <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px">Saldo neto de la semana</div>
-      <div style="font-size:11px;color:var(--text2);margin-top:2px">Cobrado − Prestado</div>
-    </div>
-    <div style="font-size:26px;font-weight:900;font-family:var(--mono);color:${scNeto}">${saldoNeto >= 0 ? '+' : ''}${fmt(saldoNeto)}</div>
-  </div>`;
-
-  html += `<div class="card" style="margin-bottom:14px">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <div class="card-title">Cobros por día</div>
-      <div style="display:flex;gap:10px;font-size:10px;font-weight:700">
-        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:#43A047;display:inline-block"></span>Cobrado</span>
-        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:#1E88E5;display:inline-block"></span>Prestado</span>
-      </div>
-    </div>
-    <div style="display:flex;gap:6px;align-items:flex-end;height:100px">`;
-
-  desgloseDias.forEach(d => {
-    const pctCob = d.cobrado > 0 ? Math.max(4, Math.round(d.cobrado / maxVal * 90)) : 0;
-    const pctPre = d.prestado > 0 ? Math.max(4, Math.round(d.prestado / maxVal * 90)) : 0;
-    const opFut = d.futuro || d.esDom ? '0.3' : '1';
-    html += `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;opacity:${opFut}">
-      <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:80px">
-        <div style="flex:1;height:${pctCob}px;background:linear-gradient(180deg,#43A047,#81C784);border-radius:4px 4px 0 0;min-height:${d.cobrado>0?4:0}px"></div>
-        <div style="flex:1;height:${pctPre}px;background:linear-gradient(180deg,#1E88E5,#64B5F6);border-radius:4px 4px 0 0;min-height:${d.prestado>0?4:0}px"></div>
-      </div>
-      <div style="font-size:9px;font-weight:800;color:var(--text2)">${d.label}</div>
-    </div>`;
-  });
-  html += `</div></div>`;
-
-  if (mejorDia && mejorDia.cobrado > 0) {
-    html += `<div class="card" style="margin-bottom:14px;display:flex;align-items:center;gap:14px">
-      <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#FF6F00,#FFA000);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">🏆</div>
-      <div>
-        <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px">Mejor día de la semana</div>
-        <div style="font-size:16px;font-weight:900;margin-top:2px">${mejorDia.label} — <span style="color:var(--success);font-family:var(--mono)">${fmt(mejorDia.cobrado)}</span></div>
-      </div>
-    </div>`;
-  }
-
-  if (topClientes.length) {
-    html += `<div class="card" style="margin-bottom:14px">
-      <div class="card-title" style="margin-bottom:12px">Top clientes esta semana</div>`;
-    topClientes.forEach((item, idx) => {
-      const medals = ['🥇','🥈','🥉','4️⃣'];
-      html += `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--surface2)">
-        <div style="font-size:20px;width:28px;text-align:center">${medals[idx]||''}</div>
-        <div class="list-avatar" style="background:${item.cl.color};width:38px;height:38px;border-radius:11px;font-size:14px">${avatarText(item.cl.nombre)}</div>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.cl.nombre}</div>
-          <div style="font-size:11px;color:var(--text2)">${item.count} pago${item.count!==1?'s':''}</div>
-        </div>
-        <div style="font-weight:900;font-family:var(--mono);font-size:14px;color:var(--success)">${fmt(item.total)}</div>
-      </div>`;
-    });
-    html += `</div>`;
-  }
-
-  if (prestamosNuevosSemana.length) {
-    html += `<div class="card" style="margin-bottom:14px">
-      <div class="card-title" style="margin-bottom:12px">Préstamos otorgados esta semana</div>`;
-    prestamosNuevosSemana.forEach(p => {
-      const cl = getCliente(p.cliente_id);
-      html += `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--surface2)">
-        <div class="list-avatar" style="background:${cl.color};width:38px;height:38px;border-radius:11px;font-size:14px">${avatarText(cl.nombre)}</div>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:13px;font-weight:800">${cl.nombre}</div>
-          <div style="font-size:11px;color:var(--text2)">${fmtDate(p.fecha_inicio)} · ${p.plazo} días · ${p.interes}%</div>
-        </div>
-        <div style="font-weight:900;font-family:var(--mono);font-size:14px;color:var(--primary)">${fmt(p.monto)}</div>
-      </div>`;
-    });
-    html += `</div>`;
-  }
-
-  if (!totalCobradoSemana && !totalPrestadoSemana) {
-    html += `<div class="empty"><div class="empty-icon">📊</div><div class="empty-text">Sin actividad esta semana</div><div style="font-size:13px;color:var(--text2);margin-top:6px">Registra cobros para ver tu resumen</div></div>`;
-  }
-
-  document.getElementById('mainContent').innerHTML = html;
-}
-
-
-async function quitarNoPago(prestamoId) {
-  const registro = cache.pagos.find(pg =>
-    pg.prestamo_id == prestamoId && pg.fecha === today() && pg.metodo === 'no_pago'
-  );
-  if (!registro) return;
-  showLoading('Deshaciendo...');
-  try {
-    await dbDelete('pagos', registro.id);
-    await cargarCache();
-    toast('↩️ Deshecho');
-    renderCobro();
-  } catch(e) { toast('❌ Error: ' + e.message); }
-  finally { hideLoading(); }
+  const scNeto=saldoNeto>=0?'#43A047':'#E53935';
+  html+=`<div style="background:${saldoNeto>=0?'rgba(67,160,71,0.08)':'rgba(229,57,53,0.08)'};border:2px solid ${scNeto};border-radius:16px;padding:16px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px">Saldo neto</div><div style="font-size:11px;color:var(--text2);margin-top:2px">Cobrado − Prestado</div></div><div style="font-size:26px;font-weight:900;font-family:var(--mono);color:${scNeto}">${saldoNeto>=0?'+':''}${fmt(saldoNeto)}</div></div>`;
+  html+=`<div class="card" style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div class="card-title">Cobros por día</div><div style="display:flex;gap:10px;font-size:10px;font-weight:700"><span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:#43A047;display:inline-block"></span>Cobrado</span><span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:3px;background:#1E88E5;display:inline-block"></span>Prestado</span></div></div><div style="display:flex;gap:6px;align-items:flex-end;height:100px">`;
+  desgloseDias.forEach(d=>{const pctCob=d.cobrado>0?Math.max(4,Math.round(d.cobrado/maxVal*90)):0;const pctPre=d.prestado>0?Math.max(4,Math.round(d.prestado/maxVal*90)):0;const opFut=d.futuro||d.esDom?'0.3':'1';html+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;opacity:${opFut}"><div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:80px"><div style="flex:1;height:${pctCob}px;background:linear-gradient(180deg,#43A047,#81C784);border-radius:4px 4px 0 0;min-height:${d.cobrado>0?4:0}px"></div><div style="flex:1;height:${pctPre}px;background:linear-gradient(180deg,#1E88E5,#64B5F6);border-radius:4px 4px 0 0;min-height:${d.prestado>0?4:0}px"></div></div><div style="font-size:9px;font-weight:800;color:var(--text2)">${d.label}</div></div>`;});
+  html+=`</div></div>`;
+  if(mejorDia&&mejorDia.cobrado>0){html+=`<div class="card" style="margin-bottom:14px;display:flex;align-items:center;gap:14px"><div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#FF6F00,#FFA000);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">🏆</div><div><div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px">Mejor día</div><div style="font-size:16px;font-weight:900;margin-top:2px">${mejorDia.label} — <span style="color:var(--success);font-family:var(--mono)">${fmt(mejorDia.cobrado)}</span></div></div></div>`;}
+  if(topClientes.length){html+=`<div class="card" style="margin-bottom:14px"><div class="card-title" style="margin-bottom:12px">Top clientes esta semana</div>`;topClientes.forEach((item,idx)=>{const medals=['🥇','🥈','🥉','4️⃣'];html+=`<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--surface2)"><div style="font-size:20px;width:28px;text-align:center">${medals[idx]||''}</div><div class="list-avatar" style="background:${item.cl.color};width:38px;height:38px;border-radius:11px;font-size:14px">${avatarText(item.cl.nombre)}</div><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.cl.nombre}</div><div style="font-size:11px;color:var(--text2)">${item.count} pago${item.count!==1?'s':''}</div></div><div style="font-weight:900;font-family:var(--mono);font-size:14px;color:var(--success)">${fmt(item.total)}</div></div>`;});html+=`</div>`;}
+  if(!totalCobradoSemana&&!totalPrestadoSemana){html+=`<div class="empty"><div class="empty-icon">📊</div><div class="empty-text">Sin actividad esta semana</div></div>`;}
+  document.getElementById('mainContent').innerHTML=html;
 }
 
 // ══════════════════════════════════════════
 //  HISTORIAL DE COBROS
 // ══════════════════════════════════════════
 function renderHistorialCobro() {
-  const isAdmin = currentUser.rol === 'admin';
-  let filtroHist = window._filtroHistCobrador || (isAdmin ? 'todos' : String(currentUser.id));
-  let pagosHist = [...cache.pagos].sort((a,b) => b.fecha.localeCompare(a.fecha));
-  if (isAdmin && filtroHist !== 'todos') {
-    const cIds = cache.clientes.filter(c => String(c.usuario_id)===String(filtroHist)).map(c=>c.id);
-    const pIds = cache.prestamos.filter(p => cIds.includes(p.cliente_id)).map(p=>p.id);
-    pagosHist = pagosHist.filter(pg => pIds.includes(pg.prestamo_id));
-  }
-  let html = '';
-  if (isAdmin) {
-    html += `<div class="tag-row" style="margin-bottom:12px"><button class="tag-btn ${filtroHist==='todos'?'active':''}" onclick="window._filtroHistCobrador='todos';renderHistorialCobro()">Todos</button>`;
-    cache.usuarios.forEach(u => { html += `<button class="tag-btn ${filtroHist===String(u.id)?'active':''}" onclick="window._filtroHistCobrador='${u.id}';renderHistorialCobro()" style="${filtroHist===String(u.id)?`background:${u.color};border-color:${u.color}`:''}"><span style="width:7px;height:7px;border-radius:50%;background:${u.color};display:inline-block;margin-right:3px"></span>${u.nombre.split(' ')[0]}</button>`; });
-    html += `</div>`;
-  }
-  html += `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div class="section-title" style="margin:0">Historial de cobros</div><button class="btn sm outline" onclick="navTo('cobro')">Volver</button></div>`;
-  if (!pagosHist.length) { html += `<div class="empty"><div class="empty-icon">📖</div><div class="empty-text">Sin historial</div></div>`; document.getElementById('mainContent').innerHTML=html; return; }
-  const porFecha = {};
-  pagosHist.forEach(pg => { if(!porFecha[pg.fecha]) porFecha[pg.fecha]=[]; porFecha[pg.fecha].push(pg); });
-  Object.keys(porFecha).sort((a,b)=>b.localeCompare(a)).forEach(fecha => {
-    const pgs = porFecha[fecha];
-    const totalDia = pgs.filter(pg=>pg.metodo!=='no_pago').reduce((s,pg)=>s+Number(pg.monto),0);
-    const pagaron = pgs.filter(pg=>pg.metodo!=='no_pago').length;
-    const noPagaron = pgs.filter(pg=>pg.metodo==='no_pago').length;
-    html += `<div class="card" style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:2px solid var(--surface2);margin-bottom:8px"><span style="font-size:13px;font-weight:800;color:var(--primary)">📅 ${fmtDate(fecha)}</span><span style="font-size:14px;font-weight:900;font-family:var(--mono);color:var(--success)">${fmt(totalDia)}</span></div><div style="display:flex;gap:12px;margin-bottom:8px;font-size:11px;font-weight:700;color:var(--text2)"><span>✅ ${pagaron} pagaron</span>${noPagaron>0?`<span style="color:#AD1457">❌ ${noPagaron} no pagaron</span>`:''}</div>`;
-    pgs.forEach(pg => {
-      const prest = cache.prestamos.find(x=>x.id==pg.prestamo_id);
-      const cl = prest ? getCliente(prest.cliente_id) : {nombre:'—',color:'#999'};
-      const esNP = pg.metodo==='no_pago';
-      const esRen = pg.metodo==='renovacion';
-      html += `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--surface2)"><div class="list-avatar" style="background:${cl.color};width:34px;height:34px;border-radius:10px;font-size:12px">${avatarText(cl.nombre)}</div><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${cl.nombre}</div><div style="font-size:11px;color:var(--text2)">${esNP?'❌ No pagó':esRen?'🔄 Renovación':pg.metodo}</div></div><div style="font-weight:800;font-family:var(--mono);font-size:13px;color:${esNP?'#AD1457':esRen?'#6A1B9A':'var(--success)'}">${esNP?'—':fmt(pg.monto)}</div></div>`;
-    });
-    html += `</div>`;
+  const isAdmin=currentUser.rol==='admin';
+  let filtroHist=window._filtroHistCobrador||(isAdmin?'todos':String(currentUser.id));
+  let pagosHist=[...cache.pagos].sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  if(isAdmin&&filtroHist!=='todos'){const cIds=cache.clientes.filter(c=>String(c.usuario_id)===String(filtroHist)).map(c=>c.id);const pIds=cache.prestamos.filter(p=>cIds.includes(p.cliente_id)).map(p=>p.id);pagosHist=pagosHist.filter(pg=>pIds.includes(pg.prestamo_id));}
+  let html='';
+  if(isAdmin){html+=`<div class="tag-row" style="margin-bottom:12px"><button class="tag-btn ${filtroHist==='todos'?'active':''}" onclick="window._filtroHistCobrador='todos';renderHistorialCobro()">Todos</button>`;cache.usuarios.forEach(u=>{html+=`<button class="tag-btn ${filtroHist===String(u.id)?'active':''}" onclick="window._filtroHistCobrador='${u.id}';renderHistorialCobro()" style="${filtroHist===String(u.id)?`background:${u.color};border-color:${u.color}`:''}"><span style="width:7px;height:7px;border-radius:50%;background:${u.color};display:inline-block;margin-right:3px"></span>${u.nombre.split(' ')[0]}</button>`;});html+=`</div>`;}
+  html+=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div class="section-title" style="margin:0">Historial de cobros</div><button class="btn sm outline" onclick="navTo('cobro')">Volver</button></div>`;
+  if(!pagosHist.length){html+=`<div class="empty"><div class="empty-icon">📖</div><div class="empty-text">Sin historial</div></div>`;document.getElementById('mainContent').innerHTML=html;return;}
+  const porFecha={};
+  pagosHist.forEach(pg=>{if(!porFecha[pg.fecha])porFecha[pg.fecha]=[];porFecha[pg.fecha].push(pg);});
+  Object.keys(porFecha).sort((a,b)=>b.localeCompare(a)).forEach(fecha=>{
+    const pgs=porFecha[fecha];
+    const totalDia=pgs.filter(pg=>pg.metodo!=='no_pago').reduce((s,pg)=>s+Number(pg.monto),0);
+    const pagaron=pgs.filter(pg=>pg.metodo!=='no_pago').length;
+    const noPagaron=pgs.filter(pg=>pg.metodo==='no_pago').length;
+    html+=`<div class="card" style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:2px solid var(--surface2);margin-bottom:8px"><span style="font-size:13px;font-weight:800;color:var(--primary)">📅 ${fmtDate(fecha)}</span><span style="font-size:14px;font-weight:900;font-family:var(--mono);color:var(--success)">${fmt(totalDia)}</span></div><div style="display:flex;gap:12px;margin-bottom:8px;font-size:11px;font-weight:700;color:var(--text2)"><span>✅ ${pagaron} pagaron</span>${noPagaron>0?`<span style="color:#AD1457">❌ ${noPagaron} no pagaron</span>`:''}</div>`;
+    pgs.forEach(pg=>{const prest=cache.prestamos.find(x=>x.id==pg.prestamo_id);const cl=prest?getCliente(prest.cliente_id):{nombre:'—',color:'#999'};const esNP=pg.metodo==='no_pago';const esRen=pg.metodo==='renovacion';html+=`<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--surface2)"><div class="list-avatar" style="background:${cl.color};width:34px;height:34px;border-radius:10px;font-size:12px">${avatarText(cl.nombre)}</div><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${cl.nombre}</div><div style="font-size:11px;color:var(--text2)">${esNP?'❌ No pagó':esRen?'🔄 Renovación':pg.metodo}</div></div><div style="font-weight:800;font-family:var(--mono);font-size:13px;color:${esNP?'#AD1457':esRen?'#6A1B9A':'var(--success)'}"}>${esNP?'—':fmt(pg.monto)}</div></div>`;});
+    html+=`</div>`;
   });
-  document.getElementById('mainContent').innerHTML = html;
+  document.getElementById('mainContent').innerHTML=html;
 }
 </script>
 </body>
