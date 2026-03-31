@@ -260,12 +260,12 @@
 
 <script>
 // ══════════════════════════════════════════
-//  CREDENCIALES SUPABASE — NO guardar en código fuente
-//  Reemplazar por mecanismo seguro en backend o variable de entorno.
-//  Para pruebas locales, define localStorage.setItem('supabase_key', '...')
+//  CREDENCIALES SUPABASE (mejor backend) - fallback para pruebas locales
+//  - localStorage tiene prioridad
+//  - si no existe, usa llave anon predeterminada (sustituir por la tuya)
 // ══════════════════════════════════════════
 const SUPABASE_URL = 'https://rjnbxjxgrbrysnjuhlrl.supabase.co';
-const SUPABASE_KEY = localStorage.getItem('supabase_key') || '';
+const SUPABASE_KEY = localStorage.getItem('supabase_key') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqbmJ4anhncmJyeXNuanVobHJsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MDg4NTksImV4cCI6MjA4OTM4NDg1OX0.E-ZuwfxcSJ-xSPZyzys8I6wiH6cOav97YaRLQXtw-j4';
 
 let sbClient = null;
 let demoMode = false;
@@ -2363,6 +2363,9 @@ function renderHistorialCobro() {
   });
   document.getElementById('mainContent').innerHTML = html;
 }
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
