@@ -888,8 +888,128 @@ function verPrestamo(id) {
     <button class="btn outline" onclick="closeModal()">Cerrar</button>
     <button class="btn warning" onclick="closeModal();modalPrestamo(${id})">✏️</button>
     ${p.estado === 'activo' ? `<button class="btn accent" onclick="closeModal();modalNuevoPago(${id})">💳 Pago</button>` : ''}
+    ${p.estado === 'activo' ? `<button class="btn" style="background:linear-gradient(135deg,#6A1B9A,#AB47BC)" onclick="closeModal();modalRenovar(${id})">🔄 Renovar</button>` : ''}
   </div>`;
   openModal(html);
+}
+
+
+// ══════════════════════════════════════════
+//  RENOVACIÓN DE PRÉSTAMOS
+// ══════════════════════════════════════════
+function modalRenovar(id) {
+  const p = cache.prestamos.find(x => x.id == id);
+  const cl = getCliente(p.cliente_id);
+  const pendiente = saldoPendiente(p);
+  const montoNuevo = Number(p.monto);
+  const enMano = Math.max(0, montoNuevo - pendiente);
+  const totalNuevo = montoNuevo * (1 + p.interes / 100);
+  const cuotaNueva = totalNuevo / p.plazo;
+
+  openModal(`
+    <div class="modal-title">🔄 Renovar préstamo</div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <div class="list-avatar" style="background:${cl.color};width:50px;height:50px;border-radius:15px;font-size:20px">${avatarText(cl.nombre)}</div>
+      <div>
+        <div style="font-weight:900;font-size:16px">${cl.nombre}</div>
+        <div style="font-size:12px;color:var(--text2)">Préstamo actual: ${fmt(montoNuevo)} · ${p.interes}% · ${p.plazo} días</div>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#6A1B9A,#AB47BC);border-radius:16px;padding:16px;color:#fff;margin-bottom:16px">
+      <div style="font-size:12px;opacity:0.85;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Resumen de renovación</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:10px;opacity:0.8;font-weight:700">Saldo pendiente</div>
+          <div style="font-size:16px;font-weight:900;font-family:var(--mono);margin-top:2px">−${fmt(pendiente)}</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:10px;opacity:0.8;font-weight:700">Nuevo préstamo</div>
+          <div style="font-size:16px;font-weight:900;font-family:var(--mono);margin-top:2px">${fmt(montoNuevo)}</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;padding:12px;background:rgba(255,255,255,0.2);border-radius:12px;text-align:center">
+        <div style="font-size:11px;opacity:0.85;font-weight:700">💵 Cliente recibe en mano</div>
+        <div style="font-size:26px;font-weight:900;font-family:var(--mono);margin-top:4px">${fmt(enMano)}</div>
+      </div>
+    </div>
+
+    <div style="background:var(--bg);border-radius:14px;padding:14px;margin-bottom:16px">
+      <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Nuevo préstamo tendrá</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
+        <div>
+          <div style="font-size:10px;color:var(--text2);font-weight:700">Monto</div>
+          <div style="font-size:14px;font-weight:900;font-family:var(--mono);color:var(--primary)">${fmt(montoNuevo)}</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--text2);font-weight:700">Interés</div>
+          <div style="font-size:14px;font-weight:900;font-family:var(--mono);color:var(--primary)">${p.interes}%</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--text2);font-weight:700">Plazo</div>
+          <div style="font-size:14px;font-weight:900;font-family:var(--mono);color:var(--primary)">${p.plazo} días</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between">
+        <span style="font-size:12px;color:var(--text2);font-weight:700">Cuota diaria nueva</span>
+        <span style="font-size:14px;font-weight:900;font-family:var(--mono);color:var(--primary)">${fmt(cuotaNueva)}</span>
+      </div>
+    </div>
+
+    <div style="background:#FFF8E1;border-radius:12px;padding:12px;margin-bottom:16px;font-size:12px;color:#E65100;font-weight:600;display:flex;gap:8px;align-items:flex-start">
+      <span style="font-size:16px">⚠️</span>
+      <span>El préstamo actual quedará <b>liquidado</b> con nota "Renovado". Se creará un nuevo préstamo desde hoy por ${fmt(montoNuevo)}.</span>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn outline" onclick="closeModal()">Cancelar</button>
+      <button class="btn" style="background:linear-gradient(135deg,#6A1B9A,#AB47BC)" onclick="confirmarRenovacion(${id})">🔄 Confirmar renovación</button>
+    </div>
+  `);
+}
+
+async function confirmarRenovacion(id) {
+  const p = cache.prestamos.find(x => x.id == id);
+  if (!p) return;
+  const pendiente = saldoPendiente(p);
+  const montoNuevo = Number(p.monto);
+
+  showLoading('Renovando préstamo...');
+  try {
+    // 1. Liquidar el préstamo viejo: registrar un pago por el saldo pendiente con nota "Renovado"
+    if (pendiente > 0) {
+      await dbInsert('pagos', {
+        prestamo_id: id,
+        monto: pendiente,
+        fecha: today(),
+        metodo: 'renovacion',
+        notas: 'Liquidado por renovación'
+      });
+    }
+    // 2. Marcar el préstamo viejo como liquidado
+    await dbUpdate('prestamos', id, {
+      estado: 'liquidado',
+      notas: (p.notas ? p.notas + ' | ' : '') + 'Renovado el ' + today()
+    });
+
+    // 3. Crear el nuevo préstamo con mismo monto, interés y plazo, desde hoy
+    await dbInsert('prestamos', {
+      cliente_id: p.cliente_id,
+      monto: montoNuevo,
+      interes: p.interes,
+      plazo: p.plazo,
+      fecha_inicio: today(),
+      cobrador_id: p.cobrador_id,
+      estado: 'activo',
+      notas: 'Renovación de préstamo anterior'
+    });
+
+    await cargarCache();
+    closeModal();
+    toast('🔄 Préstamo renovado correctamente');
+    renderPrestamos();
+  } catch(e) { toast('❌ Error: ' + e.message); }
+  finally { hideLoading(); }
 }
 
 // ══════════════════════════════════════════
@@ -2175,7 +2295,8 @@ function renderHistorialCobro() {
       const prest = cache.prestamos.find(x=>x.id==pg.prestamo_id);
       const cl = prest ? getCliente(prest.cliente_id) : {nombre:'—',color:'#999'};
       const esNP = pg.metodo==='no_pago';
-      html += `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--surface2)"><div class="list-avatar" style="background:${cl.color};width:34px;height:34px;border-radius:10px;font-size:12px">${avatarText(cl.nombre)}</div><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${cl.nombre}</div><div style="font-size:11px;color:var(--text2)">${esNP?'❌ No pagó':pg.metodo}</div></div><div style="font-weight:800;font-family:var(--mono);font-size:13px;color:${esNP?'#AD1457':'var(--success)'}">${esNP?'—':fmt(pg.monto)}</div></div>`;
+      const esRen = pg.metodo==='renovacion';
+      html += `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--surface2)"><div class="list-avatar" style="background:${cl.color};width:34px;height:34px;border-radius:10px;font-size:12px">${avatarText(cl.nombre)}</div><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${cl.nombre}</div><div style="font-size:11px;color:var(--text2)">${esNP?'❌ No pagó':esRen?'🔄 Renovación':pg.metodo}</div></div><div style="font-weight:800;font-family:var(--mono);font-size:13px;color:${esNP?'#AD1457':esRen?'#6A1B9A':'var(--success)'}">${esNP?'—':fmt(pg.monto)}</div></div>`;
     });
     html += `</div>`;
   });
@@ -2184,7 +2305,3 @@ function renderHistorialCobro() {
 </script>
 </body>
 </html>
-</script>
-</body>
-</html>
- 
