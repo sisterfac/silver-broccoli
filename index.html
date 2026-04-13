@@ -812,7 +812,12 @@
   function modalPrestamo(id) {
     const p = id ? cache.prestamos.find(x => x.id == id) : null;
     const isAdmin = currentUser.rol === 'admin';
-    const clientesOpts = cache.clientes.map(c => `<option value="${c.id}" ${p && p.cliente_id == c.id ? 'selected' : ''}>${c.nombre}</option>`).join('');
+    // Clientes sin teléfono marcados con 🔒 en el select
+    const clientesOpts = cache.clientes.map(c => {
+      const sinTel = !c.telefono || c.telefono.trim() === '';
+      const label = sinTel ? `🔒 ${c.nombre} (sin teléfono)` : c.nombre;
+      return `<option value="${c.id}" ${p && p.cliente_id == c.id ? 'selected' : ''}>${label}</option>`;
+    }).join('');
     const cobOpts = cache.usuarios.map(u => `<option value="${u.id}" ${p && p.cobrador_id == u.id ? 'selected' : ''}>${u.nombre}</option>`).join('');
     // Si es edición y NO es admin, el monto es de solo lectura
     const montoReadonly = (p && !isAdmin) ? 'readonly style="background:var(--surface2);cursor:not-allowed;opacity:0.7;border-color:var(--border)"' : '';
@@ -859,6 +864,30 @@
     }
 
     if (!monto || monto <= 0 || !plazo || !fecha_inicio) { toast('❌ Completa los campos requeridos'); return; }
+
+    // 🔒 CANDADO: verificar que el cliente tenga teléfono antes de crear préstamo nuevo
+    if (!id) {
+      const clienteSeleccionado = cache.clientes.find(c => c.id == cliente_id);
+      if (!clienteSeleccionado || !clienteSeleccionado.telefono || clienteSeleccionado.telefono.trim() === '') {
+        openModal(`
+          <div class="modal-title" style="color:var(--danger)">🔒 Sin teléfono</div>
+          <div style="text-align:center;padding:16px 0">
+            <div style="font-size:52px;margin-bottom:12px">📵</div>
+            <div style="font-size:15px;font-weight:800;margin-bottom:8px">No se puede crear el préstamo</div>
+            <div style="font-size:13px;color:var(--text2);margin-bottom:20px">
+              El cliente <b>${clienteSeleccionado?.nombre || ''}</b> no tiene número de teléfono registrado.<br><br>
+              Agrega su teléfono antes de otorgarle un préstamo.
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn outline" onclick="closeModal()">Cancelar</button>
+            <button class="btn" onclick="closeModal();modalCliente(${cliente_id})">📞 Agregar teléfono</button>
+          </div>
+        `);
+        return;
+      }
+    }
+
     showLoading('Guardando...');
     try {
       if (id) {
@@ -937,11 +966,55 @@
   function modalRenovar(id) {
     const p = cache.prestamos.find(x => x.id == id);
     const cl = getCliente(p.cliente_id);
-    const cuota = cuotaDiaria(p);
-    const pendiente = saldoPendiente(p);
-    const diasAdeudo = cache.pagos.filter(pg => pg.prestamo_id == p.id && pg.metodo === 'no_pago' && pg.fecha < today()).length;
+    const isAdmin = currentUser.rol === 'admin';
 
-    // RESTRICCIÓN: máximo 3 días de adeudo para renovar
+    // Pagos reales realizados (sin contar no_pago ni renovacion)
+    const pagosReales = cache.pagos.filter(pg =>
+      pg.prestamo_id == p.id &&
+      pg.metodo !== 'no_pago' &&
+      pg.metodo !== 'renovacion' &&
+      Number(pg.monto) > 0
+    ).length;
+
+    // Días de adeudo acumulados totales
+    const diasAdeudo = cache.pagos.filter(pg =>
+      pg.prestamo_id == p.id && pg.metodo === 'no_pago'
+    ).length;
+
+    const pendiente = saldoPendiente(p);
+    const montoNuevo = Number(p.monto);
+    const cuotaNueva = (montoNuevo * (1 + p.interes / 100)) / p.plazo;
+    const enMano = Math.max(0, montoNuevo - pendiente);
+
+    // ── BLOQUEO 1: menos de 6 pagos ──
+    if (pagosReales < 6) {
+      openModal(`
+        <div class="modal-title">🔄 Renovar préstamo</div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+          <div class="list-avatar" style="background:${cl.color};width:50px;height:50px;border-radius:15px;font-size:20px">${avatarText(cl.nombre)}</div>
+          <div><div style="font-weight:900;font-size:16px">${cl.nombre}</div></div>
+        </div>
+        <div style="background:rgba(255,76,76,0.12);border:1.5px solid var(--danger);border-radius:14px;padding:18px;text-align:center;margin-bottom:16px">
+          <div style="font-size:36px;margin-bottom:8px">🔒</div>
+          <div style="font-size:15px;font-weight:900;color:var(--danger);margin-bottom:8px">Muy pronto para renovar</div>
+          <div style="font-size:13px;color:var(--text2);font-weight:600;margin-bottom:12px">
+            Este cliente solo tiene <b style="color:var(--gold)">${pagosReales} pago${pagosReales!==1?'s':''}</b> registrado${pagosReales!==1?'s':''}.<br>
+            Se necesitan <b>mínimo 6 pagos</b> para poder renovar.
+          </div>
+          <div style="background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:10px;padding:12px">
+            <div style="font-size:11px;color:var(--text2);font-weight:700;margin-bottom:6px">PROGRESO</div>
+            <div style="height:8px;background:var(--surface3);border-radius:99px;overflow:hidden;margin-bottom:6px">
+              <div style="height:100%;width:${Math.round(pagosReales/6*100)}%;background:linear-gradient(90deg,var(--gold-dim),var(--gold-bright));border-radius:99px"></div>
+            </div>
+            <div style="font-size:12px;font-weight:800;color:var(--gold)">${pagosReales} / 6 pagos</div>
+          </div>
+        </div>
+        <button class="btn outline" onclick="closeModal()">Cerrar</button>
+      `);
+      return;
+    }
+
+    // ── BLOQUEO 2: más de 3 días de adeudo ──
     if (diasAdeudo > 3) {
       openModal(`
         <div class="modal-title">🔄 Renovar préstamo</div>
@@ -950,32 +1023,95 @@
           <div><div style="font-weight:900;font-size:16px">${cl.nombre}</div></div>
         </div>
         <div style="background:rgba(255,76,76,0.12);border:1.5px solid var(--danger);border-radius:14px;padding:18px;text-align:center;margin-bottom:16px">
-          <div style="font-size:32px;margin-bottom:8px">🚫</div>
-          <div style="font-size:15px;font-weight:900;color:var(--danger);margin-bottom:6px">Renovación bloqueada</div>
-          <div style="font-size:13px;color:var(--text2);font-weight:600">Este cliente tiene <b style="color:var(--danger)">${diasAdeudo} días de adeudo</b>.<br>Solo se puede renovar con <b>3 días de adeudo o menos</b>.</div>
+          <div style="font-size:36px;margin-bottom:8px">🚫</div>
+          <div style="font-size:15px;font-weight:900;color:var(--danger);margin-bottom:6px">Renovación bloqueada por adeudo</div>
+          <div style="font-size:13px;color:var(--text2);font-weight:600">
+            Este cliente tiene <b style="color:var(--danger)">${diasAdeudo} días de adeudo</b>.<br>
+            Solo se puede renovar con <b>3 días de adeudo o menos</b>.
+          </div>
         </div>
         <button class="btn outline" onclick="closeModal()">Cerrar</button>
       `);
       return;
     }
 
-    const montoNuevo = Number(p.monto);
-    const enMano = Math.max(0, montoNuevo - pendiente);
-    const totalNuevo = montoNuevo * (1 + p.interes / 100);
-    const cuotaNueva = totalNuevo / p.plazo;
+    // ── COBRADOR: necesita código de autorización del admin ──
+    if (!isAdmin) {
+      openModal(`
+        <div class="modal-title">🔄 Renovar préstamo</div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div class="list-avatar" style="background:${cl.color};width:50px;height:50px;border-radius:15px;font-size:20px">${avatarText(cl.nombre)}</div>
+          <div>
+            <div style="font-weight:900;font-size:16px">${cl.nombre}</div>
+            <div style="font-size:12px;color:var(--text2)">${pagosReales} pagos · ${diasAdeudo} días adeudo</div>
+          </div>
+        </div>
+        <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:14px;padding:16px;margin-bottom:16px;text-align:center">
+          <div style="font-size:28px;margin-bottom:8px">🔑</div>
+          <div style="font-size:14px;font-weight:800;color:var(--gold);margin-bottom:6px">Requiere autorización</div>
+          <div style="font-size:12px;color:var(--text2);margin-bottom:14px">Pide el código de autorización al administrador para continuar.</div>
+          <div class="field" style="margin-bottom:0">
+            <label>Código de autorización</label>
+            <input id="codigoAuth" type="password" placeholder="Contraseña del admin" autocomplete="off"
+              style="text-align:center;font-size:18px;font-weight:800;letter-spacing:4px">
+          </div>
+        </div>
+        <div style="background:var(--bg);border-radius:12px;padding:12px;margin-bottom:16px;font-size:12px;color:var(--text2);font-weight:600">
+          Monto actual: <b style="color:var(--gold);font-family:var(--mono)">${fmt(montoNuevo)}</b> · 
+          Cuota nueva: <b style="color:var(--gold);font-family:var(--mono)">${fmt(cuotaNueva)}</b> · 
+          En mano: <b style="color:var(--success);font-family:var(--mono)">${fmt(enMano)}</b>
+        </div>
+        <div class="modal-actions">
+          <button class="btn outline" onclick="closeModal()">Cancelar</button>
+          <button class="btn" style="background:linear-gradient(135deg,#6A1B9A,#AB47BC)" onclick="verificarAuthRenovacion(${id})">🔑 Verificar y renovar</button>
+        </div>
+      `);
+      return;
+    }
 
+    // ── ADMIN: renovación directa con monto editable ──
+    abrirModalRenovacionAdmin(id, p, cl, pendiente, montoNuevo, cuotaNueva, enMano, diasAdeudo);
+  }
+
+  async function verificarAuthRenovacion(id) {
+    const codigo = document.getElementById('codigoAuth')?.value?.trim();
+    if (!codigo) { toast('❌ Ingresa el código de autorización'); return; }
+    showLoading('Verificando...');
+    try {
+      const admins = cache.usuarios.filter(u => u.rol === 'admin');
+      const adminValido = admins.find(a => a.password === codigo);
+      hideLoading();
+      if (!adminValido) {
+        toast('❌ Código incorrecto');
+        const input = document.getElementById('codigoAuth');
+        if (input) { input.value = ''; input.style.borderColor = 'var(--danger)'; }
+        return;
+      }
+      // Código correcto: abrir modal de renovación admin
+      const p = cache.prestamos.find(x => x.id == id);
+      const cl = getCliente(p.cliente_id);
+      const pendiente = saldoPendiente(p);
+      const montoNuevo = Number(p.monto);
+      const cuotaNueva = (montoNuevo * (1 + p.interes / 100)) / p.plazo;
+      const enMano = Math.max(0, montoNuevo - pendiente);
+      const diasAdeudo = cache.pagos.filter(pg => pg.prestamo_id == p.id && pg.metodo === 'no_pago').length;
+      toast('✅ Autorizado por ' + adminValido.nombre.split(' ')[0]);
+      setTimeout(() => abrirModalRenovacionAdmin(id, p, cl, pendiente, montoNuevo, cuotaNueva, enMano, diasAdeudo), 300);
+    } catch(e) { hideLoading(); toast('❌ Error: ' + e.message); }
+  }
+
+  function abrirModalRenovacionAdmin(id, p, cl, pendiente, montoNuevo, cuotaNueva, enMano, diasAdeudo) {
     openModal(`
       <div class="modal-title">🔄 Renovar préstamo</div>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
         <div class="list-avatar" style="background:${cl.color};width:50px;height:50px;border-radius:15px;font-size:20px">${avatarText(cl.nombre)}</div>
         <div>
           <div style="font-weight:900;font-size:16px">${cl.nombre}</div>
-          <div style="font-size:12px;color:var(--text2)">Préstamo actual: ${fmt(montoNuevo)} · ${p.interes}% · ${p.plazo} días</div>
-          ${diasAdeudo > 0 ? `<div style="font-size:11px;color:var(--warning);font-weight:700;margin-top:3px">⚠️ ${diasAdeudo} día${diasAdeudo!==1?'s':''} de adeudo</div>` : ''}
+          <div style="font-size:12px;color:var(--text2)">Actual: ${fmt(montoNuevo)} · ${p.interes}% · ${p.plazo} días</div>
+          ${diasAdeudo > 0 ? `<div style="font-size:11px;color:var(--warning);font-weight:700;margin-top:2px">⚠️ ${diasAdeudo} día${diasAdeudo!==1?'s':''} de adeudo</div>` : ''}
         </div>
       </div>
 
-      <!-- MONTO EDITABLE -->
       <div style="background:var(--bg);border-radius:14px;padding:14px;margin-bottom:14px">
         <div style="font-size:12px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Monto del nuevo préstamo</div>
         <div class="field" style="margin-bottom:0">
@@ -1007,14 +1143,14 @@
         </div>
       </div>
 
-      <div style="background:#FFF8E1;border-radius:12px;padding:12px;margin-bottom:16px;font-size:12px;color:#E65100;font-weight:600;display:flex;gap:8px;align-items:flex-start">
+      <div style="background:rgba(255,165,0,0.1);border:1px solid rgba(255,165,0,0.3);border-radius:12px;padding:12px;margin-bottom:16px;font-size:12px;color:#E65100;font-weight:600;display:flex;gap:8px;align-items:flex-start">
         <span style="font-size:16px">⚠️</span>
-        <span>El préstamo actual quedará <b>liquidado</b> con nota "Renovado". Se creará un nuevo préstamo desde hoy.</span>
+        <span>El préstamo actual quedará <b>liquidado</b>. Se creará un nuevo préstamo desde hoy.</span>
       </div>
 
       <div class="modal-actions">
         <button class="btn outline" onclick="closeModal()">Cancelar</button>
-        <button class="btn" style="background:linear-gradient(135deg,#6A1B9A,#AB47BC)" onclick="confirmarRenovacion(${id},${pendiente},${p.interes},${p.plazo},${p.cobrador_id},${p.cliente_id})">🔄 Confirmar renovación</button>
+        <button class="btn" style="background:linear-gradient(135deg,#6A1B9A,#AB47BC)" onclick="confirmarRenovacion(${id})">🔄 Confirmar renovación</button>
       </div>
     `);
   }
@@ -1024,27 +1160,21 @@
     const enMano = Math.max(0, monto - pendiente);
     const cuotaNueva = (monto * (1 + interes / 100)) / plazo;
     const elEnMano = document.getElementById('renovEnMano');
-    const elCuota = document.getElementById('renovCuota');
-    const elNuevo = document.getElementById('renovNuevoLabel');
+    const elCuota  = document.getElementById('renovCuota');
+    const elNuevo  = document.getElementById('renovNuevoLabel');
     if (elEnMano) elEnMano.textContent = fmt(enMano);
-    if (elCuota) elCuota.textContent = fmt(cuotaNueva);
-    if (elNuevo) elNuevo.textContent = fmt(monto);
+    if (elCuota)  elCuota.textContent  = fmt(cuotaNueva);
+    if (elNuevo)  elNuevo.textContent  = fmt(monto);
   }
 
-  async function confirmarRenovacion(id, pendiente, interes, plazo, cobrador_id, cliente_id) {
+  async function confirmarRenovacion(id) {
     const p = cache.prestamos.find(x => x.id == id);
     if (!p) return;
-
-    // Usar el monto editado en el modal
     const montoNuevo = parseFloat(document.getElementById('renovMonto')?.value || p.monto);
     if (!montoNuevo || montoNuevo <= 0) { toast('❌ Ingresa un monto válido'); return; }
-
-    // Pendiente real calculado
     const pendienteReal = saldoPendiente(p);
-
     showLoading('Renovando préstamo...');
     try {
-      // 1. Liquidar el préstamo viejo con pago de renovación
       if (pendienteReal > 0) {
         await dbInsert('pagos', {
           prestamo_id: id,
@@ -1054,13 +1184,10 @@
           notas: 'Liquidado por renovación'
         });
       }
-      // 2. Marcar el préstamo viejo como liquidado
       await dbUpdate('prestamos', id, {
         estado: 'liquidado',
         notas: (p.notas ? p.notas + ' | ' : '') + 'Renovado el ' + today()
       });
-
-      // 3. Crear el nuevo préstamo con el MONTO EDITADO, mismo interés y plazo
       await dbInsert('prestamos', {
         cliente_id: p.cliente_id,
         monto: montoNuevo,
@@ -1071,7 +1198,6 @@
         estado: 'activo',
         notas: `Renovación de préstamo anterior (monto: ${fmt(montoNuevo)})`
       });
-
       await cargarCache();
       closeModal();
       toast('🔄 Préstamo renovado correctamente');
@@ -1855,22 +1981,27 @@
       const cuota = cuotaDiaria(p);
       const pagadoHoy = pagosHoy(p.id);
       const nopagoHoy = noPagoHoy(p.id);
-      // Días de atraso = registros "no_pago" anteriores a hoy (sin contar el de hoy)
+
+      // Días de atraso = todos los "no_pago" del préstamo actual SIN importar la semana
+      // Se cuentan de forma acumulada — un pago real NO borra el adeudo histórico,
+      // solo desaparece si el cobrador usa "Deshacer" o el admin elimina el registro.
       const pagosAtrasados = cache.pagos.filter(pg =>
         pg.prestamo_id == p.id &&
-        pg.metodo === 'no_pago' &&
-        pg.fecha < today()
+        pg.metodo === 'no_pago'
       ).length;
+
+      // Descontar los días de hoy si ya marcó no_pago hoy (se cuenta aparte en nopagoHoy)
+      const diasAdeudoAcumulado = nopagoHoy ? pagosAtrasados - 1 : pagosAtrasados;
       const pendiente = saldoPendiente(p);
       const cobrador = cache.usuarios.find(u => u.id == p.cobrador_id) || null;
 
       let estado;
       if (pagadoHoy >= cuota * 0.99) estado = 'pagado';
       else if (nopagoHoy) estado = 'no_pago';
-      else if (pagosAtrasados > 0) estado = 'atrasado';
+      else if (diasAdeudoAcumulado > 0) estado = 'atrasado';
       else estado = 'pendiente';
 
-      return { p, cl, cuota, pagadoHoy, nopagoHoy, pagosAtrasados, pendiente, estado, cobrador };
+      return { p, cl, cuota, pagadoHoy, nopagoHoy, pagosAtrasados: diasAdeudoAcumulado, pendiente, estado, cobrador };
     });
 
     const totalPagados   = lista.filter(x => x.estado === 'pagado').length;
@@ -2599,4 +2730,3 @@
 </script>
 </body>
 </html>
-
