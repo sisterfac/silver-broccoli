@@ -846,6 +846,11 @@
 
   async function guardarPrestamo(id) {
     const isAdmin = currentUser.rol === 'admin';
+    // 🔒 BLOQUEO: trabajadores no pueden editar préstamos ya creados
+    if (id && !isAdmin) {
+      toast('🔒 Solo el administrador puede editar préstamos');
+      return;
+    }
     const cliente_id = parseInt(document.getElementById('pCliente').value);
     const interes = parseFloat(document.getElementById('pInteres').value);
     const plazo = parseInt(document.getElementById('pPlazo').value);
@@ -950,12 +955,17 @@
         </div>
       </div>`;
     });
+    const isAdminVer = currentUser.rol === 'admin';
     html += `<div class="modal-actions">
       <button class="btn outline" onclick="closeModal()">Cerrar</button>
-      <button class="btn warning" onclick="closeModal();modalPrestamo(${id})">✏️</button>
+      ${isAdminVer ? `<button class="btn warning" onclick="closeModal();modalPrestamo(${id})">✏️ Editar</button>` : ''}
       ${p.estado === 'activo' ? `<button class="btn accent" onclick="closeModal();modalNuevoPago(${id})">💳 Pago</button>` : ''}
       ${p.estado === 'activo' ? `<button class="btn" style="background:linear-gradient(135deg,#6A1B9A,#AB47BC)" onclick="closeModal();modalRenovar(${id})">🔄 Renovar</button>` : ''}
-    </div>`;
+    </div>
+    ${!isAdminVer ? `<div style="display:flex;align-items:center;gap:6px;margin-top:12px;background:rgba(255,76,76,0.08);border:1px solid rgba(255,76,76,0.2);border-radius:10px;padding:8px 12px">
+      <span>🔒</span>
+      <span style="font-size:11px;color:var(--danger);font-weight:700">Solo el administrador puede editar los datos del préstamo</span>
+    </div>` : ''}`;
     openModal(html);
   }
 
@@ -1373,14 +1383,21 @@
       <div class="detail-row"><span class="detail-label">Capital prestado</span><span class="detail-value">${fmt(cache.prestamos.reduce((s,p)=>s+Number(p.monto),0))}</span></div>
       <div class="detail-row"><span class="detail-label">Total cobrado</span><span class="detail-value" style="color:var(--success)">${fmt(cache.pagos.reduce((s,pg)=>s+Number(pg.monto),0))}</span></div>
     </div>
-    ${isAdmin ? `
     <div class="section-title" style="margin-top:4px">📁 Exportar datos</div>
     <div class="card" style="margin-bottom:14px">
-      <div style="font-size:13px;color:var(--text2);margin-bottom:14px;font-weight:600">Genera un reporte Excel con todos los clientes y sus préstamos activos.</div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:6px;font-weight:600">
+        ${isAdmin
+          ? 'Genera un reporte Excel con todos los clientes y sus préstamos activos.'
+          : 'Descarga tu reporte personal con tus clientes y préstamos activos.'}
+      </div>
+      ${!isAdmin ? `<div style="display:flex;align-items:center;gap:6px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:8px 12px;margin-bottom:12px">
+        <span style="font-size:14px">📋</span>
+        <span style="font-size:11px;color:var(--gold);font-weight:700">Solo verás tus propios clientes en el reporte</span>
+      </div>` : ''}
       <button class="btn" style="background:linear-gradient(135deg,#1B5E20,#43A047);box-shadow:0 4px 16px rgba(67,160,71,0.3)" onclick="exportarExcelClientes()">
         📊 Descargar reporte Excel
       </button>
-    </div>` : ''}
+    </div>
     <button class="btn danger" onclick="doLogout()">🚪 Cerrar sesión</button>`;
     document.getElementById('mainContent').innerHTML = html;
   }
@@ -2630,34 +2647,54 @@
   // ya navTo esta definido arriba, solo necesitamos llamar animateCards despues de render
 
   // ══════════════════════════════════════════
-  //  EXPORTAR EXCEL — SOLO ADMIN
+  //  EXPORTAR EXCEL — ADMIN Y TRABAJADORES
   // ══════════════════════════════════════════
   function exportarExcelClientes() {
-    if (currentUser.rol !== 'admin') { toast('❌ Sin permiso'); return; }
-
+    const isAdmin = currentUser.rol === 'admin';
     const hoy = today();
+
+    // Filtrar clientes según el rol: admin ve todos, cobrador solo los suyos
+    const clientesExport = isAdmin
+      ? cache.clientes
+      : cache.clientes.filter(c => c.usuario_id == currentUser.id);
 
     // ── Hoja 1: Clientes con préstamos activos ──
     const filas = [];
 
-    // Cabecera
-    filas.push([
-      'CLIENTE', 'TELÉFONO', 'DIRECCIÓN', 'COBRADOR',
-      'MONTO PRESTADO', 'INTERÉS %', 'PLAZO (días hábiles)',
-      'FECHA INICIO', 'TOTAL A PAGAR', 'CUOTA DIARIA',
-      'TOTAL COBRADO', 'SALDO PENDIENTE', 'DÍAS ADEUDO', 'ESTADO'
-    ]);
+    // Cabecera — admin incluye columna Cobrador, trabajador no
+    if (isAdmin) {
+      filas.push([
+        'CLIENTE', 'TELÉFONO', 'DIRECCIÓN', 'COBRADOR',
+        'MONTO PRESTADO', 'INTERÉS %', 'PLAZO (días hábiles)',
+        'FECHA INICIO', 'TOTAL A PAGAR', 'CUOTA DIARIA',
+        'TOTAL COBRADO', 'SALDO PENDIENTE', 'DÍAS ADEUDO', 'ESTADO'
+      ]);
+    } else {
+      filas.push([
+        'CLIENTE', 'TELÉFONO', 'DIRECCIÓN',
+        'MONTO PRESTADO', 'INTERÉS %', 'PLAZO (días hábiles)',
+        'FECHA INICIO', 'TOTAL A PAGAR', 'CUOTA DIARIA',
+        'TOTAL COBRADO', 'SALDO PENDIENTE', 'DÍAS ADEUDO', 'ESTADO'
+      ]);
+    }
 
-    cache.clientes.forEach(c => {
+    clientesExport.forEach(c => {
       const cobrador = cache.usuarios.find(u => u.id == c.usuario_id);
       const prestActivos = cache.prestamos.filter(p => p.cliente_id == c.id && p.estado === 'activo');
 
       if (prestActivos.length === 0) {
-        filas.push([
-          c.nombre, c.telefono || '', c.direccion || '',
-          cobrador ? cobrador.nombre : '—',
-          '', '', '', '', '', '', '', '', '', 'Sin préstamos activos'
-        ]);
+        if (isAdmin) {
+          filas.push([
+            c.nombre, c.telefono || '', c.direccion || '',
+            cobrador ? cobrador.nombre : '—',
+            '', '', '', '', '', '', '', '', '', 'Sin préstamos activos'
+          ]);
+        } else {
+          filas.push([
+            c.nombre, c.telefono || '', c.direccion || '',
+            '', '', '', '', '', '', '', '', '', 'Sin préstamos activos'
+          ]);
+        }
       } else {
         prestActivos.forEach(p => {
           const diasAdeudo = cache.pagos.filter(pg =>
@@ -2667,30 +2704,32 @@
           const total = totalPrestamo(p);
           const cuota = cuotaDiaria(p);
           const pendiente = saldoPendiente(p);
-          filas.push([
-            c.nombre,
-            c.telefono || '',
-            c.direccion || '',
-            cobrador ? cobrador.nombre : '—',
-            Number(p.monto).toFixed(2),
-            p.interes,
-            p.plazo,
-            fmtDate(p.fecha_inicio),
-            total.toFixed(2),
-            cuota.toFixed(2),
-            pagado.toFixed(2),
-            pendiente.toFixed(2),
-            diasAdeudo,
-            diasAdeudo > 3 ? '⚠️ Adeudo crítico' : diasAdeudo > 0 ? '🔴 Con adeudo' : '✅ Al corriente'
-          ]);
+          const estadoLabel = diasAdeudo > 3 ? '⚠️ Adeudo crítico' : diasAdeudo > 0 ? '🔴 Con adeudo' : '✅ Al corriente';
+          if (isAdmin) {
+            filas.push([
+              c.nombre, c.telefono || '', c.direccion || '',
+              cobrador ? cobrador.nombre : '—',
+              Number(p.monto).toFixed(2), p.interes, p.plazo,
+              fmtDate(p.fecha_inicio), total.toFixed(2), cuota.toFixed(2),
+              pagado.toFixed(2), pendiente.toFixed(2), diasAdeudo, estadoLabel
+            ]);
+          } else {
+            filas.push([
+              c.nombre, c.telefono || '', c.direccion || '',
+              Number(p.monto).toFixed(2), p.interes, p.plazo,
+              fmtDate(p.fecha_inicio), total.toFixed(2), cuota.toFixed(2),
+              pagado.toFixed(2), pendiente.toFixed(2), diasAdeudo, estadoLabel
+            ]);
+          }
         });
       }
     });
 
-    // ── Hoja 2: Resumen por cobrador ──
+    // ── Hoja 2: Resumen (admin: todos los cobradores; cobrador: solo él mismo) ──
     const resumen = [];
     resumen.push(['COBRADOR', 'CLIENTES', 'PRÉSTAMOS ACTIVOS', 'CAPITAL EN CALLE', 'SALDO POR COBRAR']);
-    cache.usuarios.forEach(u => {
+    const usuariosResumen = isAdmin ? cache.usuarios : cache.usuarios.filter(u => u.id == currentUser.id);
+    usuariosResumen.forEach(u => {
       const clientesU = cache.clientes.filter(c => c.usuario_id == u.id);
       const clienteIds = clientesU.map(c => c.id);
       const prestamosU = cache.prestamos.filter(p => clienteIds.includes(p.cliente_id) && p.estado === 'activo');
@@ -2711,15 +2750,21 @@
     }
 
     const fechaGenerado = new Date().toLocaleDateString('es-MX', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-    let csv = `CobrApp — Reporte de Clientes,Generado: ${fechaGenerado}\n\n`;
+    const nombreArchivo = isAdmin
+      ? `CobrApp_Reporte_General_${hoy}.csv`
+      : `CobrApp_MisClientes_${currentUser.nombre.replace(/ /g,'_')}_${hoy}.csv`;
+
+    let csv = isAdmin
+      ? `CobrApp — Reporte General,Generado: ${fechaGenerado}\n\n`
+      : `CobrApp — Mis Clientes — ${currentUser.nombre},Generado: ${fechaGenerado}\n\n`;
     csv += seccionCSV('═══ CLIENTES Y PRÉSTAMOS ACTIVOS ═══', filas);
-    csv += seccionCSV('═══ RESUMEN POR COBRADOR ═══', resumen);
+    csv += seccionCSV(isAdmin ? '═══ RESUMEN POR COBRADOR ═══' : '═══ MI RESUMEN ═══', resumen);
 
     const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `CobrApp_Reporte_${hoy}.csv`;
+    a.download = nombreArchivo;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
