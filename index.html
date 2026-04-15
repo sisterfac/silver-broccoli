@@ -9,6 +9,7 @@
   <title>CobrApp</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     :root {
       --primary: #C9A84C;
@@ -1395,7 +1396,7 @@
         <span style="font-size:11px;color:var(--gold);font-weight:700">Solo verás tus propios clientes en el reporte</span>
       </div>` : ''}
       <button class="btn" style="background:linear-gradient(135deg,#1B5E20,#43A047);box-shadow:0 4px 16px rgba(67,160,71,0.3)" onclick="exportarExcelClientes()">
-        📊 Descargar reporte Excel
+        📊 Descargar reporte .xlsx
       </button>
     </div>
     <button class="btn danger" onclick="doLogout()">🚪 Cerrar sesión</button>`;
@@ -2650,126 +2651,224 @@
   //  EXPORTAR EXCEL — ADMIN Y TRABAJADORES
   // ══════════════════════════════════════════
   function exportarExcelClientes() {
+    if (typeof XLSX === 'undefined') {
+      toast('⏳ Cargando librería Excel, intenta de nuevo...');
+      return;
+    }
+
     const isAdmin = currentUser.rol === 'admin';
     const hoy = today();
 
-    // Filtrar clientes según el rol: admin ve todos, cobrador solo los suyos
+    // ── Colores exactos del formato Registro de Pagos ──
+    const COLOR_TITULO   = '1F3864'; // azul muy oscuro
+    const COLOR_HEADER   = '2E74B5'; // azul medio
+    const COLOR_BLANCO   = 'FFFFFF';
+    const COLOR_ALT      = 'DEEAF1'; // azul muy claro para filas alternas
+    const COLOR_TOTAL_BG = '2E74B5';
+
+    const wb = XLSX.utils.book_new();
+
+    // ══════════════════════════════════
+    //  HOJA 1: REGISTRO DE PAGOS
+    //  Columnas: # | NOMBRE | TELÉFONO | PAGO | Pre - Re
+    // ══════════════════════════════════
     const clientesExport = isAdmin
       ? cache.clientes
       : cache.clientes.filter(c => c.usuario_id == currentUser.id);
 
-    // ── Hoja 1: Clientes con préstamos activos ──
-    const filas = [];
-
-    // Cabecera — admin incluye columna Cobrador, trabajador no
-    if (isAdmin) {
-      filas.push([
-        'CLIENTE', 'TELÉFONO', 'DIRECCIÓN', 'COBRADOR',
-        'MONTO PRESTADO', 'INTERÉS %', 'PLAZO (días hábiles)',
-        'FECHA INICIO', 'TOTAL A PAGAR', 'CUOTA DIARIA',
-        'TOTAL COBRADO', 'SALDO PENDIENTE', 'DÍAS ADEUDO', 'ESTADO'
-      ]);
-    } else {
-      filas.push([
-        'CLIENTE', 'TELÉFONO', 'DIRECCIÓN',
-        'MONTO PRESTADO', 'INTERÉS %', 'PLAZO (días hábiles)',
-        'FECHA INICIO', 'TOTAL A PAGAR', 'CUOTA DIARIA',
-        'TOTAL COBRADO', 'SALDO PENDIENTE', 'DÍAS ADEUDO', 'ESTADO'
-      ]);
-    }
+    // Construir filas de datos
+    const filasRegistro = [];
+    let contador = 1;
+    let totalPago = 0;
+    let totalPreRe = 0;
 
     clientesExport.forEach(c => {
-      const cobrador = cache.usuarios.find(u => u.id == c.usuario_id);
       const prestActivos = cache.prestamos.filter(p => p.cliente_id == c.id && p.estado === 'activo');
 
       if (prestActivos.length === 0) {
-        if (isAdmin) {
-          filas.push([
-            c.nombre, c.telefono || '', c.direccion || '',
-            cobrador ? cobrador.nombre : '—',
-            '', '', '', '', '', '', '', '', '', 'Sin préstamos activos'
-          ]);
-        } else {
-          filas.push([
-            c.nombre, c.telefono || '', c.direccion || '',
-            '', '', '', '', '', '', '', '', '', 'Sin préstamos activos'
-          ]);
-        }
+        const diasAdeudo = 0;
+        filasRegistro.push({
+          num: contador++,
+          nombre: c.nombre,
+          telefono: c.telefono || '',
+          pago: '',
+          preRe: ''
+        });
       } else {
         prestActivos.forEach(p => {
           const diasAdeudo = cache.pagos.filter(pg =>
             pg.prestamo_id == p.id && pg.metodo === 'no_pago' && pg.fecha < hoy
           ).length;
-          const pagado = totalPagado(p.id);
-          const total = totalPrestamo(p);
           const cuota = cuotaDiaria(p);
           const pendiente = saldoPendiente(p);
-          const estadoLabel = diasAdeudo > 3 ? '⚠️ Adeudo crítico' : diasAdeudo > 0 ? '🔴 Con adeudo' : '✅ Al corriente';
-          if (isAdmin) {
-            filas.push([
-              c.nombre, c.telefono || '', c.direccion || '',
-              cobrador ? cobrador.nombre : '—',
-              Number(p.monto).toFixed(2), p.interes, p.plazo,
-              fmtDate(p.fecha_inicio), total.toFixed(2), cuota.toFixed(2),
-              pagado.toFixed(2), pendiente.toFixed(2), diasAdeudo, estadoLabel
-            ]);
-          } else {
-            filas.push([
-              c.nombre, c.telefono || '', c.direccion || '',
-              Number(p.monto).toFixed(2), p.interes, p.plazo,
-              fmtDate(p.fecha_inicio), total.toFixed(2), cuota.toFixed(2),
-              pagado.toFixed(2), pendiente.toFixed(2), diasAdeudo, estadoLabel
-            ]);
-          }
+          totalPago += cuota;
+          totalPreRe += pendiente;
+          filasRegistro.push({
+            num: contador++,
+            nombre: c.nombre,
+            telefono: c.telefono || '',
+            pago: Number(cuota.toFixed(2)),
+            preRe: Number(pendiente.toFixed(2))
+          });
         });
       }
     });
 
-    // ── Hoja 2: Resumen (admin: todos los cobradores; cobrador: solo él mismo) ──
-    const resumen = [];
-    resumen.push(['COBRADOR', 'CLIENTES', 'PRÉSTAMOS ACTIVOS', 'CAPITAL EN CALLE', 'SALDO POR COBRAR']);
-    const usuariosResumen = isAdmin ? cache.usuarios : cache.usuarios.filter(u => u.id == currentUser.id);
-    usuariosResumen.forEach(u => {
+    // Construir array de arrays para la hoja
+    // Fila 1: título (merged B1:E1)
+    // Fila 2: cabeceras
+    // Fila 3+: datos
+    // Última fila: TOTAL
+    const wsData = [];
+    // Fila 1 — título (A1 vacío, B1 título, C/D/E vacíos para merge)
+    wsData.push(['', 'REGISTRO DE PAGOS', '', '', '']);
+    // Fila 2 — cabeceras
+    wsData.push(['', 'NOMBRE', 'TELÉFONO', 'PAGO', 'Pre - Re']);
+    // Filas de datos
+    filasRegistro.forEach(f => {
+      wsData.push([f.num, f.nombre, f.telefono, f.pago, f.preRe]);
+    });
+    // Fila total
+    const filaTotal = filasRegistro.length + 3; // row index 1-based
+    wsData.push(['', 'TOTAL', '', `=SUM(D3:D${filaTotal - 1})`, `=SUM(E3:E${filaTotal - 1})`]);
+
+    const ws1 = XLSX.utils.aoa_to_sheet(wsData);
+
+    // ── Anchos de columna (igual que el original) ──
+    ws1['!cols'] = [
+      { wch: 9 },    // A - número
+      { wch: 45 },   // B - nombre
+      { wch: 22 },   // C - teléfono
+      { wch: 18 },   // D - pago
+      { wch: 20 },   // E - Pre-Re
+    ];
+
+    // ── Merge: B1:E1 (título) y B{total}:C{total} ──
+    ws1['!merges'] = [
+      { s: { r: 0, c: 1 }, e: { r: 0, c: 4 } },                            // B1:E1
+      { s: { r: filaTotal - 1, c: 1 }, e: { r: filaTotal - 1, c: 2 } },    // B{total}:C{total}
+    ];
+
+    // ── Alturas de fila ──
+    const rowHeights = [{ hpt: 30 }, { hpt: 22 }];
+    filasRegistro.forEach(() => rowHeights.push({ hpt: 20 }));
+    rowHeights.push({ hpt: 22 });
+    ws1['!rows'] = rowHeights;
+
+    // ── Helper: aplicar estilo a celda ──
+    function estilo(bold, bgRGB, fgRGB, hAlign, numFmt, border) {
+      const s = {
+        font: { name: 'Arial', sz: 11, bold: !!bold, color: { rgb: fgRGB || '000000' } },
+        fill: bgRGB ? { patternType: 'solid', fgColor: { rgb: bgRGB } } : { patternType: 'none' },
+        alignment: { horizontal: hAlign || 'left', vertical: 'center', wrapText: false },
+      };
+      if (numFmt) s.numFmt = numFmt;
+      if (border) s.border = {
+        top:    { style: 'thin', color: { rgb: 'BFBFBF' } },
+        bottom: { style: 'thin', color: { rgb: 'BFBFBF' } },
+        left:   { style: 'thin', color: { rgb: 'BFBFBF' } },
+        right:  { style: 'thin', color: { rgb: 'BFBFBF' } },
+      };
+      return s;
+    }
+
+    // ── Estilo fila 1: título ──
+    const tituloStyle = estilo(true, COLOR_TITULO, COLOR_BLANCO, 'center', null, false);
+    ['A1','B1','C1','D1','E1'].forEach(c => {
+      if (!ws1[c]) ws1[c] = { v: '', t: 's' };
+      ws1[c].s = tituloStyle;
+    });
+
+    // ── Estilo fila 2: cabeceras ──
+    const headerStyle = estilo(true, COLOR_HEADER, COLOR_BLANCO, 'center', null, true);
+    ['A2','B2','C2','D2','E2'].forEach(c => {
+      if (!ws1[c]) ws1[c] = { v: '', t: 's' };
+      ws1[c].s = headerStyle;
+    });
+
+    // ── Estilo filas de datos ──
+    const moneyFmt = '#,##0.00';
+    for (let i = 0; i < filasRegistro.length; i++) {
+      const r = i + 3; // fila Excel (1-based): datos empiezan en 3
+      const esAlterna = i % 2 === 1;
+      const bg = esAlterna ? COLOR_ALT : null;
+
+      const sNum  = estilo(false, bg, '000000', 'center', null, true);
+      const sNom  = estilo(false, bg, '000000', 'left',   null, true);
+      const sTel  = estilo(false, bg, '000000', 'left',   null, true);
+      const sMon  = estilo(false, bg, '000000', 'right',  moneyFmt, true);
+
+      const addr = (col, row) => XLSX.utils.encode_cell({ r: row - 1, c: col });
+      const setCell = (col, row, style) => {
+        const a = addr(col, row);
+        if (!ws1[a]) ws1[a] = { v: '', t: 's' };
+        ws1[a].s = style;
+      };
+      setCell(0, r, sNum);
+      setCell(1, r, sNom);
+      setCell(2, r, sTel);
+      setCell(3, r, sMon);
+      setCell(4, r, sMon);
+    }
+
+    // ── Estilo fila TOTAL ──
+    const sTotalLabel  = estilo(true, COLOR_TOTAL_BG, COLOR_BLANCO, 'center', null, true);
+    const sTotalBlank  = estilo(true, COLOR_TOTAL_BG, COLOR_BLANCO, 'center', null, true);
+    const sTotalMoney  = estilo(true, COLOR_TOTAL_BG, COLOR_BLANCO, 'right',  moneyFmt, true);
+    const totalRow = filaTotal;
+    const addrT = col => XLSX.utils.encode_cell({ r: totalRow - 1, c: col });
+    ws1[addrT(0)].s = sTotalLabel;
+    ws1[addrT(1)].s = sTotalLabel;
+    if (!ws1[addrT(2)]) ws1[addrT(2)] = { v: '', t: 's' };
+    ws1[addrT(2)].s = sTotalBlank;
+    ws1[addrT(3)].s = sTotalMoney;
+    ws1[addrT(4)].s = sTotalMoney;
+
+    XLSX.utils.book_append_sheet(wb, ws1, 'Registro de Pagos');
+
+    // ══════════════════════════════════
+    //  HOJA 2: RESUMEN POR COBRADOR
+    // ══════════════════════════════════
+    const resumenData = [['COBRADOR', 'CLIENTES', 'PRÉSTAMOS ACTIVOS', 'CAPITAL EN CALLE ($)', 'SALDO POR COBRAR ($)']];
+    const usuariosRes = isAdmin ? cache.usuarios : cache.usuarios.filter(u => u.id == currentUser.id);
+    usuariosRes.forEach(u => {
       const clientesU = cache.clientes.filter(c => c.usuario_id == u.id);
       const clienteIds = clientesU.map(c => c.id);
       const prestamosU = cache.prestamos.filter(p => clienteIds.includes(p.cliente_id) && p.estado === 'activo');
       const capital = prestamosU.reduce((s, p) => s + Number(p.monto), 0);
       const porCobrar = prestamosU.reduce((s, p) => s + saldoPendiente(p), 0);
-      resumen.push([u.nombre, clientesU.length, prestamosU.length, capital.toFixed(2), porCobrar.toFixed(2)]);
+      resumenData.push([u.nombre, clientesU.length, prestamosU.length, Number(capital.toFixed(2)), Number(porCobrar.toFixed(2))]);
     });
 
-    // ── Generar CSV con dos secciones ──
-    function escaparCSV(val) {
-      const s = String(val === null || val === undefined ? '' : val);
-      return s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s.replace(/"/g, '""')}"` : s;
-    }
-    function seccionCSV(titulo, datos) {
-      let out = titulo + '\n';
-      datos.forEach(fila => { out += fila.map(escaparCSV).join(',') + '\n'; });
-      return out + '\n';
+    const ws2 = XLSX.utils.aoa_to_sheet(resumenData);
+    ws2['!cols'] = [{ wch: 30 }, { wch: 12 }, { wch: 20 }, { wch: 22 }, { wch: 22 }];
+
+    // Estilo cabecera resumen
+    ['A1','B1','C1','D1','E1'].forEach(c => {
+      if (!ws2[c]) ws2[c] = { v: '', t: 's' };
+      ws2[c].s = estilo(true, COLOR_HEADER, COLOR_BLANCO, 'center', null, true);
+    });
+    // Estilo datos resumen
+    for (let i = 1; i < resumenData.length; i++) {
+      const r = i + 1;
+      const bg = i % 2 === 0 ? COLOR_ALT : null;
+      ['A','B','C','D','E'].forEach((col, ci) => {
+        const a = col + r;
+        if (!ws2[a]) ws2[a] = { v: '', t: 's' };
+        const isNum = ci >= 1;
+        ws2[a].s = estilo(false, bg, '000000', isNum ? 'right' : 'left', ci >= 3 ? moneyFmt : null, true);
+      });
     }
 
-    const fechaGenerado = new Date().toLocaleDateString('es-MX', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    XLSX.utils.book_append_sheet(wb, ws2, isAdmin ? 'Resumen por Cobrador' : 'Mi Resumen');
+
+    // ── Descargar ──
     const nombreArchivo = isAdmin
-      ? `CobrApp_Reporte_General_${hoy}.csv`
-      : `CobrApp_MisClientes_${currentUser.nombre.replace(/ /g,'_')}_${hoy}.csv`;
+      ? `CobrApp_Reporte_${hoy}.xlsx`
+      : `CobrApp_MisClientes_${currentUser.nombre.replace(/ /g,'_')}_${hoy}.xlsx`;
 
-    let csv = isAdmin
-      ? `CobrApp — Reporte General,Generado: ${fechaGenerado}\n\n`
-      : `CobrApp — Mis Clientes — ${currentUser.nombre},Generado: ${fechaGenerado}\n\n`;
-    csv += seccionCSV('═══ CLIENTES Y PRÉSTAMOS ACTIVOS ═══', filas);
-    csv += seccionCSV(isAdmin ? '═══ RESUMEN POR COBRADOR ═══' : '═══ MI RESUMEN ═══', resumen);
-
-    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = nombreArchivo;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    toast('✅ Reporte descargado — ábrelo en Excel');
+    XLSX.writeFile(wb, nombreArchivo);
+    toast('✅ Reporte Excel descargado');
   }
 
 </script>
