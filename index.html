@@ -2702,13 +2702,13 @@
           const cuota = cuotaDiaria(p);
           const pendiente = saldoPendiente(p);
           totalPago += cuota;
-          // Pre-Re se deja vacío — el admin lo llena manualmente al entregar cuentas
+          totalPreRe += pendiente;
           filasRegistro.push({
             num: contador++,
             nombre: c.nombre,
             telefono: c.telefono || '',
             pago: Number(cuota.toFixed(2)),
-            preRe: ''
+            preRe: Number(pendiente.toFixed(2))
           });
         });
       }
@@ -2730,7 +2730,7 @@
     });
     // Fila total
     const filaTotal = filasRegistro.length + 3; // row index 1-based
-    wsData.push(['', 'TOTAL', '', `=SUM(D3:D${filaTotal - 1})`, '']);
+    wsData.push(['', 'TOTAL', '', `=SUM(D3:D${filaTotal - 1})`, `=SUM(E3:E${filaTotal - 1})`]);
 
     const ws1 = XLSX.utils.aoa_to_sheet(wsData);
 
@@ -2822,9 +2822,7 @@
     if (!ws1[addrT(2)]) ws1[addrT(2)] = { v: '', t: 's' };
     ws1[addrT(2)].s = sTotalBlank;
     ws1[addrT(3)].s = sTotalMoney;
-    // Columna E (Pre-Re) sin estilo de total — se llena manualmente
-    if (!ws1[addrT(4)]) ws1[addrT(4)] = { v: '', t: 's' };
-    ws1[addrT(4)].s = sTotalBlank;
+    ws1[addrT(4)].s = sTotalMoney;
 
     XLSX.utils.book_append_sheet(wb, ws1, 'Registro de Pagos');
 
