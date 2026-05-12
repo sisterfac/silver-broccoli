@@ -317,7 +317,7 @@
       Object.entries(filtros).forEach(([k, v]) => { rows = rows.filter(r => r[k] === v); });
       return rows;
     }
-    let q = sbClient.from(tabla).select('*');
+    let q = sbClient.from(tabla).select('*').range(0, 9999);
     Object.entries(filtros).forEach(([k, v]) => { q = q.eq(k, v); });
     const { data, error } = await q;
     if (error) throw error;
